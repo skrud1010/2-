@@ -1813,7 +1813,7 @@ function checkout() {
   localStorage.setItem('dami_orders', JSON.stringify(orders));
   cartData = []; _saveCart();
   document.getElementById('cartModal').classList.remove('show');
-  showToast('✅ 주문이 접수되었습니다! 빠른 시일 내에 연락드리겠습니다.');
+  showToast('주문이 접수되었습니다!<br>빠른 시일 내에 연락드리겠습니다.');
 }
 function buyNow() {
   const p = currentProduct; const lang = currentLang;
