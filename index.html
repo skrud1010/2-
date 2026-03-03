@@ -845,7 +845,88 @@
   .toast { position: fixed; bottom: 28px; right: 28px; z-index: 3000; background: var(--black); color: var(--white); padding: 13px 20px; border-radius: 6px; border-left: 3px solid var(--yellow); font-size: 0.83rem; opacity: 0; transform: translateY(10px); transition: all 0.3s; pointer-events: none; max-width: 320px; line-height: 1.5; }
   .toast.show { opacity: 1; transform: translateY(0); }
 
+  /* ══ HAMBURGER & SIDEBAR ══ */
+  .menu-toggle {
+    display: none; flex-direction: column; gap: 5px;
+    background: none; border: none; cursor: pointer; padding: 6px; margin-right: 10px;
+  }
+  .menu-toggle span {
+    display: block; width: 24px; height: 2px;
+    background: var(--white); transition: all 0.3s; border-radius: 2px;
+  }
+  nav.scrolled .menu-toggle span { background: var(--black); }
+  .sidebar-overlay {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.55);
+    z-index: 1500; opacity: 0; pointer-events: none; transition: opacity 0.3s;
+  }
+  .sidebar-overlay.open { opacity: 1; pointer-events: auto; }
+  .sidebar {
+    position: fixed; top: 0; left: 0; bottom: 0; width: 280px;
+    background: var(--white); z-index: 1600;
+    transform: translateX(-100%); transition: transform 0.3s ease;
+    overflow-y: auto; display: flex; flex-direction: column;
+  }
+  .sidebar.open { transform: translateX(0); }
+  .sidebar-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 18px 20px; background: var(--dark-red); flex-shrink: 0;
+  }
+  .sidebar-logo {
+    font-family: 'Bebas Neue', cursive; font-size: 1.4rem;
+    letter-spacing: 2px; color: var(--white);
+  }
+  .sidebar-close {
+    background: none; border: none; color: rgba(255,255,255,0.7);
+    font-size: 1.3rem; cursor: pointer; padding: 4px 8px; line-height: 1;
+  }
+  .sidebar-close:hover { color: var(--white); }
+  .sidebar-nav { flex: 1; padding: 6px 0; }
+  .sidebar-item { border-bottom: 1px solid #f0f0f0; }
+  .sidebar-item > a {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 15px 20px; font-family: 'Montserrat', sans-serif; font-weight: 700;
+    font-size: 0.78rem; letter-spacing: 1.5px; text-transform: uppercase;
+    color: #222; text-decoration: none; transition: color 0.2s;
+  }
+  .sidebar-item > a:hover { color: var(--red); }
+  .sidebar-item > a .sb-arrow { font-size: 0.6rem; transition: transform 0.2s; }
+  .sidebar-item.expanded > a .sb-arrow { transform: rotate(90deg); }
+  .sidebar-sub { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; background: var(--gray-light); }
+  .sidebar-item.expanded .sidebar-sub { max-height: 300px; }
+  .sidebar-sub a {
+    display: block; padding: 11px 32px; font-family: 'Noto Sans KR', sans-serif;
+    font-size: 0.82rem; color: #444; text-decoration: none;
+    border-bottom: 1px solid #eaeaea; transition: color 0.15s;
+  }
+  .sidebar-sub a:last-child { border-bottom: none; }
+  .sidebar-sub a:hover { color: var(--red); }
+  .sidebar-footer {
+    padding: 16px 20px; display: flex; flex-direction: column;
+    gap: 10px; border-top: 2px solid #eee; flex-shrink: 0;
+  }
+  .sidebar-lang-row { display: flex; gap: 8px; }
+  .sidebar-action-row { display: flex; gap: 8px; }
+  .sidebar-cart-btn {
+    flex: 1; background: var(--yellow); border: none; padding: 10px;
+    border-radius: 4px; cursor: pointer; display: flex; align-items: center;
+    justify-content: center; gap: 6px; font-family: 'Montserrat', sans-serif;
+    font-weight: 700; font-size: 0.75rem; letter-spacing: 1px;
+  }
+  .sidebar-cart-btn:hover { background: #e6c200; }
+  .sidebar-login-btn {
+    flex: 1; background: var(--red); color: var(--white); border: none;
+    padding: 10px; border-radius: 4px; cursor: pointer;
+    font-family: 'Montserrat', sans-serif; font-weight: 700;
+    font-size: 0.75rem; letter-spacing: 1px; text-transform: uppercase;
+  }
+  .sidebar-login-btn:hover { background: var(--dark-red); }
+  .sidebar-cart-badge {
+    background: var(--dark-red); color: #fff; font-size: 0.6rem;
+    padding: 1px 5px; border-radius: 10px; min-width: 16px; text-align: center;
+  }
+
   @media (max-width: 900px) {
+    .menu-toggle { display: flex; }
     .nav-links { display: none; }
     nav { padding: 0 22px; }
     .intro-section, .Motto-section, .contact-body { grid-template-columns: 1fr; }
@@ -868,6 +949,9 @@
 
 <!-- ══ NAVBAR ══ -->
 <nav id="mainNav">
+  <button class="menu-toggle" onclick="openSidebar()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
   <a class="logo" href="#" onclick="showPage('home'); return false;"><img src="./assets/images/로고.png" class="logo-img" alt="Da-Mi Food">DA-MI FOOD</a>
   <div class="nav-links">
     <div class="nav-item">
@@ -905,6 +989,55 @@
     <button class="login-btn" id="navLoginBtn" data-t="nav-login" onclick="document.getElementById('loginModal').classList.add('show')">Login</button>
   </div>
 </nav>
+
+<!-- ══ SIDEBAR ══ -->
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-header">
+    <span class="sidebar-logo">DA-MI FOOD</span>
+    <button class="sidebar-close" onclick="closeSidebar()">✕</button>
+  </div>
+  <nav class="sidebar-nav">
+    <div class="sidebar-item" id="sb-about">
+      <a href="#" onclick="sbToggle('sb-about'); return false;">
+        <span data-t="nav-about">다미 소개</span><span class="sb-arrow">▶</span>
+      </a>
+      <div class="sidebar-sub">
+        <a href="#" onclick="closeSidebar(); showPage('about'); showAboutTab(0); return false;" data-t="nav-brand-story">다미 스토리</a>
+        <a href="#" onclick="closeSidebar(); showPage('about'); showAboutTab(1); return false;" data-t="nav-brand-philo">다미의 철학</a>
+        <a href="#" onclick="closeSidebar(); showPage('about'); showAboutTab(2); return false;" data-t="nav-promise">다미의 약속</a>
+        <a href="#" onclick="closeSidebar(); showPage('about'); showAboutTab(3); return false;" data-t="nav-vision">다미의 비전</a>
+      </div>
+    </div>
+    <div class="sidebar-item" id="sb-products">
+      <a href="#" onclick="sbToggle('sb-products'); return false;">
+        <span data-t="nav-products">제품 소개</span><span class="sb-arrow">▶</span>
+      </a>
+      <div class="sidebar-sub">
+        <a href="#" onclick="closeSidebar(); showPage('products'); filterProducts('all',null); return false;" data-t="nav-all-products">전체 제품</a>
+        <a href="#" onclick="closeSidebar(); showPage('products'); filterProducts('coin',null); return false;" data-t="nav-coin">코인 육수</a>
+        <a href="#" onclick="closeSidebar(); showPage('products'); filterProducts('seasoning',null); return false;" data-t="nav-seasoning">가루 시즈닝</a>
+        <a href="#" onclick="closeSidebar(); showPage('products'); filterProducts('sauce',null); return false;" data-t="nav-sauce">액체 소스</a>
+      </div>
+    </div>
+    <div class="sidebar-item">
+      <a href="#" onclick="closeSidebar(); showPage('contact'); return false;">
+        <span data-t="nav-contact">고객 서비스</span>
+      </a>
+    </div>
+  </nav>
+  <div class="sidebar-footer">
+    <div class="sidebar-lang-row">
+      <button class="lang-btn active" data-lang="ko" onclick="setLang('ko')">KO</button>
+      <button class="lang-btn" data-lang="en" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" data-lang="vi" onclick="setLang('vi')">VI</button>
+    </div>
+    <div class="sidebar-action-row">
+      <button class="sidebar-cart-btn" onclick="closeSidebar(); openCart()">🛒 <span data-t="modal-cart-btn" style="display:contents">Cart</span> <span class="sidebar-cart-badge" id="sidebarCartCount">0</span></button>
+      <button class="sidebar-login-btn" id="sidebarLoginBtn" onclick="closeSidebar(); document.getElementById('loginModal').classList.add('show')" data-t="nav-login">Login</button>
+    </div>
+  </div>
+</div>
 
 <!-- ══ LOGIN MODAL ══ -->
 <div class="modal-overlay" id="loginModal">
@@ -985,7 +1118,7 @@
   <!-- ③ 브랜드 소개 -->
   <section class="intro-section">
     <div class="intro-left">
-      <h2 data-t="intro-h2">우리가<br>달라야 했던<br>이유</h2>
+      <h2 data-t="intro-h2">우리가<br><span style="color:var(--yellow)">달라야 했던</span><br>이유</h2>
       <p data-t="intro-body">
         "왜 한국의 감칠맛과 베트남의 향긋함이 꼭 따로 존재해야 할까?"<br><br>
         다미푸드는 그 질문에서 태어났습니다.<br>
@@ -1398,19 +1531,19 @@
       </div>
       <div class="contact-sns-section">
         <div class="contact-sns-grid">
-          <a class="sns-card fb-card" href="https://m.me/damifood" target="_blank">
+          <a class="sns-card fb-card" href="https://www.facebook.com/profile.php?id=61585071355812" target="_blank">
             <div class="sns-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36" width="36" height="36"><circle cx="18" cy="18" r="18" fill="#1877F2"/><path fill="#fff" d="M22.5 12h-2.7c-.95 0-1.13.4-1.13 1.15V15H22.5l-.42 3.5H18.67V27H15.1v-8.5H13V15h2.1v-2.1c0-2.65 1.62-4.1 4.28-4.1 1.18 0 2.42.1 3.12.2V12z"/></svg></div>
             <div><div class="sns-name">Facebook</div><div class="sns-handle">Messenger</div></div>
           </a>
-          <a class="sns-card zalo-card" href="https://zalo.me/damifood" target="_blank">
+          <a class="sns-card zalo-card" href="https://chat.zalo.me" target="_blank">
             <div class="sns-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36" width="36" height="36"><rect width="36" height="36" rx="8" fill="#0068FF"/><text x="18" y="24" font-family="Arial,sans-serif" font-weight="900" font-size="13" fill="#fff" text-anchor="middle" letter-spacing="-0.5">zalo</text></svg></div>
             <div><div class="sns-name">Zalo</div><div class="sns-handle">@damifood</div></div>
           </a>
-          <a class="sns-card yt-card" href="https://youtube.com/@damifood" target="_blank">
+          <a class="sns-card yt-card" href="https://www.youtube.com/@DA-MI_Food/featured" target="_blank">
             <div class="sns-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36" width="36" height="36"><rect width="36" height="36" rx="8" fill="#FF0000"/><path fill="#fff" d="M27 14.5c-.3-1.1-1.1-1.9-2.2-2.2C22.9 12 18 12 18 12s-4.9 0-6.8.3c-1.1.3-1.9 1.1-2.2 2.2C8.7 16.4 8.7 18 8.7 18s0 1.6.3 3.5c.3 1.1 1.1 1.9 2.2 2.2C13.1 24 18 24 18 24s4.9 0 6.8-.3c1.1-.3 1.9-1.1 2.2-2.2.3-1.9.3-3.5.3-3.5s0-1.6-.3-3.5zm-11.3 5.7v-4.4l4.6 2.2-4.6 2.2z"/></svg></div>
             <div><div class="sns-name">YouTube</div><div class="sns-handle">@damifood</div></div>
           </a>
-          <a class="sns-card ig-card" href="https://instagram.com/damifood" target="_blank">
+          <a class="sns-card ig-card" href="https://www.instagram.com/damifood.official" target="_blank">
             <div class="sns-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36" width="36" height="36"><defs><linearGradient id="ig-sns-grad" x1="0%" y1="100%" x2="100%" y2="0%"><stop offset="0%" stop-color="#f09433"/><stop offset="25%" stop-color="#e6683c"/><stop offset="50%" stop-color="#dc2743"/><stop offset="75%" stop-color="#cc2366"/><stop offset="100%" stop-color="#bc1888"/></linearGradient></defs><rect width="36" height="36" rx="8" fill="url(#ig-sns-grad)"/><rect x="9.5" y="9.5" width="17" height="17" rx="5" fill="none" stroke="#fff" stroke-width="2"/><circle cx="18" cy="18" r="4.2" fill="none" stroke="#fff" stroke-width="2"/><circle cx="23.5" cy="12.5" r="1.4" fill="#fff"/></svg></div>
             <div><div class="sns-name">Instagram</div><div class="sns-handle">@damifood</div></div>
           </a>
@@ -1539,44 +1672,128 @@ let cartData = JSON.parse(localStorage.getItem('dami_cart') || '[]');
 
 /* ── BRAND DESCRIPTIONS ── */
 const BRAND_DESC = {
-  coin: {
-    eyebrow: 'MIDAM by DAMI',
-    name: 'MIDAM (미담)',
-    meaning: '<em>미담(美談)</em> — 아름다운 맛',
-    desc: '한국 전통 육수의 정수(精髓)를 코인 한 알에 압축했습니다.<br>끓는 물에 넣는 순간, 어디서든 깊고 진한 집밥의 국물이 완성됩니다.',
-    specs: [
-      ['형태', '코인형 압축 타블렛 · 1알 = 물 500ml / 1회분'],
-      ['용량', '25알 · 200g / 1봉'],
-      ['포장', '개별 소포장 · 지퍼백 밀봉'],
-      ['성분', '무방부제 · 무MSG · 천연 재료'],
-      ['보관', '실온 · 개봉 후 밀봉'],
-    ]
+  ko: {
+    coin: {
+      eyebrow: 'MIDAM by DAMI',
+      name: 'MIDAM (미담)',
+      meaning: '<em>미담(美談)</em> — 아름다운 맛',
+      desc: '한국 전통 육수의 정수(精髓)를 코인 한 알에 압축했습니다.<br>끓는 물에 넣는 순간, 어디서든 깊고 진한 집밥의 국물이 완성됩니다.',
+      specs: [
+        ['형태', '코인형 압축 타블렛 · 1알 = 물 500ml / 1회분'],
+        ['용량', '25알 · 200g / 1봉'],
+        ['포장', '개별 소포장 · 지퍼백 밀봉'],
+        ['성분', '무방부제 · 무MSG · 천연 재료'],
+        ['보관', '실온 · 개봉 후 밀봉'],
+      ]
+    },
+    seasoning: {
+      eyebrow: 'MYOMI by DAMI',
+      name: 'MYOMI (묘미)',
+      meaning: '<em>묘미(妙味)</em> — 오묘하고 절묘한 맛',
+      desc: '한국 전통의 깊은 맛을, 어떤 요리에도 한 스푼으로 완성합니다.<br>정교하게 배합된 MYOMI 시즈닝으로 일상 요리의 격을 높여보세요.',
+      specs: [
+        ['형태', '가루 시즈닝 (건더기 포함)'],
+        ['용기', '이지컷 스틱 파우치'],
+        ['용량', '1회분 15g (전복죽 20g) · 20개 / 1봉'],
+        ['성분', '무방부제 · 무MSG · 천연 재료'],
+        ['보관', '실온 · 개봉 후 밀봉'],
+      ]
+    },
+    sauce: {
+      eyebrow: 'PUNGMI by DAMI',
+      name: 'PUNGMI (풍미)',
+      meaning: '<em>풍미(豊味)</em> — 풍부한 맛',
+      desc: '한국 정통 소스 문화에 베트남 식문화의 감성을 더했습니다.<br>디핑부터 볶음까지, 매일 꺼내고 싶어지는 소스입니다.',
+      specs: [
+        ['형태', '액체 소스'],
+        ['용기', '스퀴즈 보틀'],
+        ['용량', '300ml'],
+        ['성분', '인공 보존료 무첨가 · 천연 재료'],
+        ['보관', '냉장 · 개봉 후 30일 이내'],
+      ]
+    }
   },
-  seasoning: {
-    eyebrow: 'MYOMI by DAMI',
-    name: 'MYOMI (묘미)',
-    meaning: '<em>묘미(妙味)</em> — 오묘하고 절묘한 맛',
-    desc: '한국 전통의 깊은 맛을, 어떤 요리에도 한 스푼으로 완성합니다.<br>정교하게 배합된 MYOMI 시즈닝으로 일상 요리의 격을 높여보세요.',
-    specs: [
-      ['형태', '가루 시즈닝 (건더기 포함)'],
-      ['용기', '이지컷 스틱 파우치'],
-      ['용량', '1회분 15g (전복죽 20g) · 20개 / 1봉'],
-      ['성분', '무방부제 · 무MSG · 천연 재료'],
-      ['보관', '실온 · 개봉 후 밀봉'],
-    ]
+  en: {
+    coin: {
+      eyebrow: 'MIDAM by DAMI',
+      name: 'MIDAM (미담)',
+      meaning: '<em>MIDAM (美談)</em> — A beautiful taste',
+      desc: 'The essence of Korean traditional broth, compressed into one coin.<br>The moment you drop it in boiling water, a deep, rich home-cooked broth is ready anywhere.',
+      specs: [
+        ['Type', 'Coin-shaped tablet · 1 coin = 500ml water / 1 serving'],
+        ['Quantity', '25 coins · 200g / 1 pack'],
+        ['Packaging', 'Individual wrapping · Zipper seal'],
+        ['Ingredients', 'No preservatives · No MSG · Natural ingredients'],
+        ['Storage', 'Room temp · Seal after opening'],
+      ]
+    },
+    seasoning: {
+      eyebrow: 'MYOMI by DAMI',
+      name: 'MYOMI (묘미)',
+      meaning: '<em>MYOMI (妙味)</em> — A mysterious, exquisite taste',
+      desc: 'Deep Korean traditional flavors completed with just one spoon in any dish.<br>Elevate your everyday cooking with precisely crafted MYOMI seasoning.',
+      specs: [
+        ['Type', 'Powder seasoning (with toppings)'],
+        ['Package', 'Easy-cut stick pouch'],
+        ['Quantity', '15g/serving (20g for abalone porridge) · 20 pcs / 1 pack'],
+        ['Ingredients', 'No preservatives · No MSG · Natural ingredients'],
+        ['Storage', 'Room temp · Seal after opening'],
+      ]
+    },
+    sauce: {
+      eyebrow: 'PUNGMI by DAMI',
+      name: 'PUNGMI (풍미)',
+      meaning: '<em>PUNGMI (豊味)</em> — A rich, full-bodied taste',
+      desc: 'Korean authentic sauce culture, elevated with Vietnamese food sensibility.<br>From dipping to stir-frying, a sauce you\'ll want to reach for every day.',
+      specs: [
+        ['Type', 'Liquid sauce'],
+        ['Package', 'Squeeze bottle'],
+        ['Quantity', '300ml'],
+        ['Ingredients', 'No artificial preservatives · Natural ingredients'],
+        ['Storage', 'Refrigerated · Use within 30 days of opening'],
+      ]
+    }
   },
-  sauce: {
-    eyebrow: 'PUNGMI by DAMI',
-    name: 'PUNGMI (풍미)',
-    meaning: '<em>풍미(豊味)</em> — 풍부한 맛',
-    desc: '한국 정통 소스 문화에 베트남 식문화의 감성을 더했습니다.<br>디핑부터 볶음까지, 매일 꺼내고 싶어지는 소스입니다.',
-    specs: [
-      ['형태', '액체 소스'],
-      ['용기', '스퀴즈 보틀'],
-      ['용량', '300ml'],
-      ['성분', '인공 보존료 무첨가 · 천연 재료'],
-      ['보관', '냉장 · 개봉 후 30일 이내'],
-    ]
+  vi: {
+    coin: {
+      eyebrow: 'MIDAM by DAMI',
+      name: 'MIDAM (미담)',
+      meaning: '<em>MIDAM (美談)</em> — Hương vị tuyệt đẹp',
+      desc: 'Tinh túy của nước dùng truyền thống Hàn Quốc, nén trong một viên đồng xu.<br>Thả vào nước sôi, nước dùng đậm đà như cơm nhà hoàn thiện ngay lập tức.',
+      specs: [
+        ['Dạng', 'Viên nén · 1 viên = 500ml nước / 1 phần'],
+        ['Dung lượng', '25 viên · 200g / 1 gói'],
+        ['Đóng gói', 'Gói riêng · Túi khóa kéo'],
+        ['Thành phần', 'Không chất bảo quản · Không MSG · Nguyên liệu tự nhiên'],
+        ['Bảo quản', 'Nhiệt độ phòng · Hàn kín sau khi mở'],
+      ]
+    },
+    seasoning: {
+      eyebrow: 'MYOMI by DAMI',
+      name: 'MYOMI (묘미)',
+      meaning: '<em>MYOMI (妙味)</em> — Hương vị tinh tế, tuyệt diệu',
+      desc: 'Hương vị truyền thống Hàn Quốc đậm đà, hoàn thiện chỉ với một thìa cho mọi món ăn.<br>Nâng tầm ẩm thực hàng ngày với gia vị MYOMI được phối chế tinh tế.',
+      specs: [
+        ['Dạng', 'Gia vị bột (kèm topping)'],
+        ['Bao bì', 'Túi que cắt dễ'],
+        ['Dung lượng', '15g / phần (20g cháo bào ngư) · 20 gói / 1 túi'],
+        ['Thành phần', 'Không chất bảo quản · Không MSG · Nguyên liệu tự nhiên'],
+        ['Bảo quản', 'Nhiệt độ phòng · Hàn kín sau khi mở'],
+      ]
+    },
+    sauce: {
+      eyebrow: 'PUNGMI by DAMI',
+      name: 'PUNGMI (풍미)',
+      meaning: '<em>PUNGMI (豊味)</em> — Hương vị phong phú, đậm đà',
+      desc: 'Văn hóa sốt Hàn Quốc kết hợp cảm xúc ẩm thực Việt Nam.<br>Từ chấm đến xào, loại sốt bạn sẽ muốn dùng mỗi ngày.',
+      specs: [
+        ['Dạng', 'Sốt lỏng'],
+        ['Bao bì', 'Chai bóp'],
+        ['Dung lượng', '300ml'],
+        ['Thành phần', 'Không chất bảo quản nhân tạo · Nguyên liệu tự nhiên'],
+        ['Bảo quản', 'Bảo quản lạnh · Dùng trong 30 ngày sau khi mở'],
+      ]
+    }
   }
 };
 /* ── PRODUCT RICH DETAILS ── */
@@ -2072,7 +2289,9 @@ function fmtPrice(vndStr, lang) {
 function updateBrandDesc(filter) {
   const el = document.getElementById('brandDesc');
   if (!el) return;
-  const b = BRAND_DESC[filter];
+  const lang = typeof currentLang !== 'undefined' ? currentLang : 'ko';
+  const langDesc = BRAND_DESC[lang] || BRAND_DESC['ko'];
+  const b = langDesc[filter];
   if (!b) { el.style.display = 'none'; el.innerHTML = ''; return; }
   el.style.display = '';
   el.className = 'brand-desc';
@@ -2189,6 +2408,8 @@ function _saveCart() {
   localStorage.setItem('dami_cart', JSON.stringify(cartData));
   const total = cartData.reduce((s,i) => s + i.qty, 0);
   document.getElementById('cartCount').textContent = total;
+  const sb = document.getElementById('sidebarCartCount');
+  if (sb) sb.textContent = total;
 }
 function addToCart() {
   const p = currentProduct; const lang = currentLang;
@@ -2389,7 +2610,7 @@ const TRANS = {
     'hero-btn-products':'제품 보기 →', 'hero-btn-about':'다미 스토리',
     /* DA-MI Story */
     'intro-tag':'01 · 다미 스토리',
-    'intro-h2':'우리가<br>달라야 했던<br>이유',
+    'intro-h2':'우리가<br><span style="color:var(--yellow)">달라야 했던</span><br>이유',
     'intro-body':'"왜 한국의 감칠맛과 베트남의 향긋함이 꼭 따로 존재해야 할까?"<br><br>다미푸드는 그 질문에서 태어났습니다. 한국도, 베트남도 아닌<br><strong>\'제3의 미식\'.</strong><br>코인 하나, 시즈닝 한 스푼으로 완성되는 새로운 K-Fusion 경험입니다.',
     /* Stats */
     'stat1-unit':'분', 'stat1-label':'조리 시간', 'stat1-desc':'코인 하나로<br>완성되는 깊은 맛',
@@ -2509,7 +2730,7 @@ const TRANS = {
     'hero-btn-products':'View Products →', 'hero-btn-about':'DA-MI Story',
     /* DA-MI Story */
     'intro-tag':'01 · DA-MI STORY',
-    'intro-h2':'Why we had to<br><span>be different</span>',
+    'intro-h2':'Why we had to<br><span style="color:var(--yellow)">be different</span>',
     'intro-body':'"Why must Korean umami and Vietnamese fragrance exist separately?"<br><br>Da-Mi Food was born from that question. Neither fully Korean nor Vietnamese —<br><strong>\'A Third Cuisine\'.</strong><br>A new K-Fusion experience, completed with one coin and one spoon of seasoning.',
     /* Stats */
     'stat1-unit':'min', 'stat1-label':'Cooking Time', 'stat1-desc':'Deep flavor<br>with just one coin',
@@ -2629,7 +2850,7 @@ const TRANS = {
     'hero-btn-products':'Xem sản phẩm →', 'hero-btn-about':'Câu chuyện thương hiệu',
     /* DA-MI Story */
     'intro-tag':'01 · DA-MI STORY',
-    'intro-h2':'Lý do chúng tôi<br><span>phải khác biệt</span>',
+    'intro-h2':'Lý do chúng tôi<br><span style="color:var(--yellow)">phải khác biệt</span>',
     'intro-body':'"Tại sao vị umami Hàn Quốc và hương thơm Việt Nam lại phải tách biệt?"<br><br>Da-Mi Food ra đời từ câu hỏi đó. Không hoàn toàn là Hàn Quốc, cũng không hoàn toàn là Việt Nam —<br><strong>\'Ẩm thực thứ ba\'.</strong><br>Trải nghiệm K-Fusion mới, hoàn thiện chỉ với một đồng xu và một thìa gia vị.',
     /* Stats */
     'stat1-unit':'phút', 'stat1-label':'Thời gian nấu', 'stat1-desc':'Hương vị đậm đà<br>chỉ với một đồng xu',
@@ -2786,6 +3007,21 @@ const productEnDesc = {
   15: 'The perfect harmony of sweet mango and gochujang. The ultimate wing sauce for chicken, fried foods, and tacos.',
   16: 'K-Rosé lemongrass stir-fry sauce — gochujang · cream powder · fresh lemongrass. The ultimate K-VN fusion sauce for fried noodles, chicken stir-fry, and seafood.'
 };
+
+/* ── SIDEBAR ── */
+function openSidebar() {
+  document.getElementById('sidebar').classList.add('open');
+  document.getElementById('sidebarOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeSidebar() {
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('sidebarOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function sbToggle(id) {
+  document.getElementById(id).classList.toggle('expanded');
+}
 
 /* ── 페이지 초기화 (모든 const 선언 이후에 실행) ── */
 renderProducts('all');
