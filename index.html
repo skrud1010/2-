@@ -720,8 +720,18 @@
   .modal-ingr-table th { font-family: 'Montserrat', sans-serif; font-size: 0.5rem; font-weight: 700; letter-spacing: 1.5px; color: #bbb; text-transform: uppercase; text-align: left; padding: 6px 8px; border-bottom: 2px solid #f0ece8; }
   .modal-ingr-table td { font-family: 'Noto Sans KR', sans-serif; font-size: 0.76rem; color: #333; padding: 5px 8px; border-bottom: 1px solid #f7f5f3; }
   .modal-ingr-table tr:last-child td { border-bottom: none; }
-  .modal-ingr-table td:nth-child(2) { font-family: 'Montserrat', sans-serif; font-size: 0.7rem; color: #888; text-align: right; }
+  .modal-ingr-table th:nth-child(2) { text-align: center; }
+  .modal-ingr-table td:nth-child(2) { font-family: 'Montserrat', sans-serif; font-size: 0.7rem; color: #888; text-align: center; }
   .modal-ingr-table td:nth-child(3) { font-size: 0.72rem; color: #aaa; }
+  /* ── CAROUSEL ── */
+  .carousel-img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .carousel-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,0.88); border: none; border-radius: 50%; width: 36px; height: 36px; cursor: pointer; font-size: 1.5rem; line-height: 1; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(0,0,0,0.18); transition: background 0.18s; z-index: 5; color: #333; padding: 0; }
+  .carousel-btn:hover { background: white; }
+  .carousel-btn.prev { left: 10px; }
+  .carousel-btn.next { right: 10px; }
+  .carousel-dots { position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%); display: flex; gap: 6px; z-index: 5; }
+  .carousel-dot { width: 7px; height: 7px; border-radius: 50%; background: rgba(255,255,255,0.45); cursor: pointer; border: none; padding: 0; transition: background 0.2s; }
+  .carousel-dot.active { background: rgba(255,255,255,0.95); }
   .modal-shipping { font-size: 0.74rem; color: #bbb; margin-bottom: 18px; line-height: 1.6; }
   .qty-row { display: flex; align-items: center; gap: 16px; margin-bottom: 18px; }
   .qty-label { font-size: 0.78rem; font-weight: 600; color: #555; width: 44px; }
@@ -1493,19 +1503,19 @@ window.addEventListener('scroll', updateNav, { passive: true });
 
 /* ── PRODUCTS DATA ── */
 const products = [
-  { id:1,  cat:'coin',      name:'소고기 육개장 코인육수',      en:'Beef Yukgaejang Coin Broth',        price:'TBD', desc:'한국 소고기 육개장의 깊고 칼칼한 국물. 코인 하나로 정통 육개장 베이스 완성. 샤브샤브·라면·쌀국수에도 활용 가능.', tags:[] },
-  { id:2,  cat:'coin',      name:'잔치국수(멸치) 코인육수',      en:'Anchovy Janchi Noodle Coin Broth',   price:'TBD', desc:'깔끔하고 시원한 멸치·다시마 황금 비율 육수. 잔치국수·칼국수·Phở 스타일에 활용.', tags:[] },
-  { id:3,  cat:'coin',      name:'칼칼 맑은 채수 코인육수',      en:'Spicy Clear Veggie Broth Coin',      price:'TBD', desc:'청양고추·표고버섯·양파·배추로 만든 비건 채수. 칼칼하고 맑은 국물. 해장·다이어트·비건 모두.', tags:['VEGAN'] },
-  { id:4,  cat:'coin',      name:'김치-타마린 코인육수',          en:'Kimchi-Tamarind Coin Broth',         price:'TBD', desc:'한국 김치의 발효 신맛과 베트남 타마린의 산미가 만난 새콤하고 깊은 맛의 K-VN 퓨전 육수.', tags:[] },
-  { id:7,  cat:'seasoning', name:'불고기맛 시즈닝',               en:'Bulgogi Seasoning',                  price:'TBD', desc:'배와 간장의 달콤짭짤한 불고기향. Bánh mì 위에 뿌리면 K-Fusion 완성!', tags:[] },
-  { id:8,  cat:'seasoning', name:'감자탕 시즈닝',                 en:'Gamjatang Pork Bone Seasoning',      price:'TBD', desc:'진하고 구수한 감자탕의 깊은 맛. Phở 스타일 국물 요리에 K-터치를.', tags:[] },
-  { id:9,  cat:'seasoning', name:'닭갈비 시즈닝',                 en:'Dakgalbi Spicy Chicken Seasoning',   price:'TBD', desc:'춘천식 닭갈비의 매콤달콤 양념. 닭·두부·채소·쌀과자까지 환상 궁합.', tags:[] },
-  { id:10, cat:'seasoning', name:'전복죽 시즈닝',                 en:'Abalone Porridge Seasoning',         price:'TBD', desc:'고급스러운 전복의 감칠맛. 죽·리조또·해산물 요리에 프리미엄 마무리.', tags:[] },
-  { id:11, cat:'sauce',     name:'청양마요 소스',                 en:'Cheongyang Chili Mayo Sauce',        price:'TBD', desc:'청양고추의 화끈함 + 마요네즈의 크리미함. 튀김·버거·타코에 최강.', tags:[] },
-  { id:12, cat:'sauce',     name:'매실액 시푸드 디핑소스',        en:'Maesil Plum Seafood Dipping Sauce',  price:'TBD', desc:'천연 매실액·식초·레몬즙의 새콤달콤 시푸드 디핑소스. Hải sản 최강 페어링.', tags:[] },
-  { id:13, cat:'sauce',     name:'쌈장/된장 허브 소스',           en:'Ssamjang Herb Fusion Sauce',         price:'TBD', desc:'쌈장·된장에 고수·라임·바질·민트를 더한 한×베 퓨전 소스.', tags:[] },
-  { id:14, cat:'sauce',     name:'불고기-코코넛 BBQ 글레이즈',   en:'Bulgogi Coconut BBQ Glaze',          price:'TBD', desc:'한국 불고기 소스 + 베트남 코코넛의 만남. 그릴드 미트에 완벽한 글레이즈.', tags:[] },
-  { id:15, cat:'sauce',     name:'망고 고추장 윙 소스',           en:'Mango Gochujang Wing Sauce',         price:'TBD', desc:'달콤한 망고 + 고추장의 절묘한 조화. 치킨윙·튀김·타코에 인생 소스.', tags:[] },
+  { id:1,  cat:'coin',      name:'소고기 육개장 코인육수',      en:'Beef Yukgaejang Coin Broth',        price:'130,000', desc:'한국 소고기 육개장의 깊고 칼칼한 국물. 코인 하나로 정통 육개장 베이스 완성. 샤브샤브·라면·쌀국수에도 활용 가능.', tags:[] },
+  { id:2,  cat:'coin',      name:'잔치국수(멸치) 코인육수',      en:'Anchovy Janchi Noodle Coin Broth',   price:'120,000', desc:'깔끔하고 시원한 멸치·다시마 황금 비율 육수. 잔치국수·칼국수·Phở 스타일에 활용.', tags:[] },
+  { id:3,  cat:'coin',      name:'칼칼 맑은 채수 코인육수',      en:'Spicy Clear Veggie Broth Coin',      price:'120,000', desc:'청양고추·표고버섯·양파·배추로 만든 비건 채수. 칼칼하고 맑은 국물. 해장·다이어트·비건 모두.', tags:['VEGAN'] },
+  { id:4,  cat:'coin',      name:'김치-타마린 코인육수',          en:'Kimchi-Tamarind Coin Broth',         price:'130,000', desc:'한국 김치의 발효 신맛과 베트남 타마린의 산미가 만난 새콤하고 깊은 맛의 K-VN 퓨전 육수.', tags:[] },
+  { id:7,  cat:'seasoning', name:'불고기맛 시즈닝',               en:'Bulgogi Seasoning',                  price:'67,000', desc:'배와 간장의 달콤짭짤한 불고기향. Bánh mì 위에 뿌리면 K-Fusion 완성!', tags:[] },
+  { id:8,  cat:'seasoning', name:'감자탕 시즈닝',                 en:'Gamjatang Pork Bone Seasoning',      price:'67,000', desc:'진하고 구수한 감자탕의 깊은 맛. Phở 스타일 국물 요리에 K-터치를.', tags:[] },
+  { id:9,  cat:'seasoning', name:'닭갈비 시즈닝',                 en:'Dakgalbi Spicy Chicken Seasoning',   price:'65,000', desc:'춘천식 닭갈비의 매콤달콤 양념. 닭·두부·채소·쌀과자까지 환상 궁합.', tags:[] },
+  { id:10, cat:'seasoning', name:'전복죽 시즈닝',                 en:'Abalone Porridge Seasoning',         price:'70,000', desc:'고급스러운 전복의 감칠맛. 죽·리조또·해산물 요리에 프리미엄 마무리.', tags:[] },
+  { id:11, cat:'sauce',     name:'청양마요 소스',                 en:'Cheongyang Chili Mayo Sauce',        price:'80,000', desc:'청양고추의 화끈함 + 마요네즈의 크리미함. 튀김·버거·타코에 최강.', tags:[] },
+  { id:12, cat:'sauce',     name:'매실액 시푸드 디핑소스',        en:'Maesil Plum Seafood Dipping Sauce',  price:'80,000', desc:'천연 매실액·식초·레몬즙의 새콤달콤 시푸드 디핑소스. Hải sản 최강 페어링.', tags:[] },
+  { id:13, cat:'sauce',     name:'쌈장/된장 허브 소스',           en:'Ssamjang Herb Fusion Sauce',         price:'80,000', desc:'쌈장·된장에 고수·라임·바질·민트를 더한 한×베 퓨전 소스.', tags:[] },
+  { id:14, cat:'sauce',     name:'불고기-코코넛 BBQ 글레이즈',   en:'Bulgogi Coconut BBQ Glaze',          price:'85,000', desc:'한국 불고기 소스 + 베트남 코코넛의 만남. 그릴드 미트에 완벽한 글레이즈.', tags:[] },
+  { id:15, cat:'sauce',     name:'망고 고추장 윙 소스',           en:'Mango Gochujang Wing Sauce',         price:'85,000', desc:'달콤한 망고 + 고추장의 절묘한 조화. 치킨윙·튀김·타코에 인생 소스.', tags:[] },
   { id:16, cat:'sauce',     name:'TBD 액체 소스',                 en:'Coming Soon',                        price:'TBD', desc:'제품명 및 상세 정보 확정 예정입니다.', tags:[] },
 ];
 const catLabel = {
@@ -1568,18 +1578,24 @@ const BRAND_DESC = {
 /* ── PRODUCT RICH DETAILS ── */
 const productDetails = {
   1: {
+    images: [
+      './assets/images/코인육수/육개장.png',
+      './assets/images/코인육수/소고기 육개장_사진.png',
+      './assets/images/코인육수/육개장_nutrition_1.png',
+      './assets/images/코인육수/육개장_소포장.png',
+    ],
     tagline: '베트남 소고기 국수 시장 1위의 그 진한 고기 맛, 한국의 매운맛이 더해졌습니다. 코인 하나로 육개장 육수가 완성됩니다.',
     intro: '소고기 사골 농축액, 건조 대파, 고춧가루, 마늘, 숙주 파우더를 저온 압축 성형한 코인육수입니다. 끓는 물 500ml에 코인 1알을 넣고 30초만 저으면 진한 육개장 육수가 완성됩니다.<br><br>인스턴트의 편리함, 수제 육수의 맛. 한국 가정에서 수십 년간 사랑받아 온 육개장의 레시피를 그대로 코인 한 알에 압축했습니다.',
     howto: [
-      '🍜 즉석 국수 육수 — 끓는 물 500ml + 코인 1알 + 쌀국수 (Bún / Phở)',
-      '🍲 Lẩu bò (소고기 샤브샤브) 베이스 — 코인 2~3알로 진한 전골 육수 완성',
-      '🍚 소고기 국밥 — 밥 위에 육개장 육수를 부어 한 그릇 뚝딱',
-      '🥘 찌개·볶음 국물 베이스 — 김치찌개나 된장찌개 국물로 활용',
-      '🍳 라면 육수 업그레이드 — 라면 끓일 때 코인 1알 추가',
+      '즉석 국수 육수 — 끓는 물 500ml + 코인 1알 + 쌀국수 (Bún / Phở)',
+      'Lẩu bò (소고기 샤브샤브) 베이스 — 코인 2~3알로 진한 전골 육수 완성',
+      '소고기 국밥 — 밥 위에 육개장 육수를 부어 한 그릇 뚝딱',
+      '찌개·볶음 국물 베이스 — 김치찌개나 된장찌개 국물로 활용',
+      '라면 육수 업그레이드 — 라면 끓일 때 코인 1알 추가',
     ],
     specs: {
       main: '소고기 사골 농축액, 고춧가루, 건조 대파, 마늘 파우더, 숙주 파우더, 소금',
-      origin: '대한민국 🇰🇷',
+      origin: '대한민국',
       allergen: '쇠고기',
     },
     ingredients: [
@@ -1596,18 +1612,24 @@ const productDetails = {
     ],
   },
   2: {
+    images: [
+      './assets/images/코인육수/멸치 육수.png',
+      './assets/images/코인육수/멸치_사진.png',
+      './assets/images/코인육수/멸치_nutrition_2.png',
+      './assets/images/코인육수/멸치_소포장.png',
+    ],
     tagline: '베트남의 영혼 피쉬소스와 가장 닮은 한국 육수, 멸치 잔치국수. 시원하고 깔끔한 감칠맛을 코인 하나로.',
     intro: '국내산 건멸치, 다시마, 대파, 무 파우더를 엄선해 저온 압축한 MIDAM의 시그니처 육수 코인입니다.<br><br>피쉬소스 특유의 강한 발효향 없이, 멸치 다시 특유의 투명하고 시원한 감칠맛만을 깔끔하게 담아냈습니다. 어느 요리에나 잘 어울리는 베이직 라인의 핵심 제품입니다.',
     howto: [
-      '🍜 잔치국수 / Bún nước lèo — 끓는 물 500ml + 코인 1알, 소면이나 분비 삶아서',
-      '🥢 Phở gà (닭 쌀국수) 베이스 업그레이드 — 더 깊은 감칠맛 추가',
-      '🥣 Canh (베트남식 맑은국) — 채소·두부 넣고 담백한 한국식 맑은국',
-      '🍲 Lẩu thập cẩm (모듬 샤브샤브) 육수 — 맑고 깔끔한 베이스로',
-      '🍳 계란국·맑은 찌개 국물 베이스',
+      '잔치국수 / Bún nước lèo — 끓는 물 500ml + 코인 1알, 소면이나 분비 삶아서',
+      'Phở gà (닭 쌀국수) 베이스 업그레이드 — 더 깊은 감칠맛 추가',
+      'Canh (베트남식 맑은국) — 채소·두부 넣고 담백한 한국식 맑은국',
+      'Lẩu thập cẩm (모듬 샤브샤브) 육수 — 맑고 깔끔한 베이스로',
+      '계란국·맑은 찌개 국물 베이스',
     ],
     specs: {
       main: '건멸치 농축액, 다시마 파우더, 건조 대파, 무 파우더, 소금',
-      origin: '대한민국 🇰🇷',
+      origin: '대한민국',
       allergen: '생선(멸치)',
     },
     ingredients: [
@@ -1622,18 +1644,24 @@ const productDetails = {
     ],
   },
   3: {
+    images: [
+      './assets/images/코인육수/칼칼.png',
+      './assets/images/코인육수/칼칼 맑은 채수_사진.png',
+      './assets/images/코인육수/칼칼채수_nutrition_3.png',
+      './assets/images/코인육수/칼칼_소포장.png',
+    ],
     tagline: '한국 MZ세대가 해장으로 찾는 그 맛. 칼칼하고 맑은 채수, 이제 코인 하나로. 비건도, 해장도, 다이어트도 한 번에.',
     intro: '청양고추, 표고버섯, 양파, 배추, 대파 — 동물성 원료 없이 오직 채소와 버섯의 깊은 감칠맛만으로 만든 투명하고 맑은 육수 코인입니다.<br><br>표고버섯의 천연 글루타민산이 깊은 우마미를 만들고, 청양고추의 칼칼한 매운맛이 깔끔하게 치고 올라와 \'고기 없이도 이렇게 깊은 맛이?\' 라는 반응을 이끌어냅니다.',
     howto: [
-      '🫕 Lẩu chay 매운 채소 샤브샤브 — 코인 2~3알로 칼칼한 채수 베이스 완성',
-      '🌶️ 한국식 라면 베이스 — 라면 끓일 때 코인 1알로 칼칼한 국물 업그레이드',
-      '🥬 Canh chua rau (채소 맑은국) — 두부·버섯·채소 넣어 간편한 비건 국',
-      '🍜 Bún chay (채식 쌀국수) — 맑고 칼칼한 한국식 채식 국수',
-      '🥣 해장국 — 아침에 코인 1알 + 두부 + 콩나물로 속 풀기',
+      'Lẩu chay 매운 채소 샤브샤브 — 코인 2~3알로 칼칼한 채수 베이스 완성',
+      '한국식 라면 베이스 — 라면 끓일 때 코인 1알로 칼칼한 국물 업그레이드',
+      'Canh chua rau (채소 맑은국) — 두부·버섯·채소 넣어 간편한 비건 국',
+      'Bún chay (채식 쌀국수) — 맑고 칼칼한 한국식 채식 국수',
+      '해장국 — 아침에 코인 1알 + 두부 + 콩나물로 속 풀기',
     ],
     specs: {
       main: '청양고추 파우더, 표고버섯 파우더, 건조 양파, 건조 배추, 건조 대파, 소금',
-      origin: '대한민국 🇰🇷',
+      origin: '대한민국',
       vegan: '100% Plant-based',
       allergen: '해당 없음',
     },
@@ -1650,18 +1678,24 @@ const productDetails = {
     ],
   },
   4: {
+    images: [
+      './assets/images/코인육수/김치 타마린.png',
+      './assets/images/코인육수/김치_타마린_사진.png',
+      './assets/images/코인육수/김치타마린nutrition_4.png',
+      './assets/images/코인육수/김치_소포장.png',
+    ],
     tagline: '한국 김치의 발효 신맛 + 베트남이 사랑하는 타마린의 새콤함. 두 나라의 \'신맛 DNA\'가 만나 탄생한 전혀 새로운 육수.',
     intro: '국내산 숙성 김치 농축액, 타마린 파우더, 토마토 파우더, 멸치 다시 베이스를 절묘하게 배합한 새콤하고 깊은 맛의 육수 코인입니다.<br><br>김치의 발효 신맛은 타마린의 순수한 과일 산미와 만나 서로의 단점을 보완합니다. 김치 특유의 강한 발효향은 타마린이 부드럽게 잡아주고, 타마린의 단조로운 신맛은 김치 발효의 복합적인 풍미로 채워집니다.',
     howto: [
-      '🍲 Canh chua kiểu Hàn (한국식 새콤한 생선탕) — 생선·새우·채소와 함께',
-      '🥬 김치찌개 국물 베이스 — 물 대신 이 코인 육수로 더 깊은 김치찌개',
-      '🍜 Bún riêu (새콤한 게살 쌀국수) 베이스 — 새콤한 육수로 변주',
-      '🫕 Lẩu chua cay (새콤매콤 샤브샤브) — 코인 2알로 K-VN 퓨전 전골',
-      '🍳 해물볶음 소스 베이스 — 오징어·새우 볶을 때 국물 소스로',
+      'Canh chua kiểu Hàn (한국식 새콤한 생선탕) — 생선·새우·채소와 함께',
+      '김치찌개 국물 베이스 — 물 대신 이 코인 육수로 더 깊은 김치찌개',
+      'Bún riêu (새콤한 게살 쌀국수) 베이스 — 새콤한 육수로 변주',
+      'Lẩu chua cay (새콤매콤 샤브샤브) — 코인 2알로 K-VN 퓨전 전골',
+      '해물볶음 소스 베이스 — 오징어·새우 볶을 때 국물 소스로',
     ],
     specs: {
       main: '숙성 김치 농축액, 타마린 파우더, 토마토 파우더, 멸치 다시 농축액, 고춧가루, 마늘 파우더, 소금',
-      origin: '대한민국 🇰🇷 (김치 농축액) + 베트남산 타마린',
+      origin: '대한민국 (김치 농축액) + 베트남산 타마린',
       allergen: '생선(멸치)',
     },
     ingredients: [
@@ -1765,10 +1799,32 @@ function openProduct(id) {
   document.getElementById('modalPrice').innerHTML = currentProduct.price === 'TBD'
     ? `<span style="font-size:1rem;font-family:'Noto Sans KR',sans-serif;color:#bbb">${priceTbd[lang]}</span>`
     : currentProduct.price + '<span>₫</span>';
-  document.getElementById('modalImg').innerHTML = '<div class="pm-ph"><div class="big">PRODUCT IMAGE</div></div>';
+  const imgEl = document.getElementById('modalImg');
+  if (d && d.images && d.images.length) {
+    currentSlideIndex = 0;
+    currentSlideImages = d.images;
+    const dots = d.images.map((_, i) => `<button class="carousel-dot${i===0?' active':''}" onclick="goSlide(${i})"></button>`).join('');
+    imgEl.innerHTML = `<img class="carousel-img" id="carouselImg" src="${d.images[0]}" alt="">
+      <button class="carousel-btn prev" onclick="changeSlide(-1)">&#8249;</button>
+      <button class="carousel-btn next" onclick="changeSlide(1)">&#8250;</button>
+      <div class="carousel-dots">${dots}</div>`;
+  } else {
+    imgEl.innerHTML = '<div class="pm-ph"><div class="big">PRODUCT IMAGE</div></div>';
+  }
   document.getElementById('productModal').classList.add('show');
 }
 function closeProductModal() { document.getElementById('productModal').classList.remove('show'); }
+let currentSlideIndex = 0;
+let currentSlideImages = [];
+function goSlide(idx) {
+  currentSlideIndex = idx;
+  const img = document.getElementById('carouselImg');
+  if (img) img.src = currentSlideImages[idx];
+  document.querySelectorAll('.carousel-dot').forEach((d, i) => d.classList.toggle('active', i === idx));
+}
+function changeSlide(dir) {
+  goSlide((currentSlideIndex + dir + currentSlideImages.length) % currentSlideImages.length);
+}
 function changeQty(d) { qty = Math.max(1,qty+d); document.getElementById('qtyVal').value = qty; }
 /* ── CART ── */
 function _saveCart() {
