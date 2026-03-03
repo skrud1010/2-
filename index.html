@@ -292,13 +292,19 @@
   .preview-card:hover { transform: scale(1.05); z-index: 2; box-shadow: 0 20px 60px rgba(0,0,0,0.14); }
   .preview-card-inner {
     width: 100%; height: 100%;
-    display: flex; flex-direction: column; align-items: center; justify-content: center;
-    gap: 10px; padding: 30px; transition: background 0.3s;
+    display: flex; flex-direction: column; align-items: flex-start; justify-content: flex-end;
+    gap: 6px; padding: 28px; transition: filter 0.3s;
+    background-size: cover; background-position: center; position: relative;
   }
-  .preview-card:hover .preview-card-inner { filter: brightness(0.93); }
-  .preview-cat { font-family: 'Montserrat', sans-serif; font-size: 0.6rem; font-weight: 700; letter-spacing: 3px; color: var(--red); text-transform: uppercase; }
-  .preview-name { font-weight: 700; font-size: 0.88rem; text-align: center; }
-  .preview-ph { color: #c0b8ae; font-size: 0.6rem; font-family: 'Montserrat', sans-serif; letter-spacing: 2px; }
+  .preview-card-inner::after {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.18) 55%, transparent 100%);
+    pointer-events: none;
+  }
+  .preview-card:hover .preview-card-inner { filter: brightness(1.08); }
+  .preview-cat { font-family: 'Montserrat', sans-serif; font-size: 0.58rem; font-weight: 700; letter-spacing: 3px; color: var(--yellow); text-transform: uppercase; position: relative; z-index: 1; }
+  .preview-name { font-weight: 700; font-size: 0.92rem; text-align: left; color: #fff; position: relative; z-index: 1; }
+  .preview-ph { display: none; }
   .btn-outline {
     display: inline-block; padding: 13px 46px; border: 2px solid var(--black); color: var(--black);
     font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.78rem;
@@ -1025,24 +1031,21 @@
     </div>
     <div class="preview-grid">
       <div class="preview-card" onclick="showPage('products'); filterProducts('coin',null)">
-        <div class="preview-card-inner" style="background:#f0ece6">
+        <div class="preview-card-inner" style="background-image:url('./assets/images/코인육수 라인업.png')">
           <div class="preview-cat">COIN BROTH</div>
           <div class="preview-name" data-t="prev-coin">코인 육수 4종</div>
-          <div class="preview-ph">IMAGE READY</div>
         </div>
       </div>
       <div class="preview-card" onclick="showPage('products'); filterProducts('seasoning',null)">
-        <div class="preview-card-inner" style="background:#ece7e0">
+        <div class="preview-card-inner" style="background-image:url('./assets/images/시즈닝 라인업.png')">
           <div class="preview-cat">SEASONING</div>
-          <div class="preview-name" data-t="prev-seasoning">가루 시즈닝 6종</div>
-          <div class="preview-ph">IMAGE READY</div>
+          <div class="preview-name" data-t="prev-seasoning">가루 시즈닝 4종</div>
         </div>
       </div>
       <div class="preview-card" onclick="showPage('products'); filterProducts('sauce',null)">
-        <div class="preview-card-inner" style="background:#e7e2da">
+        <div class="preview-card-inner" style="background-image:url('./assets/images/소스 라인업.png')">
           <div class="preview-cat">SAUCE</div>
-          <div class="preview-name" data-t="prev-sauce">액체 소스 5종+</div>
-          <div class="preview-ph">IMAGE READY</div>
+          <div class="preview-name" data-t="prev-sauce">액체 소스 6종</div>
         </div>
       </div>
     </div>
@@ -1586,7 +1589,7 @@ const productDetails = {
       './assets/images/코인육수/육개장_nutrition_1.png',
     ],
     tagline: '베트남 소고기 국수 시장 1위의 그 진한 고기 맛, 한국의 매운맛이 더해졌습니다. 코인 하나로 육개장 육수가 완성됩니다.',
-    intro: '소고기 사골 농축액, 건조 대파, 고춧가루, 마늘, 숙주 파우더를 저온 압축 성형한 코인육수입니다. 끓는 물 500ml에 코인 1알을 넣고 30초만 저으면 진한 육개장 육수가 완성됩니다.<br><br>인스턴트의 편리함, 수제 육수의 맛. 한국 가정에서 수십 년간 사랑받아 온 육개장의 레시피를 그대로 코인 한 알에 압축했습니다.',
+    intro: '소고기 사골 농축액, 건조 대파, 고춧가루, 마늘, 숙주 파우더를 저온 압축 성형한 코인육수입니다.<br>끓는 물 500ml에 코인 1알을 넣고 30초만 저으면 진한 육개장 육수가 완성됩니다.<br><br>인스턴트의 편리함, 수제 육수의 맛.<br>한국 가정에서 수십 년간 사랑받아 온 육개장의 레시피를 그대로 코인 한 알에 압축했습니다.',
     howto: [
       '즉석 국수 육수 — 끓는 물 500ml + 코인 1알 + 쌀국수 (Bún / Phở)',
       'Lẩu bò (소고기 샤브샤브) 베이스 — 코인 2~3알로 진한 전골 육수 완성',
@@ -1620,7 +1623,7 @@ const productDetails = {
       './assets/images/코인육수/멸치_nutrition_2.png',
     ],
     tagline: '베트남의 영혼 피쉬소스와 가장 닮은 한국 육수, 멸치 잔치국수. 시원하고 깔끔한 감칠맛을 코인 하나로.',
-    intro: '국내산 건멸치, 다시마, 대파, 무 파우더를 엄선해 저온 압축한 MIDAM의 시그니처 육수 코인입니다.<br><br>피쉬소스 특유의 강한 발효향 없이, 멸치 다시 특유의 투명하고 시원한 감칠맛만을 깔끔하게 담아냈습니다. 어느 요리에나 잘 어울리는 베이직 라인의 핵심 제품입니다.',
+    intro: '국내산 건멸치, 다시마, 대파, 무 파우더를 엄선해 저온 압축한 MIDAM의 시그니처 육수 코인입니다.<br><br>피쉬소스 특유의 강한 발효향 없이,<br>멸치 다시 특유의 투명하고 시원한 감칠맛만을 깔끔하게 담아냈습니다.<br>어느 요리에나 잘 어울리는 베이직 라인의 핵심 제품입니다.',
     howto: [
       '잔치국수 / Bún nước lèo — 끓는 물 500ml + 코인 1알, 소면이나 분비 삶아서',
       'Phở gà (닭 쌀국수) 베이스 업그레이드 — 더 깊은 감칠맛 추가',
@@ -1652,7 +1655,7 @@ const productDetails = {
       './assets/images/코인육수/칼칼채수_nutrition_3.png',
     ],
     tagline: '한국 MZ세대가 해장으로 찾는 그 맛. 칼칼하고 맑은 채수, 이제 코인 하나로. 비건도, 해장도, 다이어트도 한 번에.',
-    intro: '청양고추, 표고버섯, 양파, 배추, 대파 — 동물성 원료 없이 오직 채소와 버섯의 깊은 감칠맛만으로 만든 투명하고 맑은 육수 코인입니다.<br><br>표고버섯의 천연 글루타민산이 깊은 우마미를 만들고, 청양고추의 칼칼한 매운맛이 깔끔하게 치고 올라와 \'고기 없이도 이렇게 깊은 맛이?\' 라는 반응을 이끌어냅니다.',
+    intro: '청양고추, 표고버섯, 양파, 배추, 대파 —<br>동물성 원료 없이 오직 채소와 버섯의 깊은 감칠맛만으로 만든 투명하고 맑은 육수 코인입니다.<br><br>표고버섯의 천연 글루타민산이 깊은 우마미를 만들고,<br>청양고추의 칼칼한 매운맛이 깔끔하게 치고 올라와<br>\'고기 없이도 이렇게 깊은 맛이?\' 라는 반응을 이끌어냅니다.',
     howto: [
       'Lẩu chay 매운 채소 샤브샤브 — 코인 2~3알로 칼칼한 채수 베이스 완성',
       '한국식 라면 베이스 — 라면 끓일 때 코인 1알로 칼칼한 국물 업그레이드',
@@ -1686,7 +1689,7 @@ const productDetails = {
       './assets/images/코인육수/김치타마린nutrition_4.png',
     ],
     tagline: '한국 김치의 발효 신맛 + 베트남이 사랑하는 타마린의 새콤함. 두 나라의 \'신맛 DNA\'가 만나 탄생한 전혀 새로운 육수.',
-    intro: '국내산 숙성 김치 농축액, 타마린 파우더, 토마토 파우더, 멸치 다시 베이스를 절묘하게 배합한 새콤하고 깊은 맛의 육수 코인입니다.<br><br>김치의 발효 신맛은 타마린의 순수한 과일 산미와 만나 서로의 단점을 보완합니다. 김치 특유의 강한 발효향은 타마린이 부드럽게 잡아주고, 타마린의 단조로운 신맛은 김치 발효의 복합적인 풍미로 채워집니다.',
+    intro: '국내산 숙성 김치 농축액, 타마린 파우더, 토마토 파우더, 멸치 다시 베이스를<br>절묘하게 배합한 새콤하고 깊은 맛의 육수 코인입니다.<br><br>김치의 발효 신맛은 타마린의 순수한 과일 산미와 만나 서로의 단점을 보완합니다.<br>김치 특유의 강한 발효향은 타마린이 부드럽게 잡아주고,<br>타마린의 단조로운 신맛은 김치 발효의 복합적인 풍미로 채워집니다.',
     howto: [
       'Canh chua kiểu Hàn (한국식 새콤한 생선탕) — 생선·새우·채소와 함께',
       '김치찌개 국물 베이스 — 물 대신 이 코인 육수로 더 깊은 김치찌개',
@@ -1721,7 +1724,7 @@ const productDetails = {
       './assets/images/시즈닝/BBQ_nutrition_1.png',
     ],
     tagline: '베트남이 가장 사랑하는 한국의 맛, 불고기. 그 달콤 짭짤한 풍미를 매일 식탁 위에 — MYOMI가 짜봉과 함께 완성했습니다.',
-    intro: '간장 베이스의 달콤 짭짤한 불고기 시즈닝에 바삭한 돼지고기 입자와 볶은 깨를 한데 담은 플레이크형 시즈닝입니다.<br><br>현지 짜봉이 단순한 고기 맛에 그친다면, MYOMI K-BBQ는 다릅니다. 배즙의 천연 단맛, 간장의 깊은 감칠맛, 참기름의 고소함이 돼지고기 플레이크 위에 코팅되어 한 번에 \'불고기를 먹는 경험\'을 선사합니다.',
+    intro: '간장 베이스의 달콤 짭짤한 불고기 시즈닝에<br>바삭한 돼지고기 입자와 볶은 깨를 한데 담은 플레이크형 시즈닝입니다.<br><br>현지 짜봉이 단순한 고기 맛에 그친다면, MYOMI K-BBQ는 다릅니다.<br>배즙의 천연 단맛, 간장의 깊은 감칠맛, 참기름의 고소함이<br>돼지고기 플레이크 위에 코팅되어 한 번에 \'불고기를 먹는 경험\'을 선사합니다.',
     howto: [
       'Bánh mì 속 재료 — 빵 안에 넣어 한국식 K-불고기 반미',
       '밥 위에 뿌리기 — 따뜻한 밥 한 공기에 시즈닝 한 스푼, 즉석 불고기 덮밥',
@@ -1756,7 +1759,7 @@ const productDetails = {
       './assets/images/시즈닝/감자탕_nutrition_2_.png',
     ],
     tagline: '베트남이 사랑하는 전골(Lẩu)과 고기 요리의 모든 것이 한 스푼에. 된장 베이스의 진한 감칠맛과 들깨의 고소함 — MYOMI 감자탕 시즈닝이 완성합니다.',
-    intro: '된장, 들깨가루, 고춧가루, 돼지고기 플레이크, 마늘의 정교한 배합으로 만든 플레이크형 시즈닝입니다. 들깨의 고소함을 메인으로, 깻잎 향을 아주 미세하게 더해 한국 감자탕의 정수만을 담았습니다.<br><br>기존 가루형 수프 시즈닝과 달리, MYOMI 감자탕 시즈닝은 돼지고기 플레이크가 들어간 \'감자탕 짜봉 후리카케\' 형태로 씹히는 질감까지 재현합니다. 물에 풀어 국물을 만들 수도, 밥 위에 토핑으로 뿌릴 수도 있는 이중 활용 시즈닝입니다.',
+    intro: '된장, 들깨가루, 고춧가루, 돼지고기 플레이크, 마늘의 정교한 배합으로 만든 플레이크형 시즈닝입니다.<br>들깨의 고소함을 메인으로, 깻잎 향을 아주 미세하게 더해 한국 감자탕의 정수만을 담았습니다.<br><br>기존 가루형 수프 시즈닝과 달리, MYOMI 감자탕 시즈닝은<br>돼지고기 플레이크가 들어간 \'감자탕 짜봉 후리카케\' 형태로 씹히는 질감까지 재현합니다.<br>물에 풀어 국물을 만들 수도, 밥 위에 토핑으로 뿌릴 수도 있는 이중 활용 시즈닝입니다.',
     howto: [
       'Lẩu 전골 베이스 — 물 500ml에 시즈닝 2스푼, 즉석 K-감자탕 전골',
       '밥 위에 뿌리기 — 감자탕 짜봉 토핑으로 맛있는 한 끼',
@@ -1791,7 +1794,7 @@ const productDetails = {
       './assets/images/시즈닝/닭갈비_nutrition_3.png',
     ],
     tagline: '한국에서 가장 핫한 치킨 요리, 닭갈비. 매콤한 고추장의 불향과 달콤한 꿀의 하모니 — MYOMI가 집에서도 춘천 닭갈비를 완성합니다.',
-    intro: '태양초 고추장 파우더, 꿀 파우더, 마늘, 생강, 간장 파우더를 기반으로 한 드라이 매리네이드 시즈닝입니다. 닭고기에 MYOMI 닭갈비 시즈닝을 직접 버무려 재우면 고추장 특유의 발효 풍미가 고기 속으로 스며들어 전문점 수준의 닭갈비 양념을 구현합니다.<br><br>드라이 포맷의 장점: 수분 없이 고기 표면에 밀착되어 굽거나 볶을 때 바깥쪽에 맛있는 카라멜라이즈 레이어를 형성합니다. 춘천 닭갈비 특유의 \'불향 양념 코팅\'을 집에서 재현할 수 있는 유일한 방법입니다.',
+    intro: '태양초 고추장 파우더, 꿀 파우더, 마늘, 생강, 간장 파우더를 기반으로 한 드라이 매리네이드 시즈닝입니다.<br>닭고기에 MYOMI 닭갈비 시즈닝을 직접 버무려 재우면<br>고추장 특유의 발효 풍미가 고기 속으로 스며들어 전문점 수준의 닭갈비 양념을 구현합니다.<br><br>드라이 포맷의 장점: 수분 없이 고기 표면에 밀착되어<br>굽거나 볶을 때 바깥쪽에 맛있는 카라멜라이즈 레이어를 형성합니다.<br>춘천 닭갈비 특유의 \'불향 양념 코팅\'을 집에서 재현할 수 있는 유일한 방법입니다.',
     howto: [
       '닭갈비 볶음 — 닭 500g에 시즈닝 3스푼 버무려 30분 재운 뒤 팬에 볶기',
       'Gà nướng K-닭갈비 — 닭에 시즈닝을 코팅해 그릴이나 오븐에 굽기',
@@ -1826,7 +1829,7 @@ const productDetails = {
       './assets/images/시즈닝/전복죽_nutrition_4_.png',
     ],
     tagline: '전복 손질? 긴 조리 시간? 이제 필요 없습니다. MYOMI 전복죽 시즈닝 한 스푼, 뜨거운 물 한 잔 — 1분 만에 한국 고급 보양식이 완성됩니다.',
-    intro: '건조 전복 분말, 전복 내장 파우더, 쌀가루, 참기름, 다시마 파우더를 정밀 배합한 즉석 죽 시즈닝입니다. 쌀가루가 기본 농도를 만들어주고, 전복 분말과 내장 파우더가 진하고 깊은 전복 특유의 바다 향 감칠맛을 구현합니다.<br><br>가장 큰 차별화 포인트는 씹히는 전복 입자입니다. 단순한 가루가 아니라, 건조 전복 조각을 함께 넣어 실제 전복을 먹는 듯한 텍스처를 재현합니다. 베트남 저가형 인스턴트 죽 시장과는 차원이 다른 \'프리미엄 K-보양식\' 포지셔닝입니다.',
+    intro: '건조 전복 분말, 전복 내장 파우더, 쌀가루, 참기름, 다시마 파우더를 정밀 배합한 즉석 죽 시즈닝입니다.<br>쌀가루가 기본 농도를 만들어주고,<br>전복 분말과 내장 파우더가 진하고 깊은 전복 특유의 바다 향 감칠맛을 구현합니다.<br><br>가장 큰 차별화 포인트는 씹히는 전복 입자입니다.<br>단순한 가루가 아니라, 건조 전복 조각을 함께 넣어 실제 전복을 먹는 듯한 텍스처를 재현합니다.<br>베트남 저가형 인스턴트 죽 시장과는 차원이 다른 \'프리미엄 K-보양식\' 포지셔닝입니다.',
     howto: [
       '즉석 전복죽 — 시즈닝 2스푼 + 뜨거운 물 200ml, 30초 잘 저으면 완성',
       '전복 리소토 — 쌀을 살짝 볶다가 시즈닝을 녹인 육수 추가',
@@ -1858,7 +1861,7 @@ const productDetails = {
       './assets/images/소스/청양마요_nutrition_facts.png',
     ],
     tagline: '한국에서 가장 중독성 있는 조합, PUNGMI가 베트남 식탁으로 가져왔습니다.',
-    intro: 'PUNGMI K-청양마요 소스는 단순히 마요네즈에 고추를 섞은 제품이 아닙니다.<br><br>한국산 청양고추 농축액의 깔끔하고 칼칼한 매운맛이 진하고 크리미한 마요네즈 베이스와 완벽한 비율로 배합되어, 처음엔 부드럽고 끝에서 매운 이중 풍미를 만들어냅니다. 베트남인들이 좋아하는 "cay nhẹ, béo ngậy (살짝 매콤하고 고소한)" 맛의 공식을 한국의 시그니처 고추로 구현한 제품입니다.',
+    intro: 'PUNGMI K-청양마요 소스는 단순히 마요네즈에 고추를 섞은 제품이 아닙니다.<br><br>한국산 청양고추 농축액의 깔끔하고 칼칼한 매운맛이<br>진하고 크리미한 마요네즈 베이스와 완벽한 비율로 배합되어,<br>처음엔 부드럽고 끝에서 매운 이중 풍미를 만들어냅니다.<br>베트남인들이 좋아하는 "cay nhẹ, béo ngậy (살짝 매콤하고 고소한)"<br>맛의 공식을 한국의 시그니처 고추로 구현한 제품입니다.',
     howto: [
       'Bánh mì — 빵 안쪽에 듬뿍 짜서 발라주세요',
       '해산물 튀김 디핑 — 새우·오징어에 찍어드세요',
@@ -1889,7 +1892,7 @@ const productDetails = {
       './assets/images/소스/매실_nutrition_facts_1.png',
     ],
     tagline: '베트남 해산물 식탁의 그 소스, 한국 매실이 만나 완전히 달라졌습니다. K-Soul meets VN Seafood.',
-    intro: '한국에서 매실은 수백 년간 건강 음료와 조미료로 사용된 전통 발효 식재료입니다. 자연스러운 산미와 은은한 단맛, 깔끔한 뒷맛이 특징이죠.<br><br>한국산 매실 농축액 + 베트남 라임즙 + 피쉬소스(Nước mắm) 베이스의 조합은 베트남인들에게 익숙한 신맛의 프로파일을 유지하면서도 매실의 깊고 복합적인 산미가 더해져 "어디서 느껴본 맛인데, 더 고급스럽다"는 경험을 선사합니다. 인공 향료 없이 자연 재료만으로 만든 이 소스는 건강과 프리미엄을 동시에 추구하는 베트남 중산층 소비자에게 완벽하게 어필할 수 있는 제품입니다.',
+    intro: '한국에서 매실은 수백 년간 건강 음료와 조미료로 사용된 전통 발효 식재료입니다.<br>자연스러운 산미와 은은한 단맛, 깔끔한 뒷맛이 특징이죠.<br><br>한국산 매실 농축액 + 베트남 라임즙 + 피쉬소스(Nước mắm) 베이스의 조합은<br>베트남인들에게 익숙한 신맛의 프로파일을 유지하면서도<br>매실의 깊고 복합적인 산미가 더해져 "어디서 느껴본 맛인데, 더 고급스럽다"는 경험을 선사합니다.<br>인공 향료 없이 자연 재료만으로 만든 이 소스는<br>건강과 프리미엄을 동시에 추구하는 베트남 중산층 소비자에게 완벽하게 어필할 수 있는 제품입니다.',
     howto: [
       '새우·게·조개 찜 디핑 — 해산물 본연의 맛을 살려주는 최적의 소스',
       '생선구이 곁들임 — 느끼함을 잡아주는 깔끔한 산미',
@@ -1920,7 +1923,7 @@ const productDetails = {
       './assets/images/소스/쌈장_nutrition_facts_2.png',
     ],
     tagline: '베트남의 Gỏi cuốn(월남쌈)에 한국 쌈장이 들어가면 어떻게 될까요? 더 이상 다른 소스가 필요 없어집니다.',
-    intro: '기본 쌈장에 베트남 식탁의 필수 재료들을 녹여넣었습니다.<br><br>된장 + 고추장 베이스의 묵직한 감칠맛 위에 라임 제스트의 상쾌함, 고수 오일의 이국적인 향, 바질 파우더의 달콤한 허브향이 층층이 쌓여 월남쌈 한 입마다 복합적인 풍미가 펼쳐집니다. 기존 땅콩 소스보다 덜 무겁고, 느억맘 소스보다 더 깊은 감칠맛 — 월남쌈뿐만 아니라 베트남 식탁의 어떤 신선 채소 요리와도 어울리는 올라운드 K-허브 디핑 소스입니다.',
+    intro: '기본 쌈장에 베트남 식탁의 필수 재료들을 녹여넣었습니다.<br><br>된장 + 고추장 베이스의 묵직한 감칠맛 위에 라임 제스트의 상쾌함,<br>고수 오일의 이국적인 향, 바질 파우더의 달콤한 허브향이 층층이 쌓여<br>월남쌈 한 입마다 복합적인 풍미가 펼쳐집니다.<br>기존 땅콩 소스보다 덜 무겁고, 느억맘 소스보다 더 깊은 감칠맛 —<br>월남쌈뿐만 아니라 베트남 식탁의 어떤 신선 채소 요리와도 어울리는<br>올라운드 K-허브 디핑 소스입니다.',
     howto: [
       'Gỏi cuốn (월남쌈) 디핑 — 기존 땅콩 소스 대신 또는 함께',
       'Bò nhúng dấm (쌀국수 샤브샤브) 곁들임 소스',
@@ -1954,7 +1957,7 @@ const productDetails = {
       './assets/images/소스/불고기_nutrition_facts_4.png',
     ],
     tagline: '베트남의 노천 바비큐 문화, 한국 불고기 양념, 코코넛 크림의 고소한 부드러움. 세 가지가 만나 역대급 바비큐 글레이즈가 완성됩니다.',
-    intro: '진간장 & 배즙(불고기 베이스) + 코코넛 크림 + 마늘의 조합으로 완성된 이 글레이즈는 단순한 마리네이드 소스가 아닙니다.<br><br>굽는 과정에서 카라멜화되어 고기 표면에 윤기 나는 글레이즈 층을 형성하고, 코코넛 크림이 열을 받아 고소한 너트향을 더해 갓 구운 고기의 비주얼과 풍미를 극대화합니다. 마리네이드로 사용하면 고기가 부드러워지고, 구울 때 한 번 더 발라주면 레스토랑 퀄리티의 바비큐 글레이즈가 완성됩니다.',
+    intro: '진간장 & 배즙(불고기 베이스) + 코코넛 크림 + 마늘의 조합으로 완성된 이 글레이즈는 단순한 마리네이드 소스가 아닙니다.<br><br>굽는 과정에서 카라멜화되어 고기 표면에 윤기 나는 글레이즈 층을 형성하고,<br>코코넛 크림이 열을 받아 고소한 너트향을 더해 갓 구운 고기의 비주얼과 풍미를 극대화합니다.<br>마리네이드로 사용하면 고기가 부드러워지고,<br>구울 때 한 번 더 발라주면 레스토랑 퀄리티의 바비큐 글레이즈가 완성됩니다.',
     howto: [
       '마리네이드 — 고기 500g에 소스 3큰술, 30분 재운 후 구워내기',
       '글레이징 — 굽는 중간 고기 위에 한 번 더 짜서 윤기 극대화',
@@ -1986,7 +1989,7 @@ const productDetails = {
       './assets/images/소스/고추장 망고_nutrition_facts_5.png',
     ],
     tagline: '한국 치킨의 인기 + 베트남 망고의 상큼함. 집에서도 K-치킨 윙을 만드는 시대가 왔습니다.',
-    intro: '고추장만 사용하면 외국인들이 느끼는 텁텁함과 과한 매운맛이 문제입니다. 여기서 망고가 마법 같은 역할을 합니다.<br><br>베트남산 망고 퓨레의 자연스러운 산미와 당도가 고추장의 발효 풍미와 만나면 서로의 단점을 보완하고 장점을 극대화한 달콤 매콤(Ngọt cay)의 가장 이상적인 밸런스가 만들어집니다. 글레이즈 타입으로 설계되어 닭날개·닭다리에 바로 짜서 구우면 표면에 찰지게 코팅되는 광택 있는 윙 글레이즈가 완성됩니다.',
+    intro: '고추장만 사용하면 외국인들이 느끼는 텁텁함과 과한 매운맛이 문제입니다.<br>여기서 망고가 마법 같은 역할을 합니다.<br><br>베트남산 망고 퓨레의 자연스러운 산미와 당도가<br>고추장의 발효 풍미와 만나면 서로의 단점을 보완하고<br>장점을 극대화한 달콤 매콤(Ngọt cay)의 가장 이상적인 밸런스가 만들어집니다.<br>글레이즈 타입으로 설계되어 닭날개·닭다리에 바로 짜서 구우면<br>표면에 찰지게 코팅되는 광택 있는 윙 글레이즈가 완성됩니다.',
     howto: [
       '치킨 윙 글레이즈 — 닭날개·닭다리 굽기 마지막 5분에 짜서 바르기',
       '새우 글레이즈 — 구운 새우에 버무려 K-망고 슈림프로',
@@ -2017,7 +2020,7 @@ const productDetails = {
       './assets/images/소스/로제_nutrition_facts_3.png',
     ],
     tagline: '한국에서 가장 핫한 소스 트렌드 \'로제\', 베트남의 영혼 \'레몬그라스\'를 만나 비로소 완성됩니다.',
-    intro: '태양초 고추장 + 크림 파우더 + 다진 레몬그라스의 삼각 구도로 완성된 PUNGMI만의 K-VN 퓨전 볶음 소스입니다.<br><br>일반 로제 소스와 달리 PUNGMI K-로제 레몬그라스 소스는 베트남 식탁의 모든 볶음·면 요리에 범용적으로 사용할 수 있는 만능 퓨전 볶음 소스로 설계되었습니다. Bún xào(분볶), Phở xào(볶음 쌀국수), Gà xào(닭볶음) — 베트남 가정의 일상 요리에 바로 넣을 수 있는 현지화된 K-소스입니다.',
+    intro: '태양초 고추장 + 크림 파우더 + 다진 레몬그라스의 삼각 구도로 완성된<br>PUNGMI만의 K-VN 퓨전 볶음 소스입니다.<br><br>일반 로제 소스와 달리 PUNGMI K-로제 레몬그라스 소스는<br>베트남 식탁의 모든 볶음·면 요리에 범용적으로 사용할 수 있는 만능 퓨전 볶음 소스로 설계되었습니다.<br>Bún xào(분볶), Phở xào(볶음 쌀국수), Gà xào(닭볶음) —<br>베트남 가정의 일상 요리에 바로 넣을 수 있는 현지화된 K-소스입니다.',
     howto: [
       'Phở xào / Bún xào (볶음 쌀국수) — 볶을 때 소스 2큰술 추가',
       'Gà xào sả (레몬그라스 닭볶음) — 기존 레시피에 로제 소스로 변주',
@@ -2043,6 +2046,28 @@ const productDetails = {
     ],
   },
 };
+
+/* ── 가격 다국어 변환 (최신 환율 기준) ──
+   1 USD ≈ 25,500 VND | 1 KRW ≈ 17.5 VND
+   천 단위 아래 생략: KRW → 1,000원 단위, USD → $1 단위 */
+function convertPrice(vndStr, lang) {
+  if (!vndStr || vndStr === 'TBD') return null;
+  const vnd = parseInt(String(vndStr).replace(/,/g, ''));
+  if (lang === 'ko') {
+    const krw = Math.round(vnd / 17.5 / 1000) * 1000;
+    return { pre: '', amt: krw.toLocaleString('ko-KR'), unit: '원' };
+  } else if (lang === 'en') {
+    const usd = Math.round(vnd / 25500);
+    return { pre: '$', amt: String(usd), unit: '' };
+  } else {
+    return { pre: '', amt: vndStr, unit: '₫' };
+  }
+}
+function fmtPrice(vndStr, lang) {
+  if (!vndStr || vndStr === 'TBD') return null;
+  const p = convertPrice(vndStr, lang);
+  return p ? `${p.pre}${p.amt}<span>${p.unit}</span>` : null;
+}
 
 function updateBrandDesc(filter) {
   const el = document.getElementById('brandDesc');
@@ -2086,7 +2111,7 @@ function renderProducts(filter) {
         <div class="product-category">${catLabel.en[p.cat]}</div>
         <div class="product-name">${displayName}</div>
         <div class="product-desc">${displayDesc}</div>
-        <div class="product-price">${p.price === 'TBD' ? '—' : p.price}<span>${p.price === 'TBD' ? priceTbd[lang] : '₫'}</span></div>
+        <div class="product-price">${p.price === 'TBD' ? `—<span>${priceTbd[lang]}</span>` : fmtPrice(p.price, lang)}</div>
         <button class="card-btn" onclick="event.stopPropagation(); addToCartDirect(${p.id})">${cartBtnLabel[lang]}</button>
       </div>
     </div>`;
@@ -2131,7 +2156,7 @@ function openProduct(id) {
   }
   document.getElementById('modalPrice').innerHTML = currentProduct.price === 'TBD'
     ? `<span style="font-size:1rem;font-family:'Noto Sans KR',sans-serif;color:#bbb">${priceTbd[lang]}</span>`
-    : currentProduct.price + '<span>₫</span>';
+    : fmtPrice(currentProduct.price, lang);
   const imgEl = document.getElementById('modalImg');
   if (d && d.images && d.images.length) {
     currentSlideIndex = 0;
@@ -2363,6 +2388,7 @@ const TRANS = {
     'hero-sub':'하지만 맛은 포기할 수 없으니까.<br>다미푸드의 <strong>\'한 스푼\'</strong>이<br>당신의 식탁을 바꿉니다.',
     'hero-btn-products':'제품 보기 →', 'hero-btn-about':'다미 스토리',
     /* DA-MI Story */
+    'intro-tag':'01 · 다미 스토리',
     'intro-h2':'우리가<br>달라야 했던<br>이유',
     'intro-body':'"왜 한국의 감칠맛과 베트남의 향긋함이 꼭 따로 존재해야 할까?"<br><br>다미푸드는 그 질문에서 태어났습니다. 한국도, 베트남도 아닌<br><strong>\'제3의 미식\'.</strong><br>코인 하나, 시즈닝 한 스푼으로 완성되는 새로운 K-Fusion 경험입니다.',
     /* Stats */
@@ -2373,7 +2399,7 @@ const TRANS = {
     /* Preview */
     'preview-h2':'모든 맛의 시작,<br>다미 라인업',
     'preview-desc':'코인육수 4종 · 가루시즈닝 6종 · 액체소스 5종+ — 한 스푼이 바꾸는 식탁',
-    'prev-coin':'코인 육수 4종', 'prev-seasoning':'가루 시즈닝 6종', 'prev-sauce':'액체 소스 5종+',
+    'prev-coin':'코인 육수 4종', 'prev-seasoning':'가루 시즈닝 4종', 'prev-sauce':'액체 소스 6종',
     'preview-btn':'전체 제품 보기 →',
     /* Motto */
     'philo-h2':'우리는 식탁 위의<br><em>K-라이프스타일을</em><br>디자인합니다',
@@ -2407,7 +2433,7 @@ const TRANS = {
     /* Products */
     'products-sub':'코인육수 · 시즈닝 · 소스',
     'filter-all':'ALL', 'filter-coin':'코인육수', 'filter-seasoning':'가루 시즈닝', 'filter-sauce':'액체 소스',
-    'modal-shipping':'※ 300,000₫ 미만 구매 시 배송비 별도 | 원산지: 대한민국',
+    'modal-shipping':'※ 17,000원 미만 구매 시 배송비 별도 | 원산지: 대한민국',
     'modal-qty':'수량', 'modal-cart-btn':'🛒 장바구니', 'modal-buy-btn':'구매하기 →',
     /* Contact */
     'contact-sub':'다미푸드에 문의하세요',
@@ -2493,7 +2519,7 @@ const TRANS = {
     /* Preview */
     'preview-h2':'The start of all flavors,<br>Da-Mi Lineup',
     'preview-desc':'4 Coin Broths · 6 Seasonings · 5+ Sauces — One spoon changes your table',
-    'prev-coin':'Coin Broth (4 types)', 'prev-seasoning':'Seasoning (6 types)', 'prev-sauce':'Sauce (5+ types)',
+    'prev-coin':'Coin Broth (4 types)', 'prev-seasoning':'Seasoning (4 types)', 'prev-sauce':'Sauce (6 types)',
     'preview-btn':'View All Products →',
     /* Motto */
     'philo-h2':'We design<br><em>K-Lifestyle</em><br>on your table',
@@ -2527,7 +2553,7 @@ const TRANS = {
     /* Products */
     'products-sub':'Da-Mi Food K-Fusion Lineup | Broth · Seasoning · Sauce',
     'filter-all':'ALL', 'filter-coin':'Coin Broth', 'filter-seasoning':'Seasoning', 'filter-sauce':'Sauce',
-    'modal-shipping':'※ Shipping fee applies for orders under 300,000₫ | Origin: Korea',
+    'modal-shipping':'※ Shipping fee applies for orders under $12 | Origin: Korea',
     'modal-qty':'Qty', 'modal-cart-btn':'🛒 Add to Cart', 'modal-buy-btn':'Buy Now →',
     /* Contact */
     'contact-sub':'Contact Da-Mi Food',
@@ -2613,7 +2639,7 @@ const TRANS = {
     /* Preview */
     'preview-h2':'Khởi đầu mọi hương vị,<br>Dòng sản phẩm Da-Mi',
     'preview-desc':'4 Nước dùng · 6 Gia vị · 5+ Sốt — Một thìa thay đổi bàn ăn',
-    'prev-coin':'Nước dùng (4 loại)', 'prev-seasoning':'Gia vị bột (6 loại)', 'prev-sauce':'Sốt lỏng (5+ loại)',
+    'prev-coin':'Nước dùng (4 loại)', 'prev-seasoning':'Gia vị bột (4 loại)', 'prev-sauce':'Sốt lỏng (6 loại)',
     'preview-btn':'Xem tất cả sản phẩm →',
     /* Motto */
     'philo-h2':'Chúng tôi thiết kế<br><em>K-Lifestyle</em><br>trên bàn ăn của bạn',
@@ -2731,6 +2757,16 @@ function setLang(lang) {
 
   /* 제품 카드 다시 렌더링 (언어에 맞게) */
   renderProducts(currentFilter);
+
+  /* 모달이 열려 있으면 가격 갱신 */
+  if (currentProduct) {
+    const priceEl = document.getElementById('modalPrice');
+    if (priceEl) {
+      priceEl.innerHTML = currentProduct.price === 'TBD'
+        ? `<span style="font-size:1rem;font-family:'Noto Sans KR',sans-serif;color:#bbb">${priceTbd[lang]}</span>`
+        : fmtPrice(currentProduct.price, lang);
+    }
+  }
 }
 
 /* 제품 카드 언어 처리: products 배열에 영어 설명 추가 */
