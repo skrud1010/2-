@@ -681,6 +681,7 @@
   .product-img { width: 100%; aspect-ratio: 1; background: #f0ece8; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; }
   .product-img-placeholder { width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; color: #ccc; }
   .product-img-placeholder span { font-size: 0.6rem; font-family: 'Montserrat', sans-serif; letter-spacing: 4px; }
+  .product-thumb { width: 100%; height: 100%; object-fit: contain; display: block; background: #f8f6f4; }
   .product-badge { position: absolute; top: 12px; left: 12px; background: var(--red); color: var(--white); font-size: 0.58rem; font-weight: 700; padding: 4px 10px; border-radius: 50px; letter-spacing: 1px; font-family: 'Montserrat', sans-serif; }
   .vegan-badge { position: absolute; top: 12px; right: 12px; background: #278a27; color: var(--white); font-size: 0.56rem; font-weight: 700; padding: 4px 9px; border-radius: 50px; font-family: 'Montserrat', sans-serif; }
   .product-info { padding: 16px; flex: 1; display: flex; flex-direction: column; }
@@ -705,26 +706,26 @@
   .modal-product-en { font-family: 'Montserrat', sans-serif; font-size: 0.8rem; color: #bbb; margin-bottom: 16px; }
   .modal-product-desc { font-size: 0.84rem; line-height: 1.8; color: #555; margin-bottom: 18px; padding-bottom: 18px; border-bottom: 1px solid #eee; }
   /* ── Modal Rich Sections ── */
-  .modal-tagline { font-family: 'Noto Sans KR', sans-serif; font-size: 0.83rem; color: #555; font-weight: 500; line-height: 1.85; margin-bottom: 20px; padding: 13px 16px; background: #fdf9f7; border-left: 3px solid var(--red); border-radius: 0 6px 6px 0; }
+  .modal-tagline { font-family: 'Noto Sans KR', sans-serif; font-size: 0.95rem; color: #555; font-weight: 500; line-height: 1.85; margin-bottom: 20px; padding: 13px 16px; background: #fdf9f7; border-left: 3px solid var(--red); border-radius: 0 6px 6px 0; }
   .modal-sec { margin-bottom: 20px; }
-  .modal-sec-label { display: block; font-family: 'Montserrat', sans-serif; font-size: 0.54rem; font-weight: 700; letter-spacing: 2.5px; color: var(--red); text-transform: uppercase; margin-bottom: 10px; padding-bottom: 7px; border-bottom: 1px solid #f0ece8; }
-  .modal-intro { font-family: 'Noto Sans KR', sans-serif; font-size: 0.82rem; color: #444; line-height: 1.95; }
+  .modal-sec-label { display: block; font-family: 'Montserrat', sans-serif; font-size: 0.65rem; font-weight: 700; letter-spacing: 2.5px; color: var(--red); text-transform: uppercase; margin-bottom: 10px; padding-bottom: 7px; border-bottom: 1px solid #f0ece8; }
+  .modal-intro { font-family: 'Noto Sans KR', sans-serif; font-size: 0.94rem; color: #444; line-height: 1.95; }
   .modal-howto-list { list-style: none; padding: 0; margin: 0; }
-  .modal-howto-item { font-family: 'Noto Sans KR', sans-serif; font-size: 0.8rem; color: #333; padding: 7px 0; border-bottom: 1px solid #f7f5f3; line-height: 1.55; }
+  .modal-howto-item { font-family: 'Noto Sans KR', sans-serif; font-size: 0.92rem; color: #333; padding: 7px 0; border-bottom: 1px solid #f7f5f3; line-height: 1.55; }
   .modal-howto-item:last-child { border-bottom: none; }
   .modal-spec-grid { display: flex; flex-direction: column; gap: 7px; }
   .modal-spec-row { display: flex; gap: 10px; align-items: flex-start; }
   .modal-spec-key { font-family: 'Montserrat', sans-serif; font-size: 0.53rem; font-weight: 700; letter-spacing: 1px; color: #bbb; text-transform: uppercase; min-width: 68px; white-space: nowrap; padding-top: 2px; flex-shrink: 0; }
-  .modal-spec-val { font-family: 'Noto Sans KR', sans-serif; font-size: 0.8rem; color: #333; line-height: 1.6; }
+  .modal-spec-val { font-family: 'Noto Sans KR', sans-serif; font-size: 0.92rem; color: #333; line-height: 1.6; }
   .modal-ingr-table { width: 100%; border-collapse: collapse; }
   .modal-ingr-table th { font-family: 'Montserrat', sans-serif; font-size: 0.5rem; font-weight: 700; letter-spacing: 1.5px; color: #bbb; text-transform: uppercase; text-align: left; padding: 6px 8px; border-bottom: 2px solid #f0ece8; }
-  .modal-ingr-table td { font-family: 'Noto Sans KR', sans-serif; font-size: 0.76rem; color: #333; padding: 5px 8px; border-bottom: 1px solid #f7f5f3; }
+  .modal-ingr-table td { font-family: 'Noto Sans KR', sans-serif; font-size: 0.88rem; color: #333; padding: 5px 8px; border-bottom: 1px solid #f7f5f3; }
   .modal-ingr-table tr:last-child td { border-bottom: none; }
   .modal-ingr-table th:nth-child(2) { text-align: center; }
-  .modal-ingr-table td:nth-child(2) { font-family: 'Montserrat', sans-serif; font-size: 0.7rem; color: #888; text-align: center; }
-  .modal-ingr-table td:nth-child(3) { font-size: 0.72rem; color: #aaa; }
+  .modal-ingr-table td:nth-child(2) { font-family: 'Montserrat', sans-serif; font-size: 0.82rem; color: #888; text-align: center; }
+  .modal-ingr-table td:nth-child(3) { font-size: 0.84rem; color: #aaa; }
   /* ── CAROUSEL ── */
-  .carousel-img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .carousel-img { width: 100%; height: 100%; object-fit: contain; display: block; background: #f8f6f4; }
   .carousel-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,0.88); border: none; border-radius: 50%; width: 36px; height: 36px; cursor: pointer; font-size: 1.5rem; line-height: 1; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(0,0,0,0.18); transition: background 0.18s; z-index: 5; color: #333; padding: 0; }
   .carousel-btn:hover { background: white; }
   .carousel-btn.prev { left: 10px; }
@@ -1579,10 +1580,10 @@ const BRAND_DESC = {
 const productDetails = {
   1: {
     images: [
-      './assets/images/코인육수/육개장.png',
       './assets/images/코인육수/소고기 육개장_사진.png',
-      './assets/images/코인육수/육개장_nutrition_1.png',
       './assets/images/코인육수/육개장_소포장.png',
+      './assets/images/코인육수/육개장.png',
+      './assets/images/코인육수/육개장_nutrition_1.png',
     ],
     tagline: '베트남 소고기 국수 시장 1위의 그 진한 고기 맛, 한국의 매운맛이 더해졌습니다. 코인 하나로 육개장 육수가 완성됩니다.',
     intro: '소고기 사골 농축액, 건조 대파, 고춧가루, 마늘, 숙주 파우더를 저온 압축 성형한 코인육수입니다. 끓는 물 500ml에 코인 1알을 넣고 30초만 저으면 진한 육개장 육수가 완성됩니다.<br><br>인스턴트의 편리함, 수제 육수의 맛. 한국 가정에서 수십 년간 사랑받아 온 육개장의 레시피를 그대로 코인 한 알에 압축했습니다.',
@@ -1613,10 +1614,10 @@ const productDetails = {
   },
   2: {
     images: [
-      './assets/images/코인육수/멸치 육수.png',
       './assets/images/코인육수/멸치_사진.png',
-      './assets/images/코인육수/멸치_nutrition_2.png',
       './assets/images/코인육수/멸치_소포장.png',
+      './assets/images/코인육수/멸치 육수.png',
+      './assets/images/코인육수/멸치_nutrition_2.png',
     ],
     tagline: '베트남의 영혼 피쉬소스와 가장 닮은 한국 육수, 멸치 잔치국수. 시원하고 깔끔한 감칠맛을 코인 하나로.',
     intro: '국내산 건멸치, 다시마, 대파, 무 파우더를 엄선해 저온 압축한 MIDAM의 시그니처 육수 코인입니다.<br><br>피쉬소스 특유의 강한 발효향 없이, 멸치 다시 특유의 투명하고 시원한 감칠맛만을 깔끔하게 담아냈습니다. 어느 요리에나 잘 어울리는 베이직 라인의 핵심 제품입니다.',
@@ -1645,10 +1646,10 @@ const productDetails = {
   },
   3: {
     images: [
-      './assets/images/코인육수/칼칼.png',
       './assets/images/코인육수/칼칼 맑은 채수_사진.png',
-      './assets/images/코인육수/칼칼채수_nutrition_3.png',
       './assets/images/코인육수/칼칼_소포장.png',
+      './assets/images/코인육수/칼칼.png',
+      './assets/images/코인육수/칼칼채수_nutrition_3.png',
     ],
     tagline: '한국 MZ세대가 해장으로 찾는 그 맛. 칼칼하고 맑은 채수, 이제 코인 하나로. 비건도, 해장도, 다이어트도 한 번에.',
     intro: '청양고추, 표고버섯, 양파, 배추, 대파 — 동물성 원료 없이 오직 채소와 버섯의 깊은 감칠맛만으로 만든 투명하고 맑은 육수 코인입니다.<br><br>표고버섯의 천연 글루타민산이 깊은 우마미를 만들고, 청양고추의 칼칼한 매운맛이 깔끔하게 치고 올라와 \'고기 없이도 이렇게 깊은 맛이?\' 라는 반응을 이끌어냅니다.',
@@ -1679,10 +1680,10 @@ const productDetails = {
   },
   4: {
     images: [
-      './assets/images/코인육수/김치 타마린.png',
       './assets/images/코인육수/김치_타마린_사진.png',
-      './assets/images/코인육수/김치타마린nutrition_4.png',
       './assets/images/코인육수/김치_소포장.png',
+      './assets/images/코인육수/김치 타마린.png',
+      './assets/images/코인육수/김치타마린nutrition_4.png',
     ],
     tagline: '한국 김치의 발효 신맛 + 베트남이 사랑하는 타마린의 새콤함. 두 나라의 \'신맛 DNA\'가 만나 탄생한 전혀 새로운 육수.',
     intro: '국내산 숙성 김치 농축액, 타마린 파우더, 토마토 파우더, 멸치 다시 베이스를 절묘하게 배합한 새콤하고 깊은 맛의 육수 코인입니다.<br><br>김치의 발효 신맛은 타마린의 순수한 과일 산미와 만나 서로의 단점을 보완합니다. 김치 특유의 강한 발효향은 타마린이 부드럽게 잡아주고, 타마린의 단조로운 신맛은 김치 발효의 복합적인 풍미로 채워집니다.',
@@ -1715,9 +1716,9 @@ const productDetails = {
     images: [
       './assets/images/시즈닝/불고기_상품페이지.png',
       './assets/images/시즈닝/불고기_포장박스.png',
+      './assets/images/시즈닝/MYOMI스틱_불고기_소포장.png',
       './assets/images/시즈닝/불고기_가루.png',
       './assets/images/시즈닝/BBQ_nutrition_1.png',
-      './assets/images/시즈닝/MYOMI스틱_불고기_소포장.png',
     ],
     tagline: '베트남이 가장 사랑하는 한국의 맛, 불고기. 그 달콤 짭짤한 풍미를 매일 식탁 위에 — MYOMI가 짜봉과 함께 완성했습니다.',
     intro: '간장 베이스의 달콤 짭짤한 불고기 시즈닝에 바삭한 돼지고기 입자와 볶은 깨를 한데 담은 플레이크형 시즈닝입니다.<br><br>현지 짜봉이 단순한 고기 맛에 그친다면, MYOMI K-BBQ는 다릅니다. 배즙의 천연 단맛, 간장의 깊은 감칠맛, 참기름의 고소함이 돼지고기 플레이크 위에 코팅되어 한 번에 \'불고기를 먹는 경험\'을 선사합니다.',
@@ -1750,9 +1751,9 @@ const productDetails = {
     images: [
       './assets/images/시즈닝/감자탕_상품페이지.png',
       './assets/images/시즈닝/감자탕_포장박스.png',
+      './assets/images/시즈닝/MYOMI스틱_감자탕_소포장.png',
       './assets/images/시즈닝/감자탕_가루.png',
       './assets/images/시즈닝/감자탕_nutrition_2_.png',
-      './assets/images/시즈닝/MYOMI스틱_감자탕_소포장.png',
     ],
     tagline: '베트남이 사랑하는 전골(Lẩu)과 고기 요리의 모든 것이 한 스푼에. 된장 베이스의 진한 감칠맛과 들깨의 고소함 — MYOMI 감자탕 시즈닝이 완성합니다.',
     intro: '된장, 들깨가루, 고춧가루, 돼지고기 플레이크, 마늘의 정교한 배합으로 만든 플레이크형 시즈닝입니다. 들깨의 고소함을 메인으로, 깻잎 향을 아주 미세하게 더해 한국 감자탕의 정수만을 담았습니다.<br><br>기존 가루형 수프 시즈닝과 달리, MYOMI 감자탕 시즈닝은 돼지고기 플레이크가 들어간 \'감자탕 짜봉 후리카케\' 형태로 씹히는 질감까지 재현합니다. 물에 풀어 국물을 만들 수도, 밥 위에 토핑으로 뿌릴 수도 있는 이중 활용 시즈닝입니다.',
@@ -1785,9 +1786,9 @@ const productDetails = {
     images: [
       './assets/images/시즈닝/닭갈비_상품페이지.png',
       './assets/images/시즈닝/닭갈비_포장박스.png',
+      './assets/images/시즈닝/MYOMI스틱_닭갈비_소포장.png',
       './assets/images/시즈닝/닭갈비_가루.png',
       './assets/images/시즈닝/닭갈비_nutrition_3.png',
-      './assets/images/시즈닝/MYOMI스틱_닭갈비_소포장.png',
     ],
     tagline: '한국에서 가장 핫한 치킨 요리, 닭갈비. 매콤한 고추장의 불향과 달콤한 꿀의 하모니 — MYOMI가 집에서도 춘천 닭갈비를 완성합니다.',
     intro: '태양초 고추장 파우더, 꿀 파우더, 마늘, 생강, 간장 파우더를 기반으로 한 드라이 매리네이드 시즈닝입니다. 닭고기에 MYOMI 닭갈비 시즈닝을 직접 버무려 재우면 고추장 특유의 발효 풍미가 고기 속으로 스며들어 전문점 수준의 닭갈비 양념을 구현합니다.<br><br>드라이 포맷의 장점: 수분 없이 고기 표면에 밀착되어 굽거나 볶을 때 바깥쪽에 맛있는 카라멜라이즈 레이어를 형성합니다. 춘천 닭갈비 특유의 \'불향 양념 코팅\'을 집에서 재현할 수 있는 유일한 방법입니다.',
@@ -1820,9 +1821,9 @@ const productDetails = {
     images: [
       './assets/images/시즈닝/전복죽_상품페이지.png',
       './assets/images/시즈닝/전복죽_포장박스.png',
+      './assets/images/시즈닝/MYOMI스틱_전복죽_소포장.png',
       './assets/images/시즈닝/전복_가루.png',
       './assets/images/시즈닝/전복죽_nutrition_4_.png',
-      './assets/images/시즈닝/MYOMI스틱_전복죽_소포장.png',
     ],
     tagline: '전복 손질? 긴 조리 시간? 이제 필요 없습니다. MYOMI 전복죽 시즈닝 한 스푼, 뜨거운 물 한 잔 — 1분 만에 한국 고급 보양식이 완성됩니다.',
     intro: '건조 전복 분말, 전복 내장 파우더, 쌀가루, 참기름, 다시마 파우더를 정밀 배합한 즉석 죽 시즈닝입니다. 쌀가루가 기본 농도를 만들어주고, 전복 분말과 내장 파우더가 진하고 깊은 전복 특유의 바다 향 감칠맛을 구현합니다.<br><br>가장 큰 차별화 포인트는 씹히는 전복 입자입니다. 단순한 가루가 아니라, 건조 전복 조각을 함께 넣어 실제 전복을 먹는 듯한 텍스처를 재현합니다. 베트남 저가형 인스턴트 죽 시장과는 차원이 다른 \'프리미엄 K-보양식\' 포지셔닝입니다.',
@@ -1852,8 +1853,8 @@ const productDetails = {
   },
   11: {
     images: [
-      './assets/images/소스/청양 라벨.png',
       './assets/images/소스/청양마요_2.png',
+      './assets/images/소스/청양 라벨.png',
       './assets/images/소스/청양마요_nutrition_facts.png',
     ],
     tagline: '한국에서 가장 중독성 있는 조합, PUNGMI가 베트남 식탁으로 가져왔습니다.',
@@ -1883,8 +1884,8 @@ const productDetails = {
   },
   12: {
     images: [
-      './assets/images/소스/매실 시푸드 라벨.png',
       './assets/images/소스/매실 시푸드_3.png',
+      './assets/images/소스/매실 시푸드 라벨.png',
       './assets/images/소스/매실_nutrition_facts_1.png',
     ],
     tagline: '베트남 해산물 식탁의 그 소스, 한국 매실이 만나 완전히 달라졌습니다. K-Soul meets VN Seafood.',
@@ -1914,8 +1915,8 @@ const productDetails = {
   },
   13: {
     images: [
-      './assets/images/소스/쌈장 라벨.png',
       './assets/images/소스/쌈장_2.png',
+      './assets/images/소스/쌈장 라벨.png',
       './assets/images/소스/쌈장_nutrition_facts_2.png',
     ],
     tagline: '베트남의 Gỏi cuốn(월남쌈)에 한국 쌈장이 들어가면 어떻게 될까요? 더 이상 다른 소스가 필요 없어집니다.',
@@ -1947,6 +1948,11 @@ const productDetails = {
     ],
   },
   14: {
+    images: [
+      './assets/images/소스/불고기 코코넛.png',
+      './assets/images/소스/불고기 라벨.png',
+      './assets/images/소스/불고기_nutrition_facts_4.png',
+    ],
     tagline: '베트남의 노천 바비큐 문화, 한국 불고기 양념, 코코넛 크림의 고소한 부드러움. 세 가지가 만나 역대급 바비큐 글레이즈가 완성됩니다.',
     intro: '진간장 & 배즙(불고기 베이스) + 코코넛 크림 + 마늘의 조합으로 완성된 이 글레이즈는 단순한 마리네이드 소스가 아닙니다.<br><br>굽는 과정에서 카라멜화되어 고기 표면에 윤기 나는 글레이즈 층을 형성하고, 코코넛 크림이 열을 받아 고소한 너트향을 더해 갓 구운 고기의 비주얼과 풍미를 극대화합니다. 마리네이드로 사용하면 고기가 부드러워지고, 구울 때 한 번 더 발라주면 레스토랑 퀄리티의 바비큐 글레이즈가 완성됩니다.',
     howto: [
@@ -1974,6 +1980,11 @@ const productDetails = {
     ],
   },
   15: {
+    images: [
+      './assets/images/소스/고추장 망고.png',
+      './assets/images/소스/고추장 망고 라벨.png',
+      './assets/images/소스/고추장 망고_nutrition_facts_5.png',
+    ],
     tagline: '한국 치킨의 인기 + 베트남 망고의 상큼함. 집에서도 K-치킨 윙을 만드는 시대가 왔습니다.',
     intro: '고추장만 사용하면 외국인들이 느끼는 텁텁함과 과한 매운맛이 문제입니다. 여기서 망고가 마법 같은 역할을 합니다.<br><br>베트남산 망고 퓨레의 자연스러운 산미와 당도가 고추장의 발효 풍미와 만나면 서로의 단점을 보완하고 장점을 극대화한 달콤 매콤(Ngọt cay)의 가장 이상적인 밸런스가 만들어집니다. 글레이즈 타입으로 설계되어 닭날개·닭다리에 바로 짜서 구우면 표면에 찰지게 코팅되는 광택 있는 윙 글레이즈가 완성됩니다.',
     howto: [
@@ -2000,6 +2011,11 @@ const productDetails = {
     ],
   },
   16: {
+    images: [
+      './assets/images/소스/로제_3.png',
+      './assets/images/소스/로제 라벨.png',
+      './assets/images/소스/로제_nutrition_facts_3.png',
+    ],
     tagline: '한국에서 가장 핫한 소스 트렌드 \'로제\', 베트남의 영혼 \'레몬그라스\'를 만나 비로소 완성됩니다.',
     intro: '태양초 고추장 + 크림 파우더 + 다진 레몬그라스의 삼각 구도로 완성된 PUNGMI만의 K-VN 퓨전 볶음 소스입니다.<br><br>일반 로제 소스와 달리 PUNGMI K-로제 레몬그라스 소스는 베트남 식탁의 모든 볶음·면 요리에 범용적으로 사용할 수 있는 만능 퓨전 볶음 소스로 설계되었습니다. Bún xào(분볶), Phở xào(볶음 쌀국수), Gà xào(닭볶음) — 베트남 가정의 일상 요리에 바로 넣을 수 있는 현지화된 K-소스입니다.',
     howto: [
@@ -2051,7 +2067,7 @@ function renderProducts(filter) {
   const lang = typeof currentLang !== 'undefined' ? currentLang : 'ko';
   const grid = document.getElementById('productsGrid');
   grid.classList.remove('g3','g4');
-  grid.classList.add('g4');
+  grid.classList.add('g3');
   const list = filter === 'all' ? products : products.filter(p => p.cat === filter);
   grid.innerHTML = list.map(p => {
     const displayName = lang === 'ko' ? p.name : p.en;
@@ -2060,7 +2076,9 @@ function renderProducts(filter) {
     return `
     <div class="product-card" onclick="openProduct(${p.id})">
       <div class="product-img">
-        <div class="product-img-placeholder"><span>IMAGE</span></div>
+        ${productDetails[p.id]?.images?.[0]
+          ? `<img class="product-thumb" src="${productDetails[p.id].images[0]}" alt="${p.name}">`
+          : '<div class="product-img-placeholder"><span>IMAGE</span></div>'}
         <div class="product-badge">${catLabel[lang][p.cat]}</div>
         ${p.tags.includes('VEGAN') ? '<div class="vegan-badge">🌱 VEGAN</div>' : ''}
       </div>
