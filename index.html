@@ -637,38 +637,41 @@
   .filter-btn:hover { color: var(--red); }
   /* ══ BRAND DESC ══ */
   .brand-desc {
-    background: var(--white); padding: 52px 72px 44px;
-    border-bottom: 1px solid #ede9e4;
+    background: var(--white); padding: 56px 72px 52px;
+    border-bottom: 1px solid #ede9e4; text-align: center;
   }
-  .brand-desc-inner { max-width: 860px; }
+  .brand-desc-inner { max-width: 700px; margin: 0 auto; }
   .brand-eyebrow {
-    font-family: 'Montserrat', sans-serif; font-size: 0.6rem; font-weight: 700;
-    letter-spacing: 3.5px; color: var(--red); text-transform: uppercase; margin-bottom: 10px;
+    font-family: 'Montserrat', sans-serif; font-size: 0.58rem; font-weight: 700;
+    letter-spacing: 4px; color: var(--red); text-transform: uppercase; margin-bottom: 12px;
   }
   .brand-name-title {
-    font-family: 'Bebas Neue', 'Noto Sans KR', cursive; font-size: 2.8rem;
-    letter-spacing: 5px; color: var(--black); line-height: 1; margin-bottom: 6px;
+    font-family: 'Bebas Neue', 'Noto Sans KR', cursive; font-size: 3rem;
+    letter-spacing: 6px; color: var(--black); line-height: 1; margin-bottom: 8px;
   }
   .brand-meaning {
-    font-family: 'Noto Sans KR', sans-serif; font-size: 0.86rem;
-    color: #888; font-weight: 400; margin-bottom: 20px; letter-spacing: 0.3px;
+    font-family: 'Noto Sans KR', sans-serif; font-size: 0.85rem;
+    color: #aaa; font-weight: 400; margin-bottom: 22px; letter-spacing: 0.5px;
   }
-  .brand-meaning em { color: var(--red); font-style: normal; font-weight: 700; }
+  .brand-meaning em { color: var(--red); font-style: normal; font-weight: 600; }
   .brand-text-body {
-    font-family: 'Noto Sans KR', sans-serif; font-size: 0.88rem;
-    color: #444; line-height: 2; max-width: 740px; margin-bottom: 32px;
+    font-family: 'Noto Sans KR', sans-serif; font-size: 0.9rem;
+    color: #555; line-height: 2; margin: 0 auto 34px; max-width: 600px;
   }
   .brand-spec-grid {
-    display: grid; grid-template-columns: repeat(2, 1fr);
-    gap: 11px 48px; border-top: 1px solid #ece8e4; padding-top: 24px;
+    display: flex; flex-wrap: wrap; justify-content: center;
+    gap: 10px; border-top: 1px solid #ece8e4; padding-top: 26px;
   }
-  .spec-row { display: flex; gap: 14px; align-items: baseline; }
+  .spec-row {
+    display: flex; align-items: center; gap: 9px;
+    background: #f7f5f3; border-radius: 50px; padding: 8px 18px;
+  }
   .spec-key {
-    font-family: 'Montserrat', sans-serif; font-size: 0.58rem; font-weight: 700;
-    letter-spacing: 1.5px; color: #bbb; text-transform: uppercase;
-    white-space: nowrap; min-width: 78px; flex-shrink: 0;
+    font-family: 'Montserrat', sans-serif; font-size: 0.56rem; font-weight: 700;
+    letter-spacing: 1.5px; color: #bbb; text-transform: uppercase; white-space: nowrap;
   }
-  .spec-val { font-family: 'Noto Sans KR', sans-serif; font-size: 0.82rem; color: #333; line-height: 1.75; }
+  .spec-div { width: 1px; height: 10px; background: #ddd; flex-shrink: 0; }
+  .spec-val { font-family: 'Noto Sans KR', sans-serif; font-size: 0.8rem; color: #444; }
 
   .products-grid { display: grid; gap: 18px; padding: 36px 72px; max-width: 1300px; margin: 0 auto; justify-content: center; }
   .products-grid.g4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
@@ -820,7 +823,7 @@
     .hero-content { padding: 0 28px; }
     .about-body, .preview-section, .Motto-section { padding: 60px 28px; }
     .filter-bar, .products-header, .contact-body, .contact-hero, .vision-bar, .brand-desc { padding-left: 22px; padding-right: 22px; }
-    .brand-spec-grid { grid-template-columns: 1fr; }
+    .brand-desc { padding-left: 22px; padding-right: 22px; }
     .modal-btns { grid-template-columns: 1fr; }
   }
 </style>
@@ -1475,8 +1478,6 @@ const products = [
   { id:2,  cat:'coin',      name:'잔치국수(멸치) 코인육수',      en:'Anchovy Janchi Noodle Coin Broth',   price:'TBD', desc:'깔끔하고 시원한 멸치·다시마 황금 비율 육수. 잔치국수·칼국수·Phở 스타일에 활용.', tags:[] },
   { id:3,  cat:'coin',      name:'칼칼 매콤 채수 코인',          en:'Spicy Vegan Veggie Broth Coin',      price:'TBD', desc:'청양고추·표고버섯·양파·배추로 만든 비건 채수. 현대인의 해장 전용. 칼칼하고 매콤한데 시원한 맛.', tags:['VEGAN'] },
   { id:4,  cat:'coin',      name:'TBD 코인육수',                 en:'Coming Soon',                        price:'TBD', desc:'제품명 및 상세 정보 확정 예정입니다.', tags:[] },
-  { id:5,  cat:'seasoning', name:'K-BBQ 간장 베이스 시즈닝',     en:'K-BBQ Soy Sauce Seasoning',          price:'TBD', desc:'한국 바비큐의 기본기, 깊고 풍부한 간장 베이스 만능 시즈닝. 고기·채소·두부 모두.', tags:[] },
-  { id:6,  cat:'seasoning', name:'갈비맛 시즈닝',                 en:'Galbi Short Rib Seasoning',          price:'TBD', desc:'달콤하고 윤기나는 한국 갈비의 풍미. 그릴·에어프라이어·팬 모두 가능.', tags:[] },
   { id:7,  cat:'seasoning', name:'불고기맛 시즈닝',               en:'Bulgogi Seasoning',                  price:'TBD', desc:'배와 간장의 달콤짭짤한 불고기향. Bánh mì 위에 뿌리면 K-Fusion 완성!', tags:[] },
   { id:8,  cat:'seasoning', name:'감자탕 시즈닝',                 en:'Gamjatang Pork Bone Seasoning',      price:'TBD', desc:'진하고 구수한 감자탕의 깊은 맛. Phở 스타일 국물 요리에 K-터치를.', tags:[] },
   { id:9,  cat:'seasoning', name:'닭갈비 시즈닝',                 en:'Dakgalbi Spicy Chicken Seasoning',   price:'TBD', desc:'춘천식 닭갈비의 매콤달콤 양념. 닭·두부·채소·쌀과자까지 환상 궁합.', tags:[] },
@@ -1509,39 +1510,39 @@ const BRAND_DESC = {
     eyebrow: 'MIDAM by DAMI',
     name: 'MIDAM (미담)',
     meaning: '<em>미담(美談)</em> — 아름다운 맛',
-    desc: 'MIDAM(미담)은 \'아름다운 맛\'이라는 뜻입니다. 한국 전통 육수의 정수를 코인 한 알에 담아, 끓는 물에 넣으면 즉시 풀려 어디서든 한국 집밥의 깊은 국물 맛을 재현할 수 있도록 만든 프리미엄 즉석 육수 브랜드입니다.',
+    desc: '한국 전통 육수의 정수(精髓)를 코인 한 알에 압축했습니다.<br>끓는 물에 넣는 순간, 어디서든 깊고 진한 집밥의 국물이 완성됩니다.',
     specs: [
-      ['제품 형태', '코인형 압축 육수 타블렛 — 1알 = 1회분 (물 500ml 기준)'],
-      ['1회 제공량', '코인 1알 (약 8g) &nbsp;|&nbsp; 총 25알 / 1봉 200g'],
-      ['포장', '개별 소포장 25알 입봉 / 지퍼백 보관'],
-      ['특징', '무방부제, 무MSG, 천연 재료 압축'],
-      ['보관', '직사광선 피해 실온 보관, 개봉 후 밀봉 유지'],
+      ['형태', '코인형 압축 타블렛 · 1알 = 물 500ml / 1회분'],
+      ['용량', '25알 · 200g / 1봉'],
+      ['포장', '개별 소포장 · 지퍼백 밀봉'],
+      ['성분', '무방부제 · 무MSG · 천연 재료'],
+      ['보관', '실온 · 개봉 후 밀봉'],
     ]
   },
   seasoning: {
     eyebrow: 'MYOMI by DAMI',
     name: 'MYOMI (묘미)',
     meaning: '<em>묘미(妙味)</em> — 오묘하고 절묘한 맛',
-    desc: 'MYOMI(묘미/妙味)는 \'오묘하고 절묘한 맛\'이라는 뜻입니다. 한국 전통 요리의 깊은 맛을 누구나 쉽고 빠르게 일상 요리에 더할 수 있도록, 정교하게 배합된 시즈닝을 만드는 브랜드입니다. 밥, 국, 요리 어느곳에든 간편하게 사용해보세요.',
+    desc: '한국 전통의 깊은 맛을, 어떤 요리에도 한 스푼으로 완성합니다.<br>정교하게 배합된 MYOMI 시즈닝으로 일상 요리의 격을 높여보세요.',
     specs: [
-      ['제품 형태', '건더기가 포함된 가루'],
+      ['형태', '가루 시즈닝 (건더기 포함)'],
       ['용기', '이지컷 스틱 파우치'],
-      ['1회 제공량', '15g (전복죽 시즈닝 20g) &nbsp;|&nbsp; 총 20개 / 1봉 300g (전복죽 400g)'],
-      ['특징', '무방부제, 무MSG, 천연 재료'],
-      ['보관', '직사광선 피해 실온 보관, 개봉 후 밀봉 유지'],
+      ['용량', '1회분 15g (전복죽 20g) · 20개 / 1봉'],
+      ['성분', '무방부제 · 무MSG · 천연 재료'],
+      ['보관', '실온 · 개봉 후 밀봉'],
     ]
   },
   sauce: {
     eyebrow: 'PUNGMI by DAMI',
     name: 'PUNGMI (풍미)',
     meaning: '<em>풍미(豊味)</em> — 풍부한 맛',
-    desc: 'PUNGMI(풍미/豊味)는 \'풍부한 맛\'이라는 뜻입니다. 한국의 정통 소스 문화에 베트남 현지 식문화를 더해 누구나 매일 사용하고 싶어지는 소스를 만드는 브랜드입니다. 디핑 소스나 볶음 소스나 어디에든 활용이 가능합니다!',
+    desc: '한국 정통 소스 문화에 베트남 식문화의 감성을 더했습니다.<br>디핑부터 볶음까지, 매일 꺼내고 싶어지는 소스입니다.',
     specs: [
-      ['제품 형태', '액체'],
-      ['용기 형태', '스퀴즈 보틀'],
+      ['형태', '액체 소스'],
+      ['용기', '스퀴즈 보틀'],
       ['용량', '300ml'],
-      ['특징', '인공 보존료 무첨가, 천연 재료'],
-      ['보관', '개봉 후 냉장 보관, 30일 이내 사용'],
+      ['성분', '인공 보존료 무첨가 · 천연 재료'],
+      ['보관', '냉장 · 개봉 후 30일 이내'],
     ]
   }
 };
@@ -1558,7 +1559,7 @@ function updateBrandDesc(filter) {
     <p class="brand-meaning">${b.meaning}</p>
     <p class="brand-text-body">${b.desc}</p>
     <div class="brand-spec-grid">
-      ${b.specs.map(([k,v])=>`<div class="spec-row"><span class="spec-key">${k}</span><span class="spec-val">${v}</span></div>`).join('')}
+      ${b.specs.map(([k,v])=>`<div class="spec-row"><span class="spec-key">${k}</span><span class="spec-div"></span><span class="spec-val">${v}</span></div>`).join('')}
     </div>
   </div>`;
 }
@@ -2193,8 +2194,6 @@ const productEnDesc = {
   2: 'Clean, refreshing anchovy-kelp broth in perfect ratio. Ideal for noodle dishes and Phở-style soups.',
   3: 'Vegan broth made with cheongyang chili, shiitake, onion & cabbage. Spicy, hot, and refreshing. Perfect for MZ-generation hangover relief.',
   4: 'Product name and details to be confirmed.',
-  5: 'The foundation of Korean BBQ. A rich, deep soy-based all-purpose seasoning. Perfect for meat, vegetables, and tofu.',
-  6: 'The sweet, glossy flavor of Korean galbi. Works on grill, air fryer, or pan.',
   7: 'Sweet and savory bulgogi aroma of pear and soy sauce. Sprinkle on Bánh mì for a complete K-Fusion!',
   8: 'Deep, rich gamjatang flavor. Add K-touch to Phở-style broth dishes.',
   9: 'Sweet and spicy Chuncheon-style dakgalbi marinade. Amazing with chicken, tofu, vegetables, and rice snacks.',
