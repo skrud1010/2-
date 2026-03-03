@@ -695,15 +695,33 @@
   /* ══ PRODUCT MODAL ══ */
   .product-modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.75); z-index: 2000; display: none; align-items: center; justify-content: center; padding: 20px; }
   .product-modal-overlay.show { display: flex; }
-  .product-modal { background: var(--white); border-radius: 14px; width: 860px; max-width: 95vw; max-height: 92vh; overflow-y: auto; display: grid; grid-template-columns: 1fr 1fr; box-shadow: 0 30px 90px rgba(0,0,0,0.4); position: relative; }
-  .product-modal-img { background: #f0ece8; display: flex; align-items: center; justify-content: center; min-height: 400px; border-radius: 14px 0 0 14px; position: relative; overflow: hidden; }
+  .product-modal { background: var(--white); border-radius: 14px; width: 1000px; max-width: 96vw; max-height: 92vh; overflow: hidden; display: flex; box-shadow: 0 30px 90px rgba(0,0,0,0.4); position: relative; }
+  .product-modal-img { background: #f0ece8; display: flex; align-items: center; justify-content: center; flex: 0 0 38%; border-radius: 14px 0 0 14px; position: relative; overflow: hidden; min-height: 480px; }
   .pm-ph { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; color: #c5bdb5; }
   .pm-ph .big { font-size: 0.7rem; font-family: 'Montserrat', sans-serif; letter-spacing: 4px; opacity: 0.5; }
-  .product-modal-info { padding: 44px; }
+  .product-modal-info { flex: 1; padding: 40px; overflow-y: auto; max-height: 92vh; }
   .modal-product-cat { font-family: 'Montserrat', sans-serif; font-size: 0.65rem; font-weight: 700; letter-spacing: 2.5px; color: var(--red); text-transform: uppercase; margin-bottom: 10px; }
-  .modal-product-name { font-size: 1.5rem; font-weight: 900; margin-bottom: 5px; line-height: 1.3; }
+  .modal-product-name { font-size: 1.45rem; font-weight: 900; margin-bottom: 5px; line-height: 1.3; }
   .modal-product-en { font-family: 'Montserrat', sans-serif; font-size: 0.8rem; color: #bbb; margin-bottom: 16px; }
   .modal-product-desc { font-size: 0.84rem; line-height: 1.8; color: #555; margin-bottom: 18px; padding-bottom: 18px; border-bottom: 1px solid #eee; }
+  /* ── Modal Rich Sections ── */
+  .modal-tagline { font-family: 'Noto Sans KR', sans-serif; font-size: 0.83rem; color: #555; font-weight: 500; line-height: 1.85; margin-bottom: 20px; padding: 13px 16px; background: #fdf9f7; border-left: 3px solid var(--red); border-radius: 0 6px 6px 0; }
+  .modal-sec { margin-bottom: 20px; }
+  .modal-sec-label { display: block; font-family: 'Montserrat', sans-serif; font-size: 0.54rem; font-weight: 700; letter-spacing: 2.5px; color: var(--red); text-transform: uppercase; margin-bottom: 10px; padding-bottom: 7px; border-bottom: 1px solid #f0ece8; }
+  .modal-intro { font-family: 'Noto Sans KR', sans-serif; font-size: 0.82rem; color: #444; line-height: 1.95; }
+  .modal-howto-list { list-style: none; padding: 0; margin: 0; }
+  .modal-howto-item { font-family: 'Noto Sans KR', sans-serif; font-size: 0.8rem; color: #333; padding: 7px 0; border-bottom: 1px solid #f7f5f3; line-height: 1.55; }
+  .modal-howto-item:last-child { border-bottom: none; }
+  .modal-spec-grid { display: flex; flex-direction: column; gap: 7px; }
+  .modal-spec-row { display: flex; gap: 10px; align-items: flex-start; }
+  .modal-spec-key { font-family: 'Montserrat', sans-serif; font-size: 0.53rem; font-weight: 700; letter-spacing: 1px; color: #bbb; text-transform: uppercase; min-width: 68px; white-space: nowrap; padding-top: 2px; flex-shrink: 0; }
+  .modal-spec-val { font-family: 'Noto Sans KR', sans-serif; font-size: 0.8rem; color: #333; line-height: 1.6; }
+  .modal-ingr-table { width: 100%; border-collapse: collapse; }
+  .modal-ingr-table th { font-family: 'Montserrat', sans-serif; font-size: 0.5rem; font-weight: 700; letter-spacing: 1.5px; color: #bbb; text-transform: uppercase; text-align: left; padding: 6px 8px; border-bottom: 2px solid #f0ece8; }
+  .modal-ingr-table td { font-family: 'Noto Sans KR', sans-serif; font-size: 0.76rem; color: #333; padding: 5px 8px; border-bottom: 1px solid #f7f5f3; }
+  .modal-ingr-table tr:last-child td { border-bottom: none; }
+  .modal-ingr-table td:nth-child(2) { font-family: 'Montserrat', sans-serif; font-size: 0.7rem; color: #888; text-align: right; }
+  .modal-ingr-table td:nth-child(3) { font-size: 0.72rem; color: #aaa; }
   .modal-shipping { font-size: 0.74rem; color: #bbb; margin-bottom: 18px; line-height: 1.6; }
   .qty-row { display: flex; align-items: center; gap: 16px; margin-bottom: 18px; }
   .qty-label { font-size: 0.78rem; font-weight: 600; color: #555; width: 44px; }
@@ -818,8 +836,9 @@
     .preview-grid { grid-template-columns: repeat(2,1fr); }
     .about-grid, .promises-grid { grid-template-columns: 1fr; }
     .products-grid { padding: 20px 22px; }
-    .product-modal { grid-template-columns: 1fr; }
-    .product-modal-img { min-height: 200px; border-radius: 14px 14px 0 0; }
+    .product-modal { flex-direction: column; }
+    .product-modal-img { flex: none; min-height: 200px; border-radius: 14px 14px 0 0; }
+    .product-modal-info { max-height: none; overflow-y: visible; }
     .hero-content { padding: 0 28px; }
     .about-body, .preview-section, .Motto-section { padding: 60px 28px; }
     .filter-bar, .products-header, .contact-body, .contact-hero, .vision-bar, .brand-desc { padding-left: 22px; padding-right: 22px; }
@@ -1332,7 +1351,7 @@
       <div class="modal-product-cat" id="modalCat"></div>
       <div class="modal-product-name" id="modalName"></div>
       <div class="modal-product-en" id="modalEn"></div>
-      <div class="modal-product-desc" id="modalDesc"></div>
+      <div id="modalBody"></div>
       <div class="modal-shipping" data-t="modal-shipping">※ 300,000₫ 미만 구매 시 배송비 별도 | 원산지: 대한민국</div>
       <div class="qty-row">
         <span class="qty-label" data-t="modal-qty">수량</span>
@@ -1476,8 +1495,8 @@ window.addEventListener('scroll', updateNav, { passive: true });
 const products = [
   { id:1,  cat:'coin',      name:'소고기 육개장 코인육수',      en:'Beef Yukgaejang Coin Broth',        price:'TBD', desc:'한국 소고기 육개장의 깊고 칼칼한 국물. 코인 하나로 정통 육개장 베이스 완성. 샤브샤브·라면·쌀국수에도 활용 가능.', tags:[] },
   { id:2,  cat:'coin',      name:'잔치국수(멸치) 코인육수',      en:'Anchovy Janchi Noodle Coin Broth',   price:'TBD', desc:'깔끔하고 시원한 멸치·다시마 황금 비율 육수. 잔치국수·칼국수·Phở 스타일에 활용.', tags:[] },
-  { id:3,  cat:'coin',      name:'칼칼 매콤 채수 코인',          en:'Spicy Vegan Veggie Broth Coin',      price:'TBD', desc:'청양고추·표고버섯·양파·배추로 만든 비건 채수. 현대인의 해장 전용. 칼칼하고 매콤한데 시원한 맛.', tags:['VEGAN'] },
-  { id:4,  cat:'coin',      name:'TBD 코인육수',                 en:'Coming Soon',                        price:'TBD', desc:'제품명 및 상세 정보 확정 예정입니다.', tags:[] },
+  { id:3,  cat:'coin',      name:'칼칼 맑은 채수 코인육수',      en:'Spicy Clear Veggie Broth Coin',      price:'TBD', desc:'청양고추·표고버섯·양파·배추로 만든 비건 채수. 칼칼하고 맑은 국물. 해장·다이어트·비건 모두.', tags:['VEGAN'] },
+  { id:4,  cat:'coin',      name:'김치-타마린 코인육수',          en:'Kimchi-Tamarind Coin Broth',         price:'TBD', desc:'한국 김치의 발효 신맛과 베트남 타마린의 산미가 만난 새콤하고 깊은 맛의 K-VN 퓨전 육수.', tags:[] },
   { id:7,  cat:'seasoning', name:'불고기맛 시즈닝',               en:'Bulgogi Seasoning',                  price:'TBD', desc:'배와 간장의 달콤짭짤한 불고기향. Bánh mì 위에 뿌리면 K-Fusion 완성!', tags:[] },
   { id:8,  cat:'seasoning', name:'감자탕 시즈닝',                 en:'Gamjatang Pork Bone Seasoning',      price:'TBD', desc:'진하고 구수한 감자탕의 깊은 맛. Phở 스타일 국물 요리에 K-터치를.', tags:[] },
   { id:9,  cat:'seasoning', name:'닭갈비 시즈닝',                 en:'Dakgalbi Spicy Chicken Seasoning',   price:'TBD', desc:'춘천식 닭갈비의 매콤달콤 양념. 닭·두부·채소·쌀과자까지 환상 궁합.', tags:[] },
@@ -1546,6 +1565,120 @@ const BRAND_DESC = {
     ]
   }
 };
+/* ── PRODUCT RICH DETAILS ── */
+const productDetails = {
+  1: {
+    tagline: '베트남 소고기 국수 시장 1위의 그 진한 고기 맛, 한국의 매운맛이 더해졌습니다. 코인 하나로 육개장 육수가 완성됩니다.',
+    intro: '소고기 사골 농축액, 건조 대파, 고춧가루, 마늘, 숙주 파우더를 저온 압축 성형한 코인육수입니다. 끓는 물 500ml에 코인 1알을 넣고 30초만 저으면 진한 육개장 육수가 완성됩니다.<br><br>인스턴트의 편리함, 수제 육수의 맛. 한국 가정에서 수십 년간 사랑받아 온 육개장의 레시피를 그대로 코인 한 알에 압축했습니다.',
+    howto: [
+      '🍜 즉석 국수 육수 — 끓는 물 500ml + 코인 1알 + 쌀국수 (Bún / Phở)',
+      '🍲 Lẩu bò (소고기 샤브샤브) 베이스 — 코인 2~3알로 진한 전골 육수 완성',
+      '🍚 소고기 국밥 — 밥 위에 육개장 육수를 부어 한 그릇 뚝딱',
+      '🥘 찌개·볶음 국물 베이스 — 김치찌개나 된장찌개 국물로 활용',
+      '🍳 라면 육수 업그레이드 — 라면 끓일 때 코인 1알 추가',
+    ],
+    specs: {
+      main: '소고기 사골 농축액, 고춧가루, 건조 대파, 마늘 파우더, 숙주 파우더, 소금',
+      origin: '대한민국 🇰🇷',
+      allergen: '쇠고기',
+    },
+    ingredients: [
+      ['소고기 사골 농축액','35%','대한민국'],
+      ['고춧가루','18%','대한민국'],
+      ['건조 대파','14%','대한민국'],
+      ['마늘 파우더','10%','대한민국'],
+      ['숙주 파우더','8%','대한민국'],
+      ['양파 파우더','6%','대한민국'],
+      ['소금','5%','—'],
+      ['간장 파우더','2%','대한민국'],
+      ['후추 파우더','1.5%','—'],
+      ['참기름 파우더','0.5%','대한민국'],
+    ],
+  },
+  2: {
+    tagline: '베트남의 영혼 피쉬소스와 가장 닮은 한국 육수, 멸치 잔치국수. 시원하고 깔끔한 감칠맛을 코인 하나로.',
+    intro: '국내산 건멸치, 다시마, 대파, 무 파우더를 엄선해 저온 압축한 MIDAM의 시그니처 육수 코인입니다.<br><br>피쉬소스 특유의 강한 발효향 없이, 멸치 다시 특유의 투명하고 시원한 감칠맛만을 깔끔하게 담아냈습니다. 어느 요리에나 잘 어울리는 베이직 라인의 핵심 제품입니다.',
+    howto: [
+      '🍜 잔치국수 / Bún nước lèo — 끓는 물 500ml + 코인 1알, 소면이나 분비 삶아서',
+      '🥢 Phở gà (닭 쌀국수) 베이스 업그레이드 — 더 깊은 감칠맛 추가',
+      '🥣 Canh (베트남식 맑은국) — 채소·두부 넣고 담백한 한국식 맑은국',
+      '🍲 Lẩu thập cẩm (모듬 샤브샤브) 육수 — 맑고 깔끔한 베이스로',
+      '🍳 계란국·맑은 찌개 국물 베이스',
+    ],
+    specs: {
+      main: '건멸치 농축액, 다시마 파우더, 건조 대파, 무 파우더, 소금',
+      origin: '대한민국 🇰🇷',
+      allergen: '생선(멸치)',
+    },
+    ingredients: [
+      ['건멸치 농축액','38%','대한민국'],
+      ['다시마 파우더','20%','대한민국'],
+      ['건조 대파','16%','대한민국'],
+      ['무 파우더','12%','대한민국'],
+      ['건조 표고버섯','6%','대한민국'],
+      ['소금','5%','—'],
+      ['양파 파우더','2%','대한민국'],
+      ['생강 파우더','1%','대한민국'],
+    ],
+  },
+  3: {
+    tagline: '한국 MZ세대가 해장으로 찾는 그 맛. 칼칼하고 맑은 채수, 이제 코인 하나로. 비건도, 해장도, 다이어트도 한 번에.',
+    intro: '청양고추, 표고버섯, 양파, 배추, 대파 — 동물성 원료 없이 오직 채소와 버섯의 깊은 감칠맛만으로 만든 투명하고 맑은 육수 코인입니다.<br><br>표고버섯의 천연 글루타민산이 깊은 우마미를 만들고, 청양고추의 칼칼한 매운맛이 깔끔하게 치고 올라와 \'고기 없이도 이렇게 깊은 맛이?\' 라는 반응을 이끌어냅니다.',
+    howto: [
+      '🫕 Lẩu chay 매운 채소 샤브샤브 — 코인 2~3알로 칼칼한 채수 베이스 완성',
+      '🌶️ 한국식 라면 베이스 — 라면 끓일 때 코인 1알로 칼칼한 국물 업그레이드',
+      '🥬 Canh chua rau (채소 맑은국) — 두부·버섯·채소 넣어 간편한 비건 국',
+      '🍜 Bún chay (채식 쌀국수) — 맑고 칼칼한 한국식 채식 국수',
+      '🥣 해장국 — 아침에 코인 1알 + 두부 + 콩나물로 속 풀기',
+    ],
+    specs: {
+      main: '청양고추 파우더, 표고버섯 파우더, 건조 양파, 건조 배추, 건조 대파, 소금',
+      origin: '대한민국 🇰🇷',
+      vegan: '100% Plant-based',
+      allergen: '해당 없음',
+    },
+    ingredients: [
+      ['청양고추 파우더','28%','대한민국'],
+      ['표고버섯 파우더','22%','대한민국'],
+      ['건조 배추','16%','대한민국'],
+      ['건조 양파','12%','대한민국'],
+      ['건조 대파','10%','대한민국'],
+      ['소금','5%','—'],
+      ['마늘 파우더','4%','대한민국'],
+      ['생강 파우더','2%','대한민국'],
+      ['건조 무','1%','대한민국'],
+    ],
+  },
+  4: {
+    tagline: '한국 김치의 발효 신맛 + 베트남이 사랑하는 타마린의 새콤함. 두 나라의 \'신맛 DNA\'가 만나 탄생한 전혀 새로운 육수.',
+    intro: '국내산 숙성 김치 농축액, 타마린 파우더, 토마토 파우더, 멸치 다시 베이스를 절묘하게 배합한 새콤하고 깊은 맛의 육수 코인입니다.<br><br>김치의 발효 신맛은 타마린의 순수한 과일 산미와 만나 서로의 단점을 보완합니다. 김치 특유의 강한 발효향은 타마린이 부드럽게 잡아주고, 타마린의 단조로운 신맛은 김치 발효의 복합적인 풍미로 채워집니다.',
+    howto: [
+      '🍲 Canh chua kiểu Hàn (한국식 새콤한 생선탕) — 생선·새우·채소와 함께',
+      '🥬 김치찌개 국물 베이스 — 물 대신 이 코인 육수로 더 깊은 김치찌개',
+      '🍜 Bún riêu (새콤한 게살 쌀국수) 베이스 — 새콤한 육수로 변주',
+      '🫕 Lẩu chua cay (새콤매콤 샤브샤브) — 코인 2알로 K-VN 퓨전 전골',
+      '🍳 해물볶음 소스 베이스 — 오징어·새우 볶을 때 국물 소스로',
+    ],
+    specs: {
+      main: '숙성 김치 농축액, 타마린 파우더, 토마토 파우더, 멸치 다시 농축액, 고춧가루, 마늘 파우더, 소금',
+      origin: '대한민국 🇰🇷 (김치 농축액) + 베트남산 타마린',
+      allergen: '생선(멸치)',
+    },
+    ingredients: [
+      ['숙성 김치 농축액','30%','대한민국'],
+      ['타마린 파우더','18%','베트남'],
+      ['멸치 다시 농축액','16%','대한민국'],
+      ['토마토 파우더','12%','대한민국/베트남'],
+      ['고춧가루','8%','대한민국'],
+      ['마늘 파우더','6%','대한민국'],
+      ['소금','5%','—'],
+      ['건조 대파','3%','대한민국'],
+      ['생강 파우더','1.5%','대한민국'],
+      ['후추 파우더','0.5%','—'],
+    ],
+  },
+};
+
 function updateBrandDesc(filter) {
   const el = document.getElementById('brandDesc');
   if (!el) return;
@@ -1598,6 +1731,22 @@ function filterProducts(filter, btn) {
   if (btn) btn.classList.add('active');
   else { const m={all:0,coin:1,seasoning:2,sauce:3}; const b=document.querySelectorAll('.filter-btn'); if(b[m[filter]]) b[m[filter]].classList.add('active'); }
 }
+function _buildRichBody(d) {
+  const specRows = [
+    d.specs.main     && `<div class="modal-spec-row"><span class="modal-spec-key">주요 성분</span><span class="modal-spec-val">${d.specs.main}</span></div>`,
+    d.specs.origin   && `<div class="modal-spec-row"><span class="modal-spec-key">원산지</span><span class="modal-spec-val">${d.specs.origin}</span></div>`,
+    d.specs.vegan    && `<div class="modal-spec-row"><span class="modal-spec-key">비건</span><span class="modal-spec-val">${d.specs.vegan}</span></div>`,
+    d.specs.allergen && `<div class="modal-spec-row"><span class="modal-spec-key">알레르기</span><span class="modal-spec-val">${d.specs.allergen}</span></div>`,
+  ].filter(Boolean).join('');
+  const ingrRows = d.ingredients.map(([n,p,o]) => `<tr><td>${n}</td><td>${p}</td><td>${o}</td></tr>`).join('');
+  return `<div class="modal-tagline">${d.tagline}</div>
+    <div class="modal-sec"><span class="modal-sec-label">제품 소개</span><p class="modal-intro">${d.intro}</p></div>
+    <div class="modal-sec"><span class="modal-sec-label">이렇게 드세요</span><ul class="modal-howto-list">${d.howto.map(h=>`<li class="modal-howto-item">${h}</li>`).join('')}</ul></div>
+    <div class="modal-sec"><span class="modal-sec-label">제품 스펙</span><div class="modal-spec-grid">${specRows}</div></div>
+    <div class="modal-sec"><span class="modal-sec-label">원재료</span>
+      <table class="modal-ingr-table"><thead><tr><th>원재료명</th><th>함량</th><th>원산지</th></tr></thead>
+      <tbody>${ingrRows}</tbody></table></div>`;
+}
 function openProduct(id) {
   currentProduct = products.find(p => p.id === id); if (!currentProduct) return;
   const lang = typeof currentLang !== 'undefined' ? currentLang : 'ko';
@@ -1605,7 +1754,14 @@ function openProduct(id) {
   document.getElementById('modalCat').textContent = catFull[lang][currentProduct.cat];
   document.getElementById('modalName').textContent = lang === 'ko' ? currentProduct.name : currentProduct.en;
   document.getElementById('modalEn').textContent = lang === 'ko' ? currentProduct.en : '';
-  document.getElementById('modalDesc').textContent = lang === 'ko' ? currentProduct.desc : (productEnDesc && productEnDesc[id] ? productEnDesc[id] : currentProduct.en);
+  const bodyEl = document.getElementById('modalBody');
+  const d = productDetails[id];
+  if (d) {
+    bodyEl.innerHTML = _buildRichBody(d);
+  } else {
+    const desc = lang === 'ko' ? currentProduct.desc : (productEnDesc && productEnDesc[id] ? productEnDesc[id] : currentProduct.en);
+    bodyEl.innerHTML = `<div class="modal-product-desc">${desc}</div>`;
+  }
   document.getElementById('modalPrice').innerHTML = currentProduct.price === 'TBD'
     ? `<span style="font-size:1rem;font-family:'Noto Sans KR',sans-serif;color:#bbb">${priceTbd[lang]}</span>`
     : currentProduct.price + '<span>₫</span>';
