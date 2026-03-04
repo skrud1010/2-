@@ -880,26 +880,27 @@
     font-size: 1.3rem; cursor: pointer; padding: 4px 8px; line-height: 1;
   }
   .sidebar-close:hover { color: var(--white); }
-  .sidebar-nav { flex: 1; padding: 6px 0; }
-  .sidebar-item { border-bottom: 1px solid #f0f0f0; }
-  .sidebar-item > a {
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 15px 20px; font-family: 'Montserrat', sans-serif; font-weight: 700;
-    font-size: 0.78rem; letter-spacing: 1.5px; text-transform: uppercase;
-    color: #222; text-decoration: none; transition: color 0.2s;
+  .sidebar-nav { flex: 1; padding: 8px 0; overflow-y: auto; }
+  .sidebar-section-label {
+    display: block; padding: 14px 20px 6px;
+    font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.68rem;
+    letter-spacing: 2.5px; text-transform: uppercase; color: var(--red);
+    border-top: 1px solid #eee; margin-top: 6px;
   }
-  .sidebar-item > a:hover { color: var(--red); }
-  .sidebar-item > a .sb-arrow { font-size: 0.6rem; transition: transform 0.2s; }
-  .sidebar-item.expanded > a .sb-arrow { transform: rotate(90deg); }
-  .sidebar-sub { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; background: var(--gray-light); }
-  .sidebar-item.expanded .sidebar-sub { max-height: 300px; }
-  .sidebar-sub a {
-    display: block; padding: 11px 32px; font-family: 'Noto Sans KR', sans-serif;
-    font-size: 0.82rem; color: #444; text-decoration: none;
-    border-bottom: 1px solid #eaeaea; transition: color 0.15s;
+  .sidebar-section-label:first-child { border-top: none; margin-top: 0; }
+  .sidebar-section-direct { cursor: pointer; padding-bottom: 14px; }
+  .sidebar-section-direct:hover { color: var(--dark-red); }
+  .sidebar-nav-link {
+    display: block; padding: 11px 20px 11px 32px;
+    font-family: 'Noto Sans KR', sans-serif; font-size: 0.84rem;
+    color: #333; text-decoration: none; border-bottom: 1px solid #f5f5f5;
+    transition: all 0.15s; position: relative;
   }
-  .sidebar-sub a:last-child { border-bottom: none; }
-  .sidebar-sub a:hover { color: var(--red); }
+  .sidebar-nav-link::before {
+    content: '—'; position: absolute; left: 18px; color: #ccc; font-size: 0.7rem;
+  }
+  .sidebar-nav-link:last-of-type { border-bottom: none; }
+  .sidebar-nav-link:hover { color: var(--red); background: #fef9f0; padding-left: 36px; }
   .sidebar-footer {
     padding: 16px 20px; display: flex; flex-direction: column;
     gap: 10px; border-top: 2px solid #eee; flex-shrink: 0;
@@ -985,8 +986,8 @@
       <span class="nav-user-name" id="navUserName"></span>
       <button class="logout-btn" onclick="handleLogout()">로그아웃</button>
     </div>
-    <button class="staff-btn" onclick="window.open('#', '_blank')">직원용</button>
     <button class="login-btn" id="navLoginBtn" data-t="nav-login" onclick="document.getElementById('loginModal').classList.add('show')">Login</button>
+    <button class="staff-btn" data-t="nav-staff" onclick="window.open('#', '_blank')">직원용</button>
   </div>
 </nav>
 
@@ -998,33 +999,17 @@
     <button class="sidebar-close" onclick="closeSidebar()">✕</button>
   </div>
   <nav class="sidebar-nav">
-    <div class="sidebar-item" id="sb-about">
-      <a href="#" onclick="sbToggle('sb-about'); return false;">
-        <span data-t="nav-about">다미 소개</span><span class="sb-arrow">▶</span>
-      </a>
-      <div class="sidebar-sub">
-        <a href="#" onclick="closeSidebar(); showPage('about'); showAboutTab(0); return false;" data-t="nav-brand-story">다미 스토리</a>
-        <a href="#" onclick="closeSidebar(); showPage('about'); showAboutTab(1); return false;" data-t="nav-brand-philo">다미의 철학</a>
-        <a href="#" onclick="closeSidebar(); showPage('about'); showAboutTab(2); return false;" data-t="nav-promise">다미의 약속</a>
-        <a href="#" onclick="closeSidebar(); showPage('about'); showAboutTab(3); return false;" data-t="nav-vision">다미의 비전</a>
-      </div>
-    </div>
-    <div class="sidebar-item" id="sb-products">
-      <a href="#" onclick="sbToggle('sb-products'); return false;">
-        <span data-t="nav-products">제품 소개</span><span class="sb-arrow">▶</span>
-      </a>
-      <div class="sidebar-sub">
-        <a href="#" onclick="closeSidebar(); showPage('products'); filterProducts('all',null); return false;" data-t="nav-all-products">전체 제품</a>
-        <a href="#" onclick="closeSidebar(); showPage('products'); filterProducts('coin',null); return false;" data-t="nav-coin">코인 육수</a>
-        <a href="#" onclick="closeSidebar(); showPage('products'); filterProducts('seasoning',null); return false;" data-t="nav-seasoning">가루 시즈닝</a>
-        <a href="#" onclick="closeSidebar(); showPage('products'); filterProducts('sauce',null); return false;" data-t="nav-sauce">액체 소스</a>
-      </div>
-    </div>
-    <div class="sidebar-item">
-      <a href="#" onclick="closeSidebar(); showPage('contact'); return false;">
-        <span data-t="nav-contact">고객 서비스</span>
-      </a>
-    </div>
+    <div class="sidebar-section-label" data-t="nav-about">다미 소개</div>
+    <a class="sidebar-nav-link sb-sub" href="#" onclick="closeSidebar(); showPage('about'); showAboutTab(0); return false;" data-t="nav-brand-story">다미 스토리</a>
+    <a class="sidebar-nav-link sb-sub" href="#" onclick="closeSidebar(); showPage('about'); showAboutTab(1); return false;" data-t="nav-brand-philo">다미의 철학</a>
+    <a class="sidebar-nav-link sb-sub" href="#" onclick="closeSidebar(); showPage('about'); showAboutTab(2); return false;" data-t="nav-promise">다미의 약속</a>
+    <a class="sidebar-nav-link sb-sub" href="#" onclick="closeSidebar(); showPage('about'); showAboutTab(3); return false;" data-t="nav-vision">다미의 비전</a>
+    <div class="sidebar-section-label" data-t="nav-products">제품 소개</div>
+    <a class="sidebar-nav-link sb-sub" href="#" onclick="closeSidebar(); showPage('products'); filterProducts('all',null); return false;" data-t="nav-all-products">전체 제품</a>
+    <a class="sidebar-nav-link sb-sub" href="#" onclick="closeSidebar(); showPage('products'); filterProducts('coin',null); return false;" data-t="nav-coin">코인 육수</a>
+    <a class="sidebar-nav-link sb-sub" href="#" onclick="closeSidebar(); showPage('products'); filterProducts('seasoning',null); return false;" data-t="nav-seasoning">가루 시즈닝</a>
+    <a class="sidebar-nav-link sb-sub" href="#" onclick="closeSidebar(); showPage('products'); filterProducts('sauce',null); return false;" data-t="nav-sauce">액체 소스</a>
+    <div class="sidebar-section-label sidebar-section-direct" onclick="closeSidebar(); showPage('contact');" data-t="nav-contact">고객 서비스</div>
   </nav>
   <div class="sidebar-footer">
     <div class="sidebar-lang-row">
@@ -1118,7 +1103,7 @@
   <!-- ③ 브랜드 소개 -->
   <section class="intro-section">
     <div class="intro-left">
-      <h2 data-t="intro-h2">우리가<br><span style="color:var(--yellow)">달라야 했던</span><br>이유</h2>
+      <h2 data-t="intro-h2">우리가<br><span style="color:var(--yellow)">달라야 했던</span>이유</h2>
       <p data-t="intro-body">
         "왜 한국의 감칠맛과 베트남의 향긋함이 꼭 따로 존재해야 할까?"<br><br>
         다미푸드는 그 질문에서 태어났습니다.<br>
@@ -2264,6 +2249,154 @@ const productDetails = {
   },
 };
 
+/* ── PRODUCT DETAIL TRANSLATIONS (EN / VI) ── */
+const productDetailsLang = {
+  en: {
+    1: {
+      tagline: 'The rich beef flavor that tops Vietnam\'s beef noodle market, now with Korean spicy heat. One coin completes your Yukgaejang broth.',
+      intro: 'A coin broth made from beef bone extract, dried green onion, gochugaru, garlic, and bean sprout powder,<br>cold-compressed into a single tablet.<br>Drop one coin into 500ml of boiling water and stir for 30 seconds — bold Yukgaejang broth, done.<br><br>The convenience of instant, the taste of homemade.<br>The beloved Yukgaejang recipe cherished in Korean homes for decades,<br>pressed into a single coin.',
+      howto: ['Instant noodle broth — 500ml boiling water + 1 coin + rice noodles (Bún / Phở)','Lẩu bò (beef shabu-shabu) base — 2~3 coins for rich hot-pot broth','Beef soup rice — pour Yukgaejang broth over rice for a quick meal','Stew & stir-fry broth base — use for kimchi stew or doenjang stew','Ramen upgrade — add 1 coin when boiling ramen noodles'],
+    },
+    2: {
+      tagline: 'The Korean broth most similar to Vietnam\'s beloved fish sauce soul — Anchovy Noodle Soup. Clean, refreshing umami in one coin.',
+      intro: 'Carefully selected domestic dried anchovy, kelp, green onion, and radish powder,<br>cold-compressed into MIDAM\'s signature broth coin.<br><br>Without the strong fermented odor typical of fish sauce,<br>it captures only the clean, clear, refreshing umami of anchovy dashi.<br>The core product of the basic line, perfect for any dish.',
+      howto: ['Janchi noodles / Bún nước lèo — 500ml boiling water + 1 coin, cook vermicelli or bun bi','Phở gà (chicken rice noodle) base upgrade — add deeper umami','Canh (Vietnamese clear soup) — add vegetables & tofu for a light Korean-style clear soup','Lẩu thập cẩm (assorted shabu-shabu) broth — for a clear, clean base','Egg soup & clear stew broth base'],
+    },
+    3: {
+      tagline: 'The K-hangover cure flavor loved by Korean Gen-Z. Spicy, clear vegan broth, now in one coin. Vegan, hangover cure, and diet — all at once.',
+      intro: 'Cheongyang chili, shiitake mushroom, onion, cabbage, green onion —<br>a clear, transparent broth coin made purely from vegetables and mushrooms,<br>without any animal ingredients.<br><br>The natural glutamic acid in shiitake creates deep umami,<br>and the clean, spicy kick of cheongyang chili rises up sharply,<br>drawing the reaction: \'This much depth without meat?\'',
+      howto: ['Lẩu chay spicy vegan shabu-shabu — 2~3 coins for a spicy veggie broth base','Korean ramen base — add 1 coin for a spicy broth upgrade','Canh chua rau (clear vegetable soup) — add tofu, mushrooms & veggies for easy vegan soup','Bún chay (vegan rice noodles) — clear, spicy Korean-style vegan noodles','Hangover soup — 1 coin + tofu + bean sprouts for morning recovery'],
+    },
+    4: {
+      tagline: 'The fermented sourness of Korean kimchi + the tanginess of Vietnam\'s beloved tamarind. A completely new broth born where the \'sour DNA\' of two nations meets.',
+      intro: 'A sour, deep-flavored broth coin made by artfully blending<br>domestic aged kimchi extract, tamarind powder, tomato powder, and anchovy dashi base.<br><br>Kimchi\'s fermented sourness meets tamarind\'s pure fruit acidity, complementing each other\'s weaknesses.<br>Kimchi\'s strong fermented aroma is gently tamed by tamarind,<br>while tamarind\'s monotone sourness is filled by kimchi\'s complex fermented depth.',
+      howto: ['Canh chua kiểu Hàn (Korean sour fish soup) — with fish, shrimp & vegetables','Kimchi stew broth base — replace water with this coin broth for deeper kimchi stew','Bún riêu (sour crab rice noodle) base — a tangy broth variation','Lẩu chua cay (sour & spicy hot pot) — 2 coins for K-VN fusion hot pot','Seafood stir-fry sauce base — use as broth sauce for squid & shrimp stir-fry'],
+    },
+    7: {
+      tagline: 'Vietnam\'s most beloved Korean flavor, Bulgogi. That sweet-savory richness on your table every day — MYOMI with cha bông makes it happen.',
+      intro: 'A flake-type seasoning combining sweet-savory soy sauce-based bulgogi seasoning<br>with crispy pork flakes and toasted sesame.<br><br>If local cha bông stops at simple meat flavor, MYOMI K-BBQ is different.<br>The natural sweetness of pear juice, the deep umami of soy sauce, the nuttiness of sesame oil<br>are all coated over pork flakes, delivering a \'bulgogi experience\' in every bite.',
+      howto: ['Bánh mì filling — put inside the bread for a K-bulgogi Bánh mì','Rice topping — one spoon over warm rice for instant bulgogi rice bowl','Cháo (Vietnamese congee) topping — sprinkle over plain porridge for a flavor boost','Egg scramble & fried egg topping','Popcorn & puffed rice seasoning — sprinkle for K-bulgogi flavored snacks','Fried rice seasoning — one spoon as finishing touch'],
+    },
+    8: {
+      tagline: 'Everything about Vietnam\'s beloved hot pot (Lẩu) and meat dishes in one spoon. Rich umami from doenjang base and the nuttiness of perilla seed — MYOMI Gamjatang Seasoning completes it.',
+      intro: 'A flake-type seasoning made from a precise blend of doenjang, perilla seed powder, gochugaru, pork flakes, and garlic.<br>Perilla seed nuttiness as the main note, with a subtle hint of perilla leaf aroma,<br>capturing only the essence of Korean Gamjatang.<br><br>Unlike regular powder soup seasonings, MYOMI Gamjatang Seasoning<br>comes as a \'Gamjatang cha bông furikake\' with pork flakes,<br>recreating even the chewy texture.<br>A dual-purpose seasoning — dissolve in water for broth, or sprinkle over rice as a topping.',
+      howto: ['Lẩu hot pot base — 2 spoons in 500ml water for instant K-Gamjatang hot pot','Rice topping — Gamjatang cha bông topping for a delicious meal','Ramen & rice noodle seasoning — add one spoon while cooking','Pork braising & stir-fry — sprinkle over meat for Gamjatang flavor coating','Steamed egg base — dissolve seasoning for Korean-style steamed egg','Ssam sauce substitute — dip with boiled meat or vegetable wraps'],
+    },
+    9: {
+      tagline: 'Korea\'s hottest chicken dish, Dakgalbi. The fiery aroma of gochujang and the harmony of sweet honey — MYOMI brings Chuncheon Dakgalbi to your home.',
+      intro: 'A dry marinade seasoning based on taeyang-cho gochujang powder, honey powder, garlic, ginger, and soy sauce powder.<br>Coat and marinate chicken with MYOMI Dakgalbi Seasoning directly,<br>and the fermented depth of gochujang seeps into the meat, achieving a restaurant-level dakgalbi marinade.<br><br>Advantage of dry format: it adheres to the meat surface without moisture,<br>forming a delicious caramelized layer on the outside when grilled or stir-fried.<br>The only way to recreate Chuncheon Dakgalbi\'s signature \'charred marinade coating\' at home.',
+      howto: ['Dakgalbi stir-fry — marinate 500g chicken with 3 spoons of seasoning for 30 min, then stir-fry','Gà nướng K-Dakgalbi — coat chicken with seasoning and grill or bake in oven','Bún xào / Phở xào — use as stir-fried rice noodle base seasoning','Iron plate stir-fry — chicken + sweet potato + tteok + MYOMI Dakgalbi Seasoning','Dakgalbi pizza sauce — dissolve seasoning in oil as pizza base','Dakgalbi salad dressing — mix with boiled chicken breast for K-Dakgalbi salad'],
+    },
+    10: {
+      tagline: 'Cleaning abalone? Long cooking time? No longer needed. One spoon of MYOMI Abalone Porridge Seasoning, one cup of hot water — premium Korean health food in 1 minute.',
+      intro: 'An instant porridge seasoning made from dried abalone powder, abalone viscera powder, rice flour, sesame oil, and kelp powder,<br>precisely formulated.<br>The rice flour creates the base consistency,<br>and abalone powder and viscera powder recreate the rich, deep oceanic umami unique to abalone.<br><br>The biggest differentiator is the chewy abalone pieces.<br>Not just powder — dried abalone pieces are included to recreate the texture of eating real abalone.<br>A \'premium K-health food\' on a completely different level from instant porridge.',
+      howto: ['Instant abalone porridge — 2 spoons + 200ml hot water, stir well for 30 seconds','Abalone risotto — lightly sauté rice then add broth with dissolved seasoning','Cháo trắng upgrade — add 1 spoon of seasoning to plain porridge for premium abalone taste','Abalone steamed egg — mix seasoning into egg mixture and steam','Abalone ramen — use seasoning instead of ramen broth for premium abalone noodle soup','Recovery food — easy nourishing porridge for post-surgery or post-partum recovery'],
+    },
+    11: {
+      tagline: 'Korea\'s most addictive combination, brought to Vietnamese tables by PUNGMI.',
+      intro: 'PUNGMI K-Cheongyang Mayo Sauce is not simply a product of mixing chili into mayonnaise.<br><br>The clean, sharp spiciness of Korean cheongyang chili extract<br>is blended in a perfect ratio with a rich, creamy mayonnaise base,<br>creating a dual flavor — smooth at first, spicy at the finish.<br>The formula for \'cay nhẹ, béo ngậy (mildly spicy and creamy)\' taste,<br>realized with Korea\'s signature chili.',
+      howto: ['Bánh mì — squeeze generously inside the bread','Seafood fritter dipping — dip shrimp & squid','Drizzle over chicken & grilled meat','Salad dressing drizzle','One squeeze over fried rice as a finishing sauce'],
+    },
+    12: {
+      tagline: 'That sauce on Vietnam\'s seafood table, completely transformed when Korean plum enters. K-Soul meets VN Seafood.',
+      intro: 'In Korea, plum has been used as a traditional fermented ingredient in health drinks and condiments for hundreds of years.<br>It is characterized by natural acidity, subtle sweetness, and a clean aftertaste.<br><br>The combination of Korean plum extract + Vietnamese lime juice + fish sauce (Nước mắm) base<br>maintains the sour profile familiar to Vietnamese,<br>while the plum\'s deep, complex acidity adds a familiar yet sophisticated experience.<br>Made only from natural ingredients without artificial flavoring,<br>this sauce achieves both health and premium quality.',
+      howto: ['Steamed shrimp, crab & clam dipping — the perfect sauce to highlight natural seafood flavor','Grilled fish accompaniment — clean acidity to cut through richness','Cold seafood salad dressing — drizzle over the salad','Bún bò / Bún chả broth accent — add one spoon','Seafood marinade base sauce'],
+    },
+    13: {
+      tagline: 'What happens when Korean Ssamjang meets Vietnam\'s Gỏi cuốn? You\'ll no longer need any other sauce.',
+      intro: 'The base ssamjang is infused with essential ingredients of Vietnamese cuisine.<br><br>The rich umami of doenjang + gochujang base is layered with the freshness of lime zest,<br>the exotic aroma of coriander oil, and the sweet herbal note of basil powder,<br>unfolding complex flavors in every bite of fresh spring roll.<br>Less heavy than peanut sauce, deeper umami than fish sauce (Nước mắm) —<br>an all-around K-herb dipping sauce that pairs with any fresh vegetable dish on the Vietnamese table.',
+      howto: ['Gỏi cuốn (Vietnamese spring roll) dipping — as alternative to or alongside peanut sauce','Bò nhúng dấm (shabu-shabu rice noodle) accompaniment sauce','Ssam vegetable sauce — for all wrap dishes with lettuce, perilla leaf, kale','Fresh vegetable salad dressing','Xiên nướng (Vietnamese skewered grill) dipping'],
+    },
+    14: {
+      tagline: 'Vietnam\'s open-air barbecue culture, Korean bulgogi marinade, and the creamy richness of coconut cream. The three meet to create the ultimate BBQ glaze.',
+      intro: 'This glaze — made from dark soy sauce & pear juice (bulgogi base) + coconut cream + garlic — is not a simple marinade sauce.<br><br>During grilling, it caramelizes to form a glossy glaze layer on the meat surface,<br>and the coconut cream, when heated, adds a nutty aroma that maximizes the visual and flavor of freshly grilled meat.<br>Used as a marinade, the meat becomes tender,<br>and brushed once more while grilling, it completes a restaurant-quality BBQ glaze.',
+      howto: ['Marinade — marinate 500g of meat with 3 tablespoons of sauce for 30 minutes, then grill','Glazing — squeeze once more over meat while grilling to maximize shine','Gà nướng (chicken BBQ) — coat and make K-coconut chicken BBQ','Ba chỉ nướng (grilled pork belly) with a new marinade','Use 2 tablespoons as stir-fry base sauce'],
+    },
+    15: {
+      tagline: 'The popularity of Korean chicken + the refreshing tang of Vietnamese mango. The era of making K-chicken wings at home has arrived.',
+      intro: 'Using only gochujang creates a heavy, overly-spicy flavor.<br>This is where mango plays a magical role.<br><br>The natural acidity and sweetness of Vietnamese mango purée<br>meets the fermented depth of gochujang, complementing each other\'s weaknesses<br>and maximizing strengths — creating the most ideal balance of \'Ngọt cay (sweet-spicy)\'.<br>Designed as a glaze type, squeeze directly onto wings and drumsticks and grill<br>for a glossy wing glaze that adheres firmly to the surface.',
+      howto: ['Chicken wing glaze — squeeze and brush on wings & drumsticks in the last 5 min of grilling','Shrimp glaze — toss with grilled shrimp for K-mango shrimp','Fried food coating sauce — toss fried chicken, shrimp, or tofu','One line sauce on Bánh mì / Taco','Pizza sauce substitute — sweet-spicy K-mango pizza'],
+    },
+    16: {
+      tagline: 'Korea\'s hottest sauce trend \'Rosé\', finally completed when it meets Vietnam\'s soul \'Lemongrass\'.',
+      intro: 'PUNGMI\'s own K-VN fusion stir-fry sauce, completed with a triangle of taeyang-cho gochujang + cream powder + minced lemongrass.<br><br>Unlike regular rosé sauce, PUNGMI K-Rosé Lemongrass Sauce<br>is designed as a versatile fusion stir-fry sauce usable in all Vietnamese stir-fry and noodle dishes.<br>Bún xào (stir-fried vermicelli), Phở xào (stir-fried rice noodles), Gà xào (stir-fried chicken) —<br>a localized K-sauce that can be added directly to everyday Vietnamese home cooking.',
+      howto: ['Phở xào / Bún xào (stir-fried rice noodles) — add 2 tablespoons of sauce while stir-frying','Gà xào sả (lemongrass chicken stir-fry) — vary the usual recipe with rosé sauce','Fusion pasta — stir-fry with cooked noodles for K-rosé pasta','Stir-fry base for shrimp, squid & seafood','Spread on pizza dough for K-rosé pizza'],
+    },
+  },
+  vi: {
+    1: {
+      tagline: 'Hương vị thịt bò đậm đà đứng đầu thị trường bún bò Việt Nam, kết hợp vị cay nồng của Hàn Quốc. Một viên cho ra nước lẩu Yukgaejang hoàn hảo.',
+      intro: 'Viên nước dùng được làm từ tinh chất xương bò, hành lá khô, ớt bột, tỏi và bột giá đỗ,<br>nén lạnh thành dạng viên.<br>Thả một viên vào 500ml nước sôi, khuấy 30 giây — nước dùng Yukgaejang đậm đà hoàn thành.<br><br>Tiện lợi của đồ ăn nhanh, hương vị của cơm nhà.<br>Công thức Yukgaejang được yêu thích trong các gia đình Hàn Quốc suốt hàng chục năm,<br>nén trong một viên đồng xu.',
+      howto: ['Nước dùng bún tươi — 500ml nước sôi + 1 viên + bún / phở','Nền lẩu bò — 2~3 viên cho nước lẩu đậm đà','Cơm bò — đổ nước dùng Yukgaejang lên cơm cho bữa ăn nhanh','Nền nước kho & xào — dùng cho canh kimchi hoặc canh tương','Nâng cấp mì ăn liền — thêm 1 viên khi nấu mì'],
+    },
+    2: {
+      tagline: 'Nước dùng Hàn Quốc gần nhất với linh hồn nước mắm Việt Nam — Bún cá cơm. Vị umami tươi sáng, thanh mát trong một viên.',
+      intro: 'Cá cơm khô, tảo biển, hành lá và bột củ cải được chọn lọc kỹ lưỡng,<br>nén lạnh thành viên nước dùng đặc trưng của MIDAM.<br><br>Không có mùi lên men nồng đặc trưng của nước mắm,<br>chỉ giữ lại vị umami trong trẻo, thanh mát độc đáo của nước dùng cá cơm.<br>Sản phẩm cốt lõi của dòng cơ bản, phù hợp với mọi món ăn.',
+      howto: ['Bún nước lèo — 500ml nước sôi + 1 viên, luộc bún hoặc bún bì','Nâng cấp nền Phở gà — thêm vị umami sâu hơn','Canh rau thanh — thêm rau và đậu phụ cho canh thuần Hàn Quốc','Nền lẩu thập cẩm — cho nước lẩu trong và thanh','Nền canh trứng & canh nhẹ'],
+    },
+    3: {
+      tagline: 'Hương vị giải rượu được thế hệ MZ Hàn Quốc ưa chuộng. Nước dùng rau thanh cay, nay chỉ cần một viên. Vegan, giải rượu và ăn kiêng — tất cả trong một.',
+      intro: 'Ớt cheongyang, nấm hương, hành tây, cải thảo, hành lá —<br>Viên nước dùng trong suốt, thanh mát được làm thuần từ rau và nấm,<br>không có nguyên liệu động vật.<br><br>Axit glutamic tự nhiên trong nấm hương tạo vị umami sâu đậm,<br>vị cay thanh của ớt cheongyang bùng lên sắc nét,<br>tạo ra phản ứng: \'Sao lại đậm đà đến vậy mà không có thịt?\'',
+      howto: ['Lẩu chay cay — 2~3 viên cho nền nước lẩu rau cay','Nền mì Hàn Quốc — thêm 1 viên để nâng cấp nước dùng cay','Canh chua rau — thêm đậu phụ, nấm và rau cho canh chay đơn giản','Bún chay — bún kiểu Hàn Quốc thanh cay','Canh giải rượu — 1 viên + đậu phụ + giá đỗ cho bữa sáng phục hồi'],
+    },
+    4: {
+      tagline: 'Vị chua lên men của kimchi Hàn Quốc + vị chua ngọt của me Việt Nam được yêu thích. Nước dùng hoàn toàn mới ra đời từ nơi \'ADN chua\' của hai quốc gia gặp nhau.',
+      intro: 'Viên nước dùng chua đậm đà được tạo ra từ sự phối trộn tinh tế giữa<br>tinh chất kimchi lên men, bột me, bột cà chua và nền nước dùng cá cơm.<br><br>Vị chua lên men của kimchi gặp vị chua ngọt thuần khiết của me, bù trừ cho nhau.<br>Mùi lên men mạnh đặc trưng của kimchi được me làm dịu đi,<br>trong khi vị chua đơn điệu của me được lấp đầy bởi chiều sâu lên men phức tạp của kimchi.',
+      howto: ['Canh chua kiểu Hàn — với cá, tôm và rau củ','Nền nước canh kimchi — thay nước bằng viên nước dùng này cho canh kimchi đậm hơn','Nền bún riêu — biến tấu nước dùng chua ngọt','Lẩu chua cay — 2 viên cho lẩu fusion K-VN','Nền sốt xào hải sản — dùng làm sốt nước cho xào mực và tôm'],
+    },
+    7: {
+      tagline: 'Hương vị Hàn Quốc được Việt Nam yêu thích nhất, Bulgogi. Hương vị ngọt mặn đó trên bàn ăn mỗi ngày — MYOMI cùng với chà bông hoàn thiện nó.',
+      intro: 'Gia vị dạng mảnh kết hợp gia vị bulgogi vị ngọt mặn nền nước tương<br>với mảnh thịt heo giòn và mè rang.<br><br>Nếu chà bông địa phương chỉ dừng lại ở hương vị thịt đơn giản, MYOMI K-BBQ thì khác.<br>Vị ngọt tự nhiên của nước ép lê, vị umami sâu của nước tương, hương thơm béo của dầu mè<br>được phủ lên các mảnh thịt heo, mang lại \'trải nghiệm ăn bulgogi\' trong từng miếng.',
+      howto: ['Nhân bánh mì — cho vào trong bánh để có bánh mì K-bulgogi','Topping cơm — một thìa trên cơm nóng cho cơm trộn bulgogi tức thì','Topping cháo trắng — rắc lên cháo cho hương vị phong phú hơn','Topping trứng scramble & trứng chiên','Gia vị bắp rang & gạo nổ — rắc cho snack hương vị K-bulgogi','Gia vị cơm chiên — một thìa hoàn thiện'],
+    },
+    8: {
+      tagline: 'Tất cả về lẩu và món thịt được Việt Nam yêu thích trong một thìa. Vị umami đậm đà từ nền tương đậu và hương béo của hạt tía tô — MYOMI Gia vị Gamjatang hoàn thiện nó.',
+      intro: 'Gia vị dạng mảnh làm từ hỗn hợp tương đậu, bột hạt tía tô, ớt bột, mảnh thịt heo và tỏi được phối trộn chính xác.<br>Hương béo của hạt tía tô là nốt chính, với một chút hương lá tía tô được thêm tinh tế,<br>giữ lại chỉ tinh túy của Gamjatang Hàn Quốc.<br><br>Khác với gia vị súp bột thông thường, MYOMI Gia vị Gamjatang<br>có dạng \'chà bông furikake Gamjatang\' với mảnh thịt heo,<br>tái hiện cả kết cấu dai.<br>Gia vị đa dụng — hòa tan trong nước làm nước dùng hoặc rắc lên cơm làm topping.',
+      howto: ['Nền lẩu — 2 thìa trong 500ml nước cho lẩu K-Gamjatang tức thì','Topping cơm — topping chà bông Gamjatang cho bữa ăn ngon','Gia vị mì & bún — thêm một thìa khi nấu','Hấp & xào thịt heo — rắc lên thịt để phủ hương vị Gamjatang','Nền trứng hấp — hòa tan gia vị cho trứng hấp kiểu Hàn','Thay sốt ssam — chấm thịt luộc hoặc cuốn rau'],
+    },
+    9: {
+      tagline: 'Món gà nóng nhất Hàn Quốc, Dakgalbi. Hương cháy nồng của gochujang và sự hài hòa của mật ong ngọt — MYOMI đưa Dakgalbi Chuncheon đến nhà bạn.',
+      intro: 'Gia vị ướp khô dựa trên bột tương ớt taeyang-cho, bột mật ong, tỏi, gừng và bột nước tương.<br>Ướp trực tiếp gà với Gia vị Dakgalbi MYOMI,<br>độ sâu lên men của gochujang thấm vào thịt, tạo ra hương vị ướp dakgalbi chuẩn nhà hàng.<br><br>Ưu điểm dạng khô: bám vào bề mặt thịt mà không cần độ ẩm,<br>tạo lớp caramel ngon trên bề mặt khi nướng hoặc xào.<br>Cách duy nhất để tái hiện \'lớp phủ marinade cháy nồng\' đặc trưng của Dakgalbi Chuncheon tại nhà.',
+      howto: ['Xào dakgalbi — ướp 500g gà với 3 thìa gia vị trong 30 phút, rồi xào','Gà nướng K-Dakgalbi — phủ gia vị lên gà và nướng hoặc nướng lò','Bún xào / Phở xào — dùng làm gia vị nền bún xào','Xào trên chảo sắt — gà + khoai lang + tteok + Gia vị Dakgalbi MYOMI','Sốt pizza Dakgalbi — hòa tan gia vị trong dầu làm nền pizza','Salad dressing Dakgalbi — trộn với ức gà luộc cho salad K-Dakgalbi'],
+    },
+    10: {
+      tagline: 'Làm sạch bào ngư? Thời gian nấu lâu? Không còn cần nữa. Một thìa Gia vị Cháo Bào ngư MYOMI, một ly nước nóng — thức ăn bổ dưỡng cao cấp Hàn Quốc trong 1 phút.',
+      intro: 'Gia vị cháo tức thì được làm từ bột bào ngư khô, bột nội tạng bào ngư, bột gạo, dầu mè và bột tảo biển,<br>phối trộn chính xác.<br>Bột gạo tạo ra độ sệt cơ bản,<br>bột bào ngư và bột nội tạng tái tạo vị umami đậm đà, sâu sắc độc đáo của bào ngư.<br><br>Điểm khác biệt lớn nhất là các miếng bào ngư dai.<br>Không chỉ là bột — các mảnh bào ngư khô được đưa vào để tái hiện kết cấu như ăn bào ngư thật.<br>\'Thức ăn bổ dưỡng K cao cấp\' ở đẳng cấp hoàn toàn khác với cháo ăn liền.',
+      howto: ['Cháo bào ngư tức thì — 2 thìa + 200ml nước nóng, khuấy đều trong 30 giây','Risotto bào ngư — xào nhẹ gạo rồi thêm nước dùng pha gia vị','Nâng cấp cháo trắng — thêm 1 thìa gia vị vào cháo trắng cho hương vị bào ngư cao cấp','Trứng hấp bào ngư — pha gia vị vào hỗn hợp trứng và hấp','Mì bào ngư — dùng gia vị thay nước dùng mì cho mì nước bào ngư cao cấp','Thức ăn phục hồi — cháo bổ dưỡng tiện lợi sau phẫu thuật hoặc sinh con'],
+    },
+    11: {
+      tagline: 'Sự kết hợp gây nghiện nhất Hàn Quốc, được PUNGMI đưa lên bàn ăn Việt Nam.',
+      intro: 'Sốt PUNGMI K-Cheongyang Mayo không đơn giản là trộn ớt vào mayonnaise.<br><br>Vị cay thanh, sắc của tinh chất ớt cheongyang Hàn Quốc<br>được phối trộn với nền mayonnaise đặc kem trong tỷ lệ hoàn hảo,<br>tạo ra hương vị kép — mềm mại ban đầu, cay ở cuối.<br>Công thức cho hương vị \'cay nhẹ, béo ngậy\',<br>được thể hiện bằng ớt đặc trưng của Hàn Quốc.',
+      howto: ['Bánh mì — nặn rộng tay bên trong bánh','Chấm hải sản chiên — chấm tôm & mực','Rưới lên gà & thịt nướng','Nước sốt salad','Một đường trên cơm chiên để hoàn thiện'],
+    },
+    12: {
+      tagline: 'Loại sốt trên bàn ăn hải sản Việt Nam đó, hoàn toàn thay đổi khi gặp me Hàn Quốc. K-Soul gặp VN Seafood.',
+      intro: 'Ở Hàn Quốc, me đã được sử dụng như nguyên liệu lên men truyền thống trong đồ uống sức khỏe và gia vị hàng trăm năm.<br>Đặc trưng bởi vị chua tự nhiên, vị ngọt tinh tế và dư vị sạch sẽ.<br><br>Sự kết hợp giữa tinh chất me Hàn Quốc + nước cốt chanh Việt Nam + nền nước mắm<br>duy trì hương vị chua quen thuộc với người Việt,<br>trong khi vị chua sâu và phức tạp của me thêm vào tạo trải nghiệm quen mà sang trọng.<br>Làm từ nguyên liệu tự nhiên mà không có hương liệu nhân tạo,<br>loại sốt này đạt được cả sức khỏe lẫn chất lượng cao cấp.',
+      howto: ['Chấm tôm hấp, cua & nghêu — sốt hoàn hảo để tôn lên hương vị hải sản tự nhiên','Ăn kèm cá nướng — vị chua thanh mát cắt qua vị béo','Nước sốt gỏi hải sản lạnh — rưới lên gỏi','Điểm nhấn nước dùng Bún bò / Bún chả — thêm một thìa','Sốt marinade hải sản'],
+    },
+    13: {
+      tagline: 'Điều gì xảy ra khi ssamjang Hàn Quốc gặp Gỏi cuốn Việt Nam? Bạn sẽ không còn cần loại sốt nào khác nữa.',
+      intro: 'Ssamjang cơ bản được tích hợp các nguyên liệu thiết yếu của ẩm thực Việt Nam.<br><br>Vị umami đậm đà của nền tương đậu + tương ớt được xếp lớp với vị tươi mát của vỏ chanh,<br>hương thơm kỳ lạ của dầu rau mùi, và hương thảo mộc ngọt của bột húng quế,<br>mở ra hương vị phức tạp trong từng miếng gỏi cuốn.<br>Ít nặng hơn sốt đậu phộng, vị umami sâu hơn nước mắm —<br>sốt chấm K-thảo mộc đa năng phù hợp với bất kỳ món rau tươi nào trên bàn ăn Việt.',
+      howto: ['Chấm Gỏi cuốn — thay thế hoặc kết hợp với sốt đậu phộng','Sốt ăn kèm Bò nhúng dấm','Sốt cuốn rau — cho tất cả các món cuốn với xà lách, lá tía tô, cải xoăn','Nước sốt salad rau tươi','Chấm xiên nướng Việt Nam'],
+    },
+    14: {
+      tagline: 'Văn hóa nướng vỉa hè Việt Nam, nước ướp bulgogi Hàn Quốc, và vị béo mịn của kem dừa. Ba thứ gặp nhau tạo ra glaze BBQ đỉnh nhất từ trước đến nay.',
+      intro: 'Glaze này — làm từ xì dầu đậm & nước ép lê (nền bulgogi) + kem dừa + tỏi — không phải sốt ướp đơn giản.<br><br>Trong quá trình nướng, nó caramel hóa tạo ra lớp glaze bóng trên bề mặt thịt,<br>và kem dừa, khi được gia nhiệt, thêm hương thơm béo ngậy giúp tối đa hóa vẻ ngoài và hương vị của thịt vừa nướng.<br>Dùng ướp, thịt sẽ mềm hơn,<br>và phết thêm một lần khi nướng, tạo ra glaze BBQ chất lượng nhà hàng.',
+      howto: ['Ướp thịt — ướp 500g thịt với 3 thìa canh sốt trong 30 phút rồi nướng','Tráng men — phết thêm lên thịt trong khi nướng để tối đa độ bóng','Gà nướng — phết lên và làm gà BBQ K-dừa','Ba chỉ nướng với nước ướp mới','Dùng 2 thìa canh làm sốt xào nền'],
+    },
+    15: {
+      tagline: 'Sự nổi tiếng của gà Hàn Quốc + vị chua tươi mát của xoài Việt Nam. Thời đại làm cánh gà K-chicken tại nhà đã đến.',
+      intro: 'Chỉ dùng tương ớt tạo ra hương vị nặng, quá cay.<br>Đây là nơi xoài đóng vai trò thần kỳ.<br><br>Vị chua tự nhiên và độ ngọt của xoài purée Việt Nam<br>gặp chiều sâu lên men của tương ớt, bổ sung cho điểm yếu của nhau<br>và tối đa hóa điểm mạnh — tạo ra sự cân bằng lý tưởng nhất của \'ngọt cay\'.<br>Được thiết kế dạng glaze, nặn trực tiếp lên cánh và đùi gà rồi nướng<br>để có glaze cánh bóng bám chặt vào bề mặt.',
+      howto: ['Glaze cánh gà — nặn và phết lên cánh & đùi gà trong 5 phút cuối khi nướng','Glaze tôm — trộn với tôm nướng cho K-tôm xoài','Sốt tẩm chiên — trộn gà chiên, tôm hoặc đậu phụ','Một đường sốt trên Bánh mì / Taco','Thay sốt pizza — pizza K-xoài ngọt cay'],
+    },
+    16: {
+      tagline: 'Xu hướng sốt nóng nhất Hàn Quốc \'Rosé\', cuối cùng hoàn thiện khi gặp \'linh hồn\' Việt Nam — Sả.',
+      intro: 'Sốt xào fusion K-VN đặc trưng của PUNGMI, hoàn thiện với tam giác tương ớt taeyang-cho + bột kem + sả băm nhỏ.<br><br>Khác với sốt rosé thông thường, Sốt Rosé Sả PUNGMI K<br>được thiết kế như sốt xào fusion đa năng có thể dùng trong tất cả các món xào và bún Việt Nam.<br>Bún xào, Phở xào, Gà xào —<br>sốt K địa phương hóa có thể thêm trực tiếp vào nấu ăn hàng ngày tại nhà Việt Nam.',
+      howto: ['Phở xào / Bún xào — thêm 2 thìa sốt khi xào','Gà xào sả — biến tấu công thức thường với sốt rosé','Pasta fusion — xào với mì đã luộc cho pasta K-rosé','Nền xào tôm, mực và hải sản','Phết lên đế pizza cho pizza K-rosé'],
+    },
+  }
+};
+
 /* ── 가격 다국어 변환 (최신 환율 기준) ──
    1 USD ≈ 25,500 VND | 1 KRW ≈ 17.5 VND
    천 단위 아래 생략: KRW → 1,000원 단위, USD → $1 단위 */
@@ -2342,20 +2475,37 @@ function filterProducts(filter, btn) {
   if (btn) btn.classList.add('active');
   else { const m={all:0,coin:1,seasoning:2,sauce:3}; const b=document.querySelectorAll('.filter-btn'); if(b[m[filter]]) b[m[filter]].classList.add('active'); }
 }
-function _buildRichBody(d) {
+const _richLabels = {
+  ko: { intro:'제품 소개', howto:'이렇게 드세요', spec:'제품 스펙', ingr:'원재료',
+        specMain:'주요 성분', specOrigin:'원산지', specVegan:'비건', specAllergen:'알레르기',
+        ingrName:'원재료명', ingrPct:'함량', ingrOrigin:'원산지' },
+  en: { intro:'About', howto:'How to Use', spec:'Specs', ingr:'Ingredients',
+        specMain:'Main Ingredients', specOrigin:'Origin', specVegan:'Vegan', specAllergen:'Allergen',
+        ingrName:'Ingredient', ingrPct:'Amount', ingrOrigin:'Origin' },
+  vi: { intro:'Giới thiệu sản phẩm', howto:'Cách sử dụng', spec:'Thông số', ingr:'Thành phần',
+        specMain:'Thành phần chính', specOrigin:'Xuất xứ', specVegan:'Thuần chay', specAllergen:'Dị ứng',
+        ingrName:'Nguyên liệu', ingrPct:'Hàm lượng', ingrOrigin:'Xuất xứ' },
+};
+function _buildRichBody(d, id) {
+  const lang = typeof currentLang !== 'undefined' ? currentLang : 'ko';
+  const L = _richLabels[lang] || _richLabels.ko;
+  const t = (lang !== 'ko' && productDetailsLang[lang] && productDetailsLang[lang][id]) ? productDetailsLang[lang][id] : null;
+  const tagline = t ? t.tagline : d.tagline;
+  const intro   = t ? t.intro   : d.intro;
+  const howto   = t ? t.howto   : d.howto;
   const specRows = [
-    d.specs.main     && `<div class="modal-spec-row"><span class="modal-spec-key">주요 성분</span><span class="modal-spec-val">${d.specs.main}</span></div>`,
-    d.specs.origin   && `<div class="modal-spec-row"><span class="modal-spec-key">원산지</span><span class="modal-spec-val">${d.specs.origin}</span></div>`,
-    d.specs.vegan    && `<div class="modal-spec-row"><span class="modal-spec-key">비건</span><span class="modal-spec-val">${d.specs.vegan}</span></div>`,
-    d.specs.allergen && `<div class="modal-spec-row"><span class="modal-spec-key">알레르기</span><span class="modal-spec-val">${d.specs.allergen}</span></div>`,
+    d.specs.main     && `<div class="modal-spec-row"><span class="modal-spec-key">${L.specMain}</span><span class="modal-spec-val">${d.specs.main}</span></div>`,
+    d.specs.origin   && `<div class="modal-spec-row"><span class="modal-spec-key">${L.specOrigin}</span><span class="modal-spec-val">${d.specs.origin}</span></div>`,
+    d.specs.vegan    && `<div class="modal-spec-row"><span class="modal-spec-key">${L.specVegan}</span><span class="modal-spec-val">${d.specs.vegan}</span></div>`,
+    d.specs.allergen && `<div class="modal-spec-row"><span class="modal-spec-key">${L.specAllergen}</span><span class="modal-spec-val">${d.specs.allergen}</span></div>`,
   ].filter(Boolean).join('');
   const ingrRows = d.ingredients.map(([n,p,o]) => `<tr><td>${n}</td><td>${p}</td><td>${o}</td></tr>`).join('');
-  return `<div class="modal-tagline">${d.tagline}</div>
-    <div class="modal-sec"><span class="modal-sec-label">제품 소개</span><p class="modal-intro">${d.intro}</p></div>
-    <div class="modal-sec"><span class="modal-sec-label">이렇게 드세요</span><ul class="modal-howto-list">${d.howto.map(h=>`<li class="modal-howto-item">${h}</li>`).join('')}</ul></div>
-    <div class="modal-sec"><span class="modal-sec-label">제품 스펙</span><div class="modal-spec-grid">${specRows}</div></div>
-    <div class="modal-sec"><span class="modal-sec-label">원재료</span>
-      <table class="modal-ingr-table"><thead><tr><th>원재료명</th><th>함량</th><th>원산지</th></tr></thead>
+  return `<div class="modal-tagline">${tagline}</div>
+    <div class="modal-sec"><span class="modal-sec-label">${L.intro}</span><p class="modal-intro">${intro}</p></div>
+    <div class="modal-sec"><span class="modal-sec-label">${L.howto}</span><ul class="modal-howto-list">${howto.map(h=>`<li class="modal-howto-item">${h}</li>`).join('')}</ul></div>
+    <div class="modal-sec"><span class="modal-sec-label">${L.spec}</span><div class="modal-spec-grid">${specRows}</div></div>
+    <div class="modal-sec"><span class="modal-sec-label">${L.ingr}</span>
+      <table class="modal-ingr-table"><thead><tr><th>${L.ingrName}</th><th>${L.ingrPct}</th><th>${L.ingrOrigin}</th></tr></thead>
       <tbody>${ingrRows}</tbody></table></div>`;
 }
 function openProduct(id) {
@@ -2368,7 +2518,7 @@ function openProduct(id) {
   const bodyEl = document.getElementById('modalBody');
   const d = productDetails[id];
   if (d) {
-    bodyEl.innerHTML = _buildRichBody(d);
+    bodyEl.innerHTML = _buildRichBody(d, id);
   } else {
     const desc = lang === 'ko' ? currentProduct.desc : (productEnDesc && productEnDesc[id] ? productEnDesc[id] : currentProduct.en);
     bodyEl.innerHTML = `<div class="modal-product-desc">${desc}</div>`;
@@ -2594,7 +2744,7 @@ const TRANS = {
   ko: {
     /* Nav */
     'nav-about':'다미 소개', 'nav-products':'제품 소개', 'nav-contact':'고객 서비스',
-    'nav-login':'Login',
+    'nav-login':'Login', 'nav-staff':'직원용',
     'nav-brand-story':'다미 스토리', 'nav-brand-philo':'다미의 철학',
     'nav-promise':'다미의 약속', 'nav-vision':'다미의 비전',
     'nav-all-products':'전체 제품', 'nav-coin':'코인 육수',
@@ -2610,7 +2760,7 @@ const TRANS = {
     'hero-btn-products':'제품 보기 →', 'hero-btn-about':'다미 스토리',
     /* DA-MI Story */
     'intro-tag':'01 · 다미 스토리',
-    'intro-h2':'우리가<br><span style="color:var(--yellow)">달라야 했던</span><br>이유',
+    'intro-h2':'우리가<br><span style="color:var(--yellow)">달라야 했던</span>이유',
     'intro-body':'"왜 한국의 감칠맛과 베트남의 향긋함이 꼭 따로 존재해야 할까?"<br><br>다미푸드는 그 질문에서 태어났습니다. 한국도, 베트남도 아닌<br><strong>\'제3의 미식\'.</strong><br>코인 하나, 시즈닝 한 스푼으로 완성되는 새로운 K-Fusion 경험입니다.',
     /* Stats */
     'stat1-unit':'분', 'stat1-label':'조리 시간', 'stat1-desc':'코인 하나로<br>완성되는 깊은 맛',
@@ -2714,7 +2864,7 @@ const TRANS = {
   en: {
     /* Nav */
     'nav-about':'About Us', 'nav-products':'Products', 'nav-contact':'Contact Us',
-    'nav-login':'Login',
+    'nav-login':'Login', 'nav-staff':'Staff',
     'nav-brand-story':'DA-MI Story', 'nav-brand-philo':'Brand Motto',
     'nav-promise':'Our Promise', 'nav-vision':'Vision',
     'nav-all-products':'All Products', 'nav-coin':'Coin Broth',
@@ -2834,7 +2984,7 @@ const TRANS = {
   vi: {
     /* Nav */
     'nav-about':'Giới thiệu', 'nav-products':'Sản phẩm', 'nav-contact':'Liên hệ',
-    'nav-login':'Đăng nhập',
+    'nav-login':'Đăng nhập', 'nav-staff':'Nhân viên',
     'nav-brand-story':'Câu chuyện thương hiệu', 'nav-brand-philo':'Triết lý thương hiệu',
     'nav-promise':'Cam kết của chúng tôi', 'nav-vision':'Tầm nhìn',
     'nav-all-products':'Tất cả sản phẩm', 'nav-coin':'Nước dùng đồng xu',
@@ -2979,7 +3129,7 @@ function setLang(lang) {
   /* 제품 카드 다시 렌더링 (언어에 맞게) */
   renderProducts(currentFilter);
 
-  /* 모달이 열려 있으면 가격 갱신 */
+  /* 모달이 열려 있으면 가격·내용 갱신 */
   if (currentProduct) {
     const priceEl = document.getElementById('modalPrice');
     if (priceEl) {
@@ -2987,6 +3137,13 @@ function setLang(lang) {
         ? `<span style="font-size:1rem;font-family:'Noto Sans KR',sans-serif;color:#bbb">${priceTbd[lang]}</span>`
         : fmtPrice(currentProduct.price, lang);
     }
+    const bodyEl = document.getElementById('modalBody');
+    const d = productDetails[currentProduct.id];
+    if (bodyEl && d) bodyEl.innerHTML = _buildRichBody(d, currentProduct.id);
+    const nameEl = document.getElementById('modalName');
+    if (nameEl) nameEl.textContent = lang === 'ko' ? currentProduct.name : currentProduct.en;
+    const catEl = document.getElementById('modalCat');
+    if (catEl) catEl.textContent = catFull[lang][currentProduct.cat];
   }
 }
 
