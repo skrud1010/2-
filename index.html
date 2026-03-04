@@ -929,6 +929,41 @@
   }
   .sidebar-nav-link:hover { color: var(--red); background: #fef9f0; }
 
+  /* ══ HERO BANNER SLIDER ══ */
+  .hero-slider { position: absolute; inset: 0; overflow: hidden; }
+  .hero-slide { position: absolute; inset: 0; opacity: 0; transition: opacity 0.9s ease; pointer-events: none; }
+  .hero-slide.active { opacity: 1; pointer-events: auto; }
+  .hero-slide-dots {
+    position: absolute; bottom: 80px; left: 50%; transform: translateX(-50%);
+    z-index: 4; display: flex; gap: 10px; align-items: center;
+  }
+  .hero-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: rgba(255,255,255,0.35); border: none; cursor: pointer;
+    transition: all 0.28s; padding: 0; flex-shrink: 0;
+  }
+  .hero-dot.active { background: rgba(255,255,255,0.95); width: 24px; border-radius: 4px; }
+
+  /* ══ HERO SOUND BAR ══ */
+  .hero-sound-bar {
+    background: #111; padding: 10px 48px;
+    display: flex; align-items: center; gap: 14px;
+    border-bottom: 1px solid #1e1e1e;
+  }
+  .sound-toggle {
+    display: flex; align-items: center; gap: 7px;
+    background: none; border: 1.5px solid rgba(255,255,255,0.22);
+    color: rgba(255,255,255,0.55); padding: 6px 18px; border-radius: 20px;
+    cursor: pointer; font-size: 0.72rem; font-family: 'Montserrat', sans-serif;
+    font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; transition: all 0.2s;
+  }
+  .sound-toggle:hover { border-color: rgba(255,255,255,0.55); color: #fff; }
+  .sound-toggle.on { border-color: var(--yellow); color: var(--yellow); }
+  .sound-bar-hint {
+    font-family: 'Montserrat', sans-serif; font-size: 0.6rem;
+    color: rgba(255,255,255,0.22); letter-spacing: 2px; text-transform: uppercase;
+  }
+
   @media (max-width: 900px) {
     .menu-toggle { display: flex; }
     .nav-links { display: none; }
@@ -1072,9 +1107,23 @@
 
   <!-- ① 히어로 배너 — 어두운 배경에 사진이 주인공 -->
   <section class="hero-section">
-    <div class="hero-photo-slot">
-      <!-- 사진/영상 제작 완료 후 이 자리에 <img src="..." /> 또는 <video autoplay muted loop> 삽입 -->
-      <div class="hero-photo-label">HERO PHOTO &nbsp;/&nbsp; VIDEO AREA</div>
+    <div class="hero-slider" id="heroSlider">
+      <div class="hero-slide active">
+        <video id="heroVideo" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;display:block;">
+          <source src="./assets/images/배너 영상_최최종.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="hero-slide">
+        <img src="./assets/images/배너 상품.png" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;display:block;" alt="Da-Mi Products">
+      </div>
+      <div class="hero-slide">
+        <img src="./assets/images/배너_청양마요_월남쌈.png" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;display:block;" alt="Da-Mi Sauce">
+      </div>
+    </div>
+    <div class="hero-slide-dots">
+      <button class="hero-dot active" onclick="goHeroSlide(0)"></button>
+      <button class="hero-dot" onclick="goHeroSlide(1)"></button>
+      <button class="hero-dot" onclick="goHeroSlide(2)"></button>
     </div>
     <div class="hero-overlay"></div>
     <div class="hero-content">
@@ -1091,6 +1140,14 @@
     </div>
     <div class="scroll-hint"><div class="scroll-line"></div><span>SCROLL</span></div>
   </section>
+
+  <!-- 🔊 사운드 컨트롤 바 -->
+  <div class="hero-sound-bar" id="heroSoundBar">
+    <button class="sound-toggle" id="soundToggle" onclick="toggleHeroSound()">
+      <span>🔇</span><span>MUTE</span>
+    </button>
+    <span class="sound-bar-hint" data-t="sound-hint">배너 영상의 소리를 켜거나 끌 수 있습니다</span>
+  </div>
 
   <!-- ② 슬로건 마퀴 -->
   <div class="slogan-strip">
@@ -1781,6 +1838,70 @@ const BRAND_DESC = {
     }
   }
 };
+/* ── PRODUCT SPECS / INGREDIENTS TRANSLATIONS (EN / VI) ── */
+const productSpecsLang = {
+  en: {
+    1:  { specs:{ main:'Beef bone extract, gochugaru, dried green onion, garlic powder, bean sprout powder, salt', origin:'Republic of Korea', allergen:'Beef' },
+          ingredients:[['Beef Bone Extract','35%','Korea'],['Gochugaru (Korean Chili Powder)','18%','Korea'],['Dried Green Onion','14%','Korea'],['Garlic Powder','10%','Korea'],['Bean Sprout Powder','8%','Korea'],['Onion Powder','6%','Korea'],['Salt','5%','—'],['Soy Sauce Powder','2%','Korea'],['Black Pepper Powder','1.5%','—'],['Sesame Oil Powder','0.5%','Korea']] },
+    2:  { specs:{ main:'Dried anchovy extract, kelp powder, dried green onion, radish powder, salt', origin:'Republic of Korea', allergen:'Fish (anchovy)' },
+          ingredients:[['Dried Anchovy Extract','38%','Korea'],['Kelp Powder','20%','Korea'],['Dried Green Onion','16%','Korea'],['Radish Powder','12%','Korea'],['Dried Shiitake Mushroom','6%','Korea'],['Salt','5%','—'],['Onion Powder','2%','Korea'],['Ginger Powder','1%','Korea']] },
+    3:  { specs:{ main:'Cheongyang chili powder, shiitake mushroom powder, dried cabbage, dried onion, dried green onion, salt', origin:'Republic of Korea', vegan:'100% Plant-based', allergen:'None' },
+          ingredients:[['Cheongyang Chili Powder','28%','Korea'],['Shiitake Mushroom Powder','22%','Korea'],['Dried Cabbage','16%','Korea'],['Dried Onion','12%','Korea'],['Dried Green Onion','10%','Korea'],['Salt','5%','—'],['Garlic Powder','4%','Korea'],['Ginger Powder','2%','Korea'],['Dried Radish','1%','Korea']] },
+    4:  { specs:{ main:'Aged kimchi extract, tamarind powder, tomato powder, anchovy dashi extract, gochugaru, garlic powder, salt', origin:'Korea (kimchi extract) + Vietnamese tamarind', allergen:'Fish (anchovy)' },
+          ingredients:[['Aged Kimchi Extract','30%','Korea'],['Tamarind Powder','18%','Vietnam'],['Anchovy Dashi Extract','16%','Korea'],['Tomato Powder','12%','Korea/Vietnam'],['Gochugaru','8%','Korea'],['Garlic Powder','6%','Korea'],['Salt','5%','—'],['Dried Green Onion','3%','Korea'],['Ginger Powder','1.5%','Korea'],['Black Pepper Powder','0.5%','—']] },
+    7:  { specs:{ main:'Pork flake, soy sauce powder, sugar, sesame, pear juice powder, garlic powder, sesame oil powder', allergen:'Pork, soy (soy sauce), sesame' },
+          ingredients:[['Dried Pork Flake','30%','Korea'],['Soy Sauce Powder','18%','Korea'],['Sugar','14%','—'],['Roasted Sesame','12%','Korea'],['Pear Juice Powder','8%','Korea'],['Garlic Powder','7%','Korea'],['Sesame Oil Powder','5%','Korea'],['Black Pepper Powder','3%','—'],['Salt','2%','—'],['Ginger Powder','1%','Korea']] },
+    8:  { specs:{ main:'Doenjang powder, perilla seed powder, pork flake, gochugaru, garlic powder, perilla leaf powder, salt', allergen:'Pork, soy (doenjang), sesame (perilla seed)' },
+          ingredients:[['Perilla Seed Powder','25%','Korea'],['Doenjang (Soybean Paste) Powder','22%','Korea'],['Dried Pork Flake','18%','Korea'],['Gochugaru','12%','Korea'],['Garlic Powder','8%','Korea'],['Salt','6%','—'],['Perilla Leaf Powder','4%','Korea'],['Green Onion Powder','3%','Korea'],['Ginger Powder','1.5%','Korea'],['Black Pepper Powder','0.5%','—']] },
+    9:  { specs:{ main:'Taeyang-cho gochujang powder, honey powder, garlic powder, soy sauce powder, ginger powder, sugar, sesame oil powder', allergen:'Soy (soy sauce, gochujang), sesame' },
+          ingredients:[['Taeyang-cho Gochujang Powder','28%','Korea'],['Honey Powder','18%','Korea'],['Garlic Powder','16%','Korea'],['Soy Sauce Powder','14%','Korea'],['Sugar','10%','—'],['Ginger Powder','6%','Korea'],['Sesame Oil Powder','4%','Korea'],['Salt','2.5%','—'],['Gochugaru','1%','Korea'],['Black Pepper Powder','0.5%','—']] },
+    10: { specs:{ main:'Dried abalone powder, abalone viscera powder, dried abalone pieces, rice flour, kelp powder, sesame oil powder, salt', allergen:'Shellfish (abalone), sesame' },
+          ingredients:[['Rice Flour','35%','Korea'],['Dried Abalone Powder','20%','Korea'],['Abalone Viscera Powder','15%','Korea'],['Dried Abalone Pieces','10%','Korea'],['Kelp Powder','8%','Korea'],['Sesame Oil Powder','5%','Korea'],['Salt','4%','—'],['Garlic Powder','2%','Korea'],['Ginger Powder','1%','Korea']] },
+    11: { specs:{ main:'Mayonnaise, cheongyang chili extract, vinegar, sugar, garlic powder', allergen:'Egg, soy' },
+          ingredients:[['Mayonnaise','72%','Korea'],['Cheongyang Chili Extract','12%','Korea'],['Purified Water','6%','—'],['Brewed Vinegar','4%','Korea'],['Sugar','3%','—'],['Garlic Powder','1.5%','Korea'],['Salt','1%','—'],['Citric Acid','0.3%','—'],['Xanthan Gum (Thickener)','0.2%','—']] },
+    12: { specs:{ main:'Plum extract, lime juice, fish sauce (Nước mắm), vinegar, sugar, black pepper', vegan:'No artificial flavoring · Natural fermented plum extract used' },
+          ingredients:[['Purified Water','38%','—'],['Korean Plum Extract','25%','Korea (Gwangyang, Gyeongnam)'],['Lime Juice Concentrate','15%','Vietnam'],['Fish Sauce (Nước mắm)','10%','Vietnam'],['Sugar','6%','—'],['Brewed Vinegar','4%','Korea'],['Black Pepper Powder','1%','—'],['Salt','0.7%','—'],['Citric Acid','0.3%','—']] },
+    13: { specs:{ main:'Doenjang, gochujang, garlic, sesame oil, lime zest, coriander oil, basil powder, mint powder', vegan:'No artificial preservatives · Korean traditional doenjang & gochujang used' },
+          ingredients:[['Doenjang (Korean Traditional Fermented Soybean Paste)','35%','Korea (Traditional)'],['Gochujang','20%','Korea'],['Purified Water','15%','—'],['Minced Garlic','8%','Korea'],['Sesame Oil','5%','Korea'],['Sugar','4%','—'],['Lime Zest','4%','Vietnam'],['Coriander Oil','3%','Vietnam'],['Basil Powder','2.5%','Vietnam'],['Mint Powder','2%','Vietnam'],['Salt','1%','—'],['Sesame Seeds','0.5%','Korea']] },
+    14: { specs:{ main:'Dark soy sauce, pear juice, coconut cream, garlic, sugar, sesame oil', vegan:'No artificial preservatives · 100% Korean pear juice used' },
+          ingredients:[['Dark Soy Sauce','30%','Korea'],['Coconut Cream','22%','Vietnam'],['Korean Pear Juice','18%','Korea (100% domestic)'],['Purified Water','10%','—'],['Sugar','8%','—'],['Minced Garlic','6%','Korea'],['Sesame Oil','3%','Korea'],['Ginger Juice','2%','Korea'],['Black Pepper Powder','0.7%','—'],['Modified Starch (Thickener)','0.3%','—']] },
+    15: { specs:{ main:'Gochujang, mango purée, garlic, soy sauce, sugar, vinegar', vegan:'Direct-imported local mango · No artificial coloring' },
+          ingredients:[['Mango Purée','32%','Vietnam (Direct import)'],['Gochujang','28%','Korea'],['Purified Water','15%','—'],['Soy Sauce','8%','Korea'],['Sugar','7%','—'],['Minced Garlic','5%','Korea'],['Brewed Vinegar','3%','Korea'],['Salt','1.5%','—'],['Modified Starch (Thickener)','0.5%','—']] },
+    16: { specs:{ main:'Taeyang-cho gochujang, cream powder, minced lemongrass, garlic, onion, sugar', vegan:'No artificial coloring · Direct-imported lemongrass used' },
+          ingredients:[['Purified Water','30%','—'],['Taeyang-cho Gochujang','25%','Korea'],['Cream Powder','18%','—'],['Minced Lemongrass','10%','Vietnam (Direct import)'],['Onion','6%','Korea'],['Minced Garlic','5%','Korea'],['Sugar','3.5%','—'],['Salt','1.5%','—'],['Black Pepper Powder','0.7%','—'],['Modified Starch (Thickener)','0.3%','—']] },
+  },
+  vi: {
+    1:  { specs:{ main:'Tinh chất xương bò, ớt bột gochugaru, hành lá khô, bột tỏi, bột giá đỗ, muối', origin:'Hàn Quốc', allergen:'Thịt bò' },
+          ingredients:[['Tinh Chất Xương Bò','35%','Hàn Quốc'],['Ớt Bột Hàn Quốc (Gochugaru)','18%','Hàn Quốc'],['Hành Lá Khô','14%','Hàn Quốc'],['Bột Tỏi','10%','Hàn Quốc'],['Bột Giá Đỗ','8%','Hàn Quốc'],['Bột Hành Tây','6%','Hàn Quốc'],['Muối','5%','—'],['Bột Nước Tương','2%','Hàn Quốc'],['Bột Tiêu','1.5%','—'],['Bột Dầu Mè','0.5%','Hàn Quốc']] },
+    2:  { specs:{ main:'Tinh chất cá cơm khô, bột tảo biển, hành lá khô, bột củ cải, muối', origin:'Hàn Quốc', allergen:'Cá (cá cơm)' },
+          ingredients:[['Tinh Chất Cá Cơm Khô','38%','Hàn Quốc'],['Bột Tảo Biển','20%','Hàn Quốc'],['Hành Lá Khô','16%','Hàn Quốc'],['Bột Củ Cải','12%','Hàn Quốc'],['Nấm Hương Khô','6%','Hàn Quốc'],['Muối','5%','—'],['Bột Hành Tây','2%','Hàn Quốc'],['Bột Gừng','1%','Hàn Quốc']] },
+    3:  { specs:{ main:'Bột ớt cheongyang, bột nấm hương, cải thảo khô, hành tây khô, hành lá khô, muối', origin:'Hàn Quốc', vegan:'100% Thuần chay', allergen:'Không có' },
+          ingredients:[['Bột Ớt Cheongyang','28%','Hàn Quốc'],['Bột Nấm Hương','22%','Hàn Quốc'],['Cải Thảo Khô','16%','Hàn Quốc'],['Hành Tây Khô','12%','Hàn Quốc'],['Hành Lá Khô','10%','Hàn Quốc'],['Muối','5%','—'],['Bột Tỏi','4%','Hàn Quốc'],['Bột Gừng','2%','Hàn Quốc'],['Củ Cải Khô','1%','Hàn Quốc']] },
+    4:  { specs:{ main:'Tinh chất kimchi lên men, bột me, bột cà chua, tinh chất nước dùng cá cơm, ớt bột, bột tỏi, muối', origin:'Hàn Quốc (tinh chất kimchi) + me Việt Nam', allergen:'Cá (cá cơm)' },
+          ingredients:[['Tinh Chất Kimchi Lên Men','30%','Hàn Quốc'],['Bột Me','18%','Việt Nam'],['Tinh Chất Nước Dùng Cá Cơm','16%','Hàn Quốc'],['Bột Cà Chua','12%','Hàn Quốc/Việt Nam'],['Ớt Bột','8%','Hàn Quốc'],['Bột Tỏi','6%','Hàn Quốc'],['Muối','5%','—'],['Hành Lá Khô','3%','Hàn Quốc'],['Bột Gừng','1.5%','Hàn Quốc'],['Bột Tiêu','0.5%','—']] },
+    7:  { specs:{ main:'Mảnh thịt heo, bột nước tương, đường, mè, bột nước ép lê, bột tỏi, bột dầu mè', allergen:'Thịt heo, đậu nành (nước tương), mè' },
+          ingredients:[['Mảnh Thịt Heo Khô','30%','Hàn Quốc'],['Bột Nước Tương','18%','Hàn Quốc'],['Đường','14%','—'],['Mè Rang','12%','Hàn Quốc'],['Bột Nước Ép Lê','8%','Hàn Quốc'],['Bột Tỏi','7%','Hàn Quốc'],['Bột Dầu Mè','5%','Hàn Quốc'],['Bột Tiêu','3%','—'],['Muối','2%','—'],['Bột Gừng','1%','Hàn Quốc']] },
+    8:  { specs:{ main:'Bột tương đậu, bột hạt tía tô, mảnh thịt heo, ớt bột, bột tỏi, bột lá tía tô, muối', allergen:'Thịt heo, đậu nành (tương đậu), mè (hạt tía tô)' },
+          ingredients:[['Bột Hạt Tía Tô','25%','Hàn Quốc'],['Bột Tương Đậu (Doenjang)','22%','Hàn Quốc'],['Mảnh Thịt Heo Khô','18%','Hàn Quốc'],['Ớt Bột','12%','Hàn Quốc'],['Bột Tỏi','8%','Hàn Quốc'],['Muối','6%','—'],['Bột Lá Tía Tô','4%','Hàn Quốc'],['Bột Hành Lá','3%','Hàn Quốc'],['Bột Gừng','1.5%','Hàn Quốc'],['Bột Tiêu','0.5%','—']] },
+    9:  { specs:{ main:'Bột tương ớt taeyang-cho, bột mật ong, bột tỏi, bột nước tương, bột gừng, đường, bột dầu mè', allergen:'Đậu nành (nước tương, tương ớt), mè' },
+          ingredients:[['Bột Tương Ớt Taeyang-cho','28%','Hàn Quốc'],['Bột Mật Ong','18%','Hàn Quốc'],['Bột Tỏi','16%','Hàn Quốc'],['Bột Nước Tương','14%','Hàn Quốc'],['Đường','10%','—'],['Bột Gừng','6%','Hàn Quốc'],['Bột Dầu Mè','4%','Hàn Quốc'],['Muối','2.5%','—'],['Ớt Bột','1%','Hàn Quốc'],['Bột Tiêu','0.5%','—']] },
+    10: { specs:{ main:'Bột bào ngư khô, bột nội tạng bào ngư, mảnh bào ngư khô, bột gạo, bột tảo biển, bột dầu mè, muối', allergen:'Động vật có vỏ (bào ngư), mè' },
+          ingredients:[['Bột Gạo','35%','Hàn Quốc'],['Bột Bào Ngư Khô','20%','Hàn Quốc'],['Bột Nội Tạng Bào Ngư','15%','Hàn Quốc'],['Mảnh Bào Ngư Khô','10%','Hàn Quốc'],['Bột Tảo Biển','8%','Hàn Quốc'],['Bột Dầu Mè','5%','Hàn Quốc'],['Muối','4%','—'],['Bột Tỏi','2%','Hàn Quốc'],['Bột Gừng','1%','Hàn Quốc']] },
+    11: { specs:{ main:'Mayonnaise, tinh chất ớt cheongyang, giấm, đường, bột tỏi', allergen:'Trứng, đậu nành' },
+          ingredients:[['Mayonnaise','72%','Hàn Quốc'],['Tinh Chất Ớt Cheongyang','12%','Hàn Quốc'],['Nước Tinh Khiết','6%','—'],['Giấm Ủ','4%','Hàn Quốc'],['Đường','3%','—'],['Bột Tỏi','1.5%','Hàn Quốc'],['Muối','1%','—'],['Axit Citric','0.3%','—'],['Gôm Xanthan (Chất Làm Đặc)','0.2%','—']] },
+    12: { specs:{ main:'Tinh chất mận, nước cốt chanh, nước mắm, giấm, đường, tiêu', vegan:'Không hương liệu nhân tạo · Sử dụng tinh chất mận lên men tự nhiên' },
+          ingredients:[['Nước Tinh Khiết','38%','—'],['Tinh Chất Mận Hàn Quốc','25%','Hàn Quốc (Gwangyang, Gyeongnam)'],['Tinh Chất Nước Cốt Chanh','15%','Việt Nam'],['Nước Mắm','10%','Việt Nam'],['Đường','6%','—'],['Giấm Ủ','4%','Hàn Quốc'],['Bột Tiêu Đen','1%','—'],['Muối','0.7%','—'],['Axit Citric','0.3%','—']] },
+    13: { specs:{ main:'Tương đậu, tương ớt, tỏi, dầu mè, vỏ chanh, dầu rau mùi, bột húng quế, bột bạc hà', vegan:'Không chất bảo quản nhân tạo · Tương đậu & tương ớt truyền thống Hàn Quốc' },
+          ingredients:[['Tương Đậu (Doenjang - Đậu Nành Lên Men Truyền Thống)','35%','Hàn Quốc (Truyền thống)'],['Tương Ớt (Gochujang)','20%','Hàn Quốc'],['Nước Tinh Khiết','15%','—'],['Tỏi Băm','8%','Hàn Quốc'],['Dầu Mè','5%','Hàn Quốc'],['Đường','4%','—'],['Vỏ Chanh','4%','Việt Nam'],['Dầu Rau Mùi','3%','Việt Nam'],['Bột Húng Quế','2.5%','Việt Nam'],['Bột Bạc Hà','2%','Việt Nam'],['Muối','1%','—'],['Mè','0.5%','Hàn Quốc']] },
+    14: { specs:{ main:'Xì dầu đậm, nước ép lê, kem dừa, tỏi, đường, dầu mè', vegan:'Không chất bảo quản nhân tạo · Sử dụng 100% nước ép lê Hàn Quốc' },
+          ingredients:[['Xì Dầu Đậm','30%','Hàn Quốc'],['Kem Dừa','22%','Việt Nam'],['Nước Ép Lê Hàn Quốc','18%','Hàn Quốc (100% nội địa)'],['Nước Tinh Khiết','10%','—'],['Đường','8%','—'],['Tỏi Băm','6%','Hàn Quốc'],['Dầu Mè','3%','Hàn Quốc'],['Nước Gừng','2%','Hàn Quốc'],['Bột Tiêu Đen','0.7%','—'],['Tinh Bột Biến Tính (Chất Làm Đặc)','0.3%','—']] },
+    15: { specs:{ main:'Tương ớt, xoài purée, tỏi, nước tương, đường, giấm', vegan:'Xoài nhập khẩu trực tiếp · Không màu nhân tạo' },
+          ingredients:[['Xoài Purée','32%','Việt Nam (Nhập khẩu trực tiếp)'],['Tương Ớt (Gochujang)','28%','Hàn Quốc'],['Nước Tinh Khiết','15%','—'],['Nước Tương','8%','Hàn Quốc'],['Đường','7%','—'],['Tỏi Băm','5%','Hàn Quốc'],['Giấm Ủ','3%','Hàn Quốc'],['Muối','1.5%','—'],['Tinh Bột Biến Tính (Chất Làm Đặc)','0.5%','—']] },
+    16: { specs:{ main:'Tương ớt taeyang-cho, bột kem, sả băm, tỏi, hành tây, đường', vegan:'Không màu nhân tạo · Sử dụng sả nhập khẩu trực tiếp' },
+          ingredients:[['Nước Tinh Khiết','30%','—'],['Tương Ớt Taeyang-cho','25%','Hàn Quốc'],['Bột Kem','18%','—'],['Sả Băm','10%','Việt Nam (Nhập khẩu trực tiếp)'],['Hành Tây','6%','Hàn Quốc'],['Tỏi Băm','5%','Hàn Quốc'],['Đường','3.5%','—'],['Muối','1.5%','—'],['Bột Tiêu Đen','0.7%','—'],['Tinh Bột Biến Tính (Chất Làm Đặc)','0.3%','—']] },
+  }
+};
+
 /* ── PRODUCT RICH DETAILS ── */
 const productDetails = {
   1: {
@@ -2493,13 +2614,16 @@ function _buildRichBody(d, id) {
   const tagline = t ? t.tagline : d.tagline;
   const intro   = t ? t.intro   : d.intro;
   const howto   = t ? t.howto   : d.howto;
+  const _sl = (lang !== 'ko' && productSpecsLang[lang] && productSpecsLang[lang][id]) ? productSpecsLang[lang][id] : null;
+  const tSpecs = (_sl && _sl.specs) ? _sl.specs : d.specs;
+  const tIngredients = (_sl && _sl.ingredients) ? _sl.ingredients : d.ingredients;
   const specRows = [
-    d.specs.main     && `<div class="modal-spec-row"><span class="modal-spec-key">${L.specMain}</span><span class="modal-spec-val">${d.specs.main}</span></div>`,
-    d.specs.origin   && `<div class="modal-spec-row"><span class="modal-spec-key">${L.specOrigin}</span><span class="modal-spec-val">${d.specs.origin}</span></div>`,
-    d.specs.vegan    && `<div class="modal-spec-row"><span class="modal-spec-key">${L.specVegan}</span><span class="modal-spec-val">${d.specs.vegan}</span></div>`,
-    d.specs.allergen && `<div class="modal-spec-row"><span class="modal-spec-key">${L.specAllergen}</span><span class="modal-spec-val">${d.specs.allergen}</span></div>`,
+    tSpecs.main     && `<div class="modal-spec-row"><span class="modal-spec-key">${L.specMain}</span><span class="modal-spec-val">${tSpecs.main}</span></div>`,
+    tSpecs.origin   && `<div class="modal-spec-row"><span class="modal-spec-key">${L.specOrigin}</span><span class="modal-spec-val">${tSpecs.origin}</span></div>`,
+    tSpecs.vegan    && `<div class="modal-spec-row"><span class="modal-spec-key">${L.specVegan}</span><span class="modal-spec-val">${tSpecs.vegan}</span></div>`,
+    tSpecs.allergen && `<div class="modal-spec-row"><span class="modal-spec-key">${L.specAllergen}</span><span class="modal-spec-val">${tSpecs.allergen}</span></div>`,
   ].filter(Boolean).join('');
-  const ingrRows = d.ingredients.map(([n,p,o]) => `<tr><td>${n}</td><td>${p}</td><td>${o}</td></tr>`).join('');
+  const ingrRows = tIngredients.map(([n,p,o]) => `<tr><td>${n}</td><td>${p}</td><td>${o}</td></tr>`).join('');
   return `<div class="modal-tagline">${tagline}</div>
     <div class="modal-sec"><span class="modal-sec-label">${L.intro}</span><p class="modal-intro">${intro}</p></div>
     <div class="modal-sec"><span class="modal-sec-label">${L.howto}</span><ul class="modal-howto-list">${howto.map(h=>`<li class="modal-howto-item">${h}</li>`).join('')}</ul></div>
@@ -2576,18 +2700,27 @@ function addToCartDirect(id) {
   _saveCart(); showToast('"' + name + '" 장바구니에 담겼습니다.');
 }
 function openCart() { _renderCart(); document.getElementById('cartModal').classList.add('show'); }
+const _cartEmptyMsg = { ko:'장바구니가 비어 있습니다.', en:'Your cart is empty.', vi:'Giỏ hàng trống.' };
+const _checkoutLabel = { ko:'주문하기 →', en:'Checkout →', vi:'Đặt hàng →' };
+function _fmtCartAmt(vnd) {
+  const p = convertPrice(String(vnd), currentLang);
+  if (!p) return '—';
+  return p.pre + Number(p.amt.replace(/,/g,'')).toLocaleString() + p.unit;
+}
 function _renderCart() {
   const list = document.getElementById('cartList');
   const totalRow = document.getElementById('cartTotalRow');
   const btn = document.getElementById('cartCheckoutBtn');
+  if (btn) btn.textContent = _checkoutLabel[currentLang] || _checkoutLabel.ko;
   if (cartData.length === 0) {
-    list.innerHTML = '<div class="cart-empty">장바구니가 비어 있습니다.</div>';
+    list.innerHTML = `<div class="cart-empty">${_cartEmptyMsg[currentLang] || _cartEmptyMsg.ko}</div>`;
     totalRow.style.display = 'none'; btn.style.display = 'none'; return;
   }
   let total = 0;
   list.innerHTML = cartData.map((item, i) => {
     const p = parseFloat((item.price+'').replace(/[^0-9.]/g,'')) || 0;
     const sub = p * item.qty; total += sub;
+    const subFmt = item.price === 'TBD' ? '—' : _fmtCartAmt(sub);
     return `<div class="cart-item">
       <span class="cart-item-name">${item.name}</span>
       <div class="cart-item-ctrl">
@@ -2596,10 +2729,10 @@ function _renderCart() {
         <button class="cart-qty-btn" onclick="_cartQty(${i},1)">+</button>
         <button class="cart-rm" onclick="_cartRm(${i})">✕</button>
       </div>
-      <span class="cart-item-price">${item.price==='TBD'?'—':sub.toLocaleString()+'₫'}</span>
+      <span class="cart-item-price">${subFmt}</span>
     </div>`;
   }).join('');
-  document.getElementById('cartTotalAmt').textContent = total > 0 ? total.toLocaleString() + '₫' : '—';
+  document.getElementById('cartTotalAmt').textContent = total > 0 ? _fmtCartAmt(total) : '—';
   totalRow.style.display = 'flex'; btn.style.display = 'block';
 }
 function _cartQty(i,d) { cartData[i].qty = Math.max(1, cartData[i].qty+d); _saveCart(); _renderCart(); }
@@ -2646,6 +2779,44 @@ function _startReveal(root) {
 }
 /* 100ms 후 시작 — 브라우저가 초기 opacity:0 상태를 먼저 렌더링하도록 */
 setTimeout(_startReveal, 100);
+
+/* ── HERO BANNER SLIDER ── */
+let _heroIdx = 0, _heroTimer = null;
+const _HERO_N = 3;
+
+function goHeroSlide(idx) {
+  const slides = document.querySelectorAll('.hero-slide');
+  const dots   = document.querySelectorAll('.hero-dot');
+  if (!slides.length) return;
+  slides[_heroIdx].classList.remove('active');
+  dots[_heroIdx].classList.remove('active');
+  _heroIdx = ((idx % _HERO_N) + _HERO_N) % _HERO_N;
+  slides[_heroIdx].classList.add('active');
+  dots[_heroIdx].classList.add('active');
+  if (_heroIdx === 0) {
+    const v = document.getElementById('heroVideo');
+    if (v) { try { v.currentTime = 0; v.play(); } catch(e){} }
+  }
+  clearInterval(_heroTimer);
+  _heroTimer = setInterval(() => goHeroSlide(_heroIdx + 1), 7000);
+}
+
+/* 자동 슬라이드 시작 */
+_heroTimer = setInterval(() => goHeroSlide(_heroIdx + 1), 7000);
+
+function toggleHeroSound() {
+  const v   = document.getElementById('heroVideo');
+  const btn = document.getElementById('soundToggle');
+  if (!v || !btn) return;
+  v.muted = !v.muted;
+  if (v.muted) {
+    btn.innerHTML = '<span>🔇</span><span>MUTE</span>';
+    btn.classList.remove('on');
+  } else {
+    btn.innerHTML = '<span>🔊</span><span>SOUND ON</span>';
+    btn.classList.add('on');
+  }
+}
 
 /* ── ABOUT TAB ── */
 function showAboutTab(idx) {
@@ -2820,6 +2991,7 @@ const TRANS = {
     'cf-topic-ph':'주제 선택','cf-topic-praise':'칭찬','cf-topic-suggest':'건의','cf-topic-inquiry':'문의','cf-topic-complaint':'불만',
     'cf-cat-ph':'카테고리 선택','cf-cat-coin':'코인육수','cf-cat-season':'시즈닝','cf-cat-sauce':'소스',
     /* Placeholders */
+    'sound-hint':'배너 영상의 소리를 켜거나 끌 수 있습니다',
     'modal-email-ph':'이메일 주소', 'modal-pw-ph':'비밀번호',
     'modal-name-ph':'이름 / Họ và tên', 'modal-pw2-ph':'비밀번호 확인',
     'contact-name-ph':'이름 / Họ và tên *', 'contact-email-ph':'이메일 / Email *',
@@ -2924,6 +3096,7 @@ const TRANS = {
     /* Products */
     'products-sub':'Da-Mi Food K-Fusion Lineup | Broth · Seasoning · Sauce',
     'filter-all':'ALL', 'filter-coin':'Coin Broth', 'filter-seasoning':'Seasoning', 'filter-sauce':'Sauce',
+    'sound-hint':'Toggle banner video sound on or off',
     'modal-shipping':'※ Shipping fee applies for orders under $12 | Origin: Korea',
     'modal-qty':'Qty', 'modal-cart-btn':'🛒 Add to Cart', 'modal-buy-btn':'Buy Now →',
     /* Contact */
@@ -3044,6 +3217,7 @@ const TRANS = {
     /* Products */
     'products-sub':'Dòng sản phẩm K-Fusion Da-Mi Food | Nước dùng · Gia vị · Sốt',
     'filter-all':'TẤT CẢ', 'filter-coin':'Nước dùng', 'filter-seasoning':'Gia vị', 'filter-sauce':'Sốt',
+    'sound-hint':'Bật hoặc tắt âm thanh video banner',
     'modal-shipping':'※ Phí vận chuyển áp dụng cho đơn dưới 300,000₫ | Xuất xứ: Hàn Quốc',
     'modal-qty':'Số lượng', 'modal-cart-btn':'🛒 Thêm vào giỏ', 'modal-buy-btn':'Mua ngay →',
     /* Contact */
@@ -3128,6 +3302,11 @@ function setLang(lang) {
 
   /* 제품 카드 다시 렌더링 (언어에 맞게) */
   renderProducts(currentFilter);
+
+  /* 장바구니가 열려있으면 통화 갱신 */
+  if (document.getElementById('cartModal').classList.contains('show')) {
+    _renderCart();
+  }
 
   /* 모달이 열려 있으면 가격·내용 갱신 */
   if (currentProduct) {
