@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Da-Mi Food | 다미푸드</title>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+KR:wght@300;400;500;700;900&family=Montserrat:wght@400;600;700;900&display=swap" rel="stylesheet">
-<link rel="icon" type="image/png" href="./assets/images/로고.png">
+<link rel="icon" type="image/png" href="./static/images/brand/로고.png">
 <style>
   :root {
     --red: #E82C00;
@@ -141,17 +141,14 @@
     font-size: 0.68rem; letter-spacing: 5px; text-transform: uppercase;
     border: 1px dashed #2e2e2e; padding: 12px 26px; border-radius: 2px;
   }
-  /* 그라디언트 오버레이: 왼쪽 어두움 → 오른쪽 사진 노출 */
+  /* 그라디언트 오버레이: 제거됨 */
   .hero-overlay {
     position: absolute; inset: 0;
-    background: linear-gradient(108deg,
-      rgba(0,0,0,0.88) 0%,
-      rgba(0,0,0,0.60) 42%,
-      rgba(0,0,0,0.12) 72%,
-      rgba(0,0,0,0.00) 100%);
+    background: none;
   }
   .hero-content {
     position: relative; z-index: 2; padding: 0 64px; max-width: 680px;
+    text-shadow: 0 2px 12px rgba(0,0,0,0.7), 0 0 4px rgba(0,0,0,0.5);
   }
   .hero-eyebrow {
     display: inline-flex; align-items: center; gap: 12px; margin-bottom: 24px;
@@ -166,7 +163,9 @@
     font-size: clamp(4rem, 7.8vw, 7.8rem);
     line-height: 0.93; color: var(--white); letter-spacing: 3px; margin-bottom: 22px;
   }
-  .hero h1 em { font-style: normal; color: var(--yellow); display: block; }
+  .hero h1 em { font-style: normal; color: var(--white); display: block; }
+  .hero-section h1 { color: #FFFFFF; }
+  .hero-section h1 em { color: #FFFFFF; }
   .hero-sub {
     font-size: 1rem; font-weight: 300; color: rgba(255,255,255,0.72);
     line-height: 1.85; max-width: 420px; margin-bottom: 38px; letter-spacing: 0.3px;
@@ -316,7 +315,7 @@
   /* ══ Motto ══ */
   .Motto-section {
     position: relative;
-    background:  url('./assets/images/홈페이지.png') center/cover no-repeat;
+    background:  url('./static/images/brand/홈페이지.png') center/cover no-repeat;
     padding: 100px 72px;
     display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
   }
@@ -449,7 +448,7 @@
   .story-slogan {
     position: relative; display: flex; align-items: center;
     aspect-ratio: 2048 / 1065;
-    background: #0a0a0a url('./assets/images/슬로건배경.png') center center / 100% auto no-repeat;
+    background: #0a0a0a url('./static/images/brand/슬로건배경.png') center center / 100% auto no-repeat;
   }
   .story-slogan::after {
     content: ''; position: absolute; inset: 0;
@@ -944,25 +943,17 @@
   }
   .hero-dot.active { background: rgba(255,255,255,0.95); width: 24px; border-radius: 4px; }
 
-  /* ══ HERO SOUND BAR ══ */
-  .hero-sound-bar {
-    background: #111; padding: 10px 48px;
-    display: flex; align-items: center; gap: 14px;
-    border-bottom: 1px solid #1e1e1e;
+  /* ══ HERO SOUND ICON ══ */
+  .hero-sound-icon {
+    position: absolute; bottom: 90px; right: 32px; z-index: 5;
+    width: 44px; height: 44px; border-radius: 50%;
+    background: rgba(0,0,0,0.45); border: 1.5px solid rgba(255,255,255,0.3);
+    color: #fff; font-size: 1.2rem; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.25s; backdrop-filter: blur(4px);
   }
-  .sound-toggle {
-    display: flex; align-items: center; gap: 7px;
-    background: none; border: 1.5px solid rgba(255,255,255,0.22);
-    color: rgba(255,255,255,0.55); padding: 6px 18px; border-radius: 20px;
-    cursor: pointer; font-size: 0.72rem; font-family: 'Montserrat', sans-serif;
-    font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; transition: all 0.2s;
-  }
-  .sound-toggle:hover { border-color: rgba(255,255,255,0.55); color: #fff; }
-  .sound-toggle.on { border-color: var(--yellow); color: var(--yellow); }
-  .sound-bar-hint {
-    font-family: 'Montserrat', sans-serif; font-size: 0.6rem;
-    color: rgba(255,255,255,0.22); letter-spacing: 2px; text-transform: uppercase;
-  }
+  .hero-sound-icon:hover { background: rgba(0,0,0,0.65); border-color: rgba(255,255,255,0.6); }
+  .hero-sound-icon.on { border-color: var(--yellow); }
 
   @media (max-width: 900px) {
     .menu-toggle { display: flex; }
@@ -991,7 +982,7 @@
   <button class="menu-toggle" onclick="openSidebar()" aria-label="Menu">
     <span></span><span></span><span></span>
   </button>
-  <a class="logo" href="#" onclick="showPage('home'); return false;"><img src="./assets/images/로고.png" class="logo-img" alt="Da-Mi Food">DA-MI FOOD</a>
+  <a class="logo" href="#" onclick="showPage('home'); return false;"><img src="./static/images/brand/로고.png" class="logo-img" alt="Da-Mi Food">DA-MI FOOD</a>
   <div class="nav-links">
     <div class="nav-item">
       <a href="#" onclick="showPage('about'); return false;"><span data-t="nav-about">다미 소개</span><span class="nav-underline"></span></a>
@@ -1110,20 +1101,32 @@
     <div class="hero-slider" id="heroSlider">
       <div class="hero-slide active">
         <video id="heroVideo" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;display:block;">
-          <source src="./assets/images/배너 영상_최최종.mp4" type="video/mp4">
+          <source src="./static/images/brand/배너 영상_최최종.mp4" type="video/mp4">
         </video>
       </div>
       <div class="hero-slide">
-        <img src="./assets/images/배너 상품.png" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;display:block;" alt="Da-Mi Products">
+        <img src="./static/images/brand/배너_쌀국수_매실피시.png" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;display:block;" alt="Da-Mi 쌀국수매실">
       </div>
       <div class="hero-slide">
-        <img src="./assets/images/배너_청양마요_월남쌈.png" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;display:block;" alt="Da-Mi Sauce">
+        <img src="./static/images/brand/배너_청양마요_월남쌈.png" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;display:block;" alt="Da-Mi 월남쌈마요">
+      </div>
+      <div class="hero-slide">
+        <img src="./static/images/brand/배너_가족.png" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;display:block;" alt="Da-Mi 가족">
+      </div>
+      <div class="hero-slide">
+        <img src="./static/images/brand/배너_전복죽.png" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;display:block;" alt="Da-Mi 전복죽">
+      </div>
+      <div class="hero-slide">
+        <img src="./static/images/brand/배너 상품.png" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;display:block;" alt="Da-Mi Products">
       </div>
     </div>
     <div class="hero-slide-dots">
       <button class="hero-dot active" onclick="goHeroSlide(0)"></button>
       <button class="hero-dot" onclick="goHeroSlide(1)"></button>
       <button class="hero-dot" onclick="goHeroSlide(2)"></button>
+      <button class="hero-dot" onclick="goHeroSlide(3)"></button>
+      <button class="hero-dot" onclick="goHeroSlide(4)"></button>
+      <button class="hero-dot" onclick="goHeroSlide(5)"></button>
     </div>
     <div class="hero-overlay"></div>
     <div class="hero-content">
@@ -1138,16 +1141,9 @@
         <a href="#" class="btn-hero-ghost" data-t="hero-btn-about" onclick="showPage('about'); return false;">다미 스토리</a>
       </div>
     </div>
+    <button class="hero-sound-icon" id="soundToggle" onclick="toggleHeroSound()" title="Sound On/Off">🔇</button>
     <div class="scroll-hint"><div class="scroll-line"></div><span>SCROLL</span></div>
   </section>
-
-  <!-- 🔊 사운드 컨트롤 바 -->
-  <div class="hero-sound-bar" id="heroSoundBar">
-    <button class="sound-toggle" id="soundToggle" onclick="toggleHeroSound()">
-      <span>🔇</span><span>MUTE</span>
-    </button>
-    <span class="sound-bar-hint" data-t="sound-hint">배너 영상의 소리를 켜거나 끌 수 있습니다</span>
-  </div>
 
   <!-- ② 슬로건 마퀴 -->
   <div class="slogan-strip">
@@ -1169,7 +1165,7 @@
       </p>
     </div>
     <div class="intro-right">
-      <img src="./assets/images/홈페이지이유.png" alt="Da-Mi Food Brand" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;display:block;">
+      <img src="./static/images/brand/홈페이지이유.png" alt="Da-Mi Food Brand" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;display:block;">
     </div>
   </section>
 
@@ -1206,19 +1202,19 @@
     </div>
     <div class="preview-grid">
       <div class="preview-card" onclick="showPage('products'); filterProducts('coin',null)">
-        <div class="preview-card-inner" style="background-image:url('./assets/images/코인육수 라인업.png')">
+        <div class="preview-card-inner" style="background-image:url('./static/images/products/코인육수 라인업.png')">
           <div class="preview-cat">COIN BROTH</div>
           <div class="preview-name" data-t="prev-coin">코인 육수 4종</div>
         </div>
       </div>
       <div class="preview-card" onclick="showPage('products'); filterProducts('seasoning',null)">
-        <div class="preview-card-inner" style="background-image:url('./assets/images/시즈닝 라인업.png')">
+        <div class="preview-card-inner" style="background-image:url('./static/images/products/시즈닝 라인업.png')">
           <div class="preview-cat">SEASONING</div>
           <div class="preview-name" data-t="prev-seasoning">가루 시즈닝 4종</div>
         </div>
       </div>
       <div class="preview-card" onclick="showPage('products'); filterProducts('sauce',null)">
-        <div class="preview-card-inner" style="background-image:url('./assets/images/소스 라인업.png')">
+        <div class="preview-card-inner" style="background-image:url('./static/images/products/소스 라인업.png')">
           <div class="preview-cat">SAUCE</div>
           <div class="preview-name" data-t="prev-sauce">액체 소스 6종</div>
         </div>
@@ -1255,9 +1251,9 @@
   </section>
 
   <footer class="light">
-    <div class="footer-logo"><img src="./assets/images/로고.png" class="footer-logo-img" alt="Da-Mi Food">DA-MI FOOD</div>
+    <div class="footer-logo"><img src="./static/images/brand/로고.png" class="footer-logo-img" alt="Da-Mi Food">DA-MI FOOD</div>
     <p data-t="footer-copy">© 2026 다미푸드(Da-Mi Food). All rights reserved.<br>
-    서울특별시 강남구 영동대로 513 COEX 4층 &nbsp;|&nbsp; <a href="mailto:contact@damifood.com">contact@damifood.com</a></p>
+    서울특별시 강남구 영동대로 513 COEX 4층 &nbsp;|&nbsp; <a href="/cdn-cgi/l/email-protection#5f3c30312b3e3c2b1f3b3e32363930303b713c3032"><span class="__cf_email__" data-cfemail="ec8f8382988d8f98ac888d81858a838388c28f8381">[email&#160;protected]</span></a></p>
   </footer>
 </div>
 
@@ -1289,7 +1285,7 @@
       <!-- 01 한 스푼의 마법 — 쌀국수 위에 고춧가루 뿌리기 -->
       <div class="story-point reveal-up">
         <div class="story-visual-wrap">
-          <div class="story-food-circle" style="background-image:url('./assets/images/홈페이지.png'); background-position: center 30%;"></div>
+          <div class="story-food-circle" style="background-image:url('./static/images/brand/홈페이지.png'); background-position: center 30%;"></div>
           <svg class="story-illust-svg" viewBox="0 0 290 290" fill="none" xmlns="http://www.w3.org/2000/svg">
             <!-- 계량스푼 손잡이 (우상단에서 내려옴) -->
             <line x1="264" y1="16" x2="220" y2="72" stroke="#1a1a1a" stroke-width="3" stroke-linecap="round"/>
@@ -1394,7 +1390,7 @@
         <p class="slogan-vision-quote" data-t="slogan-vq">"우리는 단순한 소스 회사가 아닙니다.<br>베트남과 한국을 잇는 가장 맛있는 연결고리가 되겠습니다."</p>
       </div>
     </div>
-    <footer><div class="footer-logo"><img src="./assets/images/로고.png" class="footer-logo-img" alt="Da-Mi Food">DA-MI FOOD</div><p data-t="footer-copy-short">© 2026 다미푸드. All rights reserved.</p></footer>
+    <footer><div class="footer-logo"><img src="./static/images/brand/로고.png" class="footer-logo-img" alt="Da-Mi Food">DA-MI FOOD</div><p data-t="footer-copy-short">© 2026 다미푸드. All rights reserved.</p></footer>
   </div>
 
   <!-- ────── Tab 1: 다미의 철학 ────── -->
@@ -1419,7 +1415,7 @@
         </div>
       </div>
     </div>
-    <footer class="light"><div class="footer-logo"><img src="./assets/images/로고.png" class="footer-logo-img" alt="Da-Mi Food">DA-MI FOOD</div><p data-t="footer-copy-short">© 2026 다미푸드. All rights reserved.</p></footer>
+    <footer class="light"><div class="footer-logo"><img src="./static/images/brand/로고.png" class="footer-logo-img" alt="Da-Mi Food">DA-MI FOOD</div><p data-t="footer-copy-short">© 2026 다미푸드. All rights reserved.</p></footer>
   </div>
 
   <!-- ────── Tab 2: 다미의 약속 ────── -->
@@ -1435,7 +1431,7 @@
 
       <!-- Section 01: Smart K-Life -->
       <div class="promise-alt-section reveal-up">
-        <div class="promise-alt-img" style="background-image:url('./assets/images/스마트케이라이프.png');"></div>
+        <div class="promise-alt-img" style="background-image:url('./static/images/brand/스마트케이라이프.png');"></div>
         <div class="promise-alt-text">
           <div class="promise-alt-num">01</div>
           <div class="promise-alt-eyebrow">Smart K-Life</div>
@@ -1447,7 +1443,7 @@
 
       <!-- Section 02: Health & Clean (reversed) -->
       <div class="promise-alt-section reverse reveal-up">
-        <div class="promise-alt-img" style="background-image:url('./assets/images/헬스앤클린.png');"></div>
+        <div class="promise-alt-img" style="background-image:url('./static/images/brand/헬스앤클린.png');"></div>
         <div class="promise-alt-text dark">
           <div class="promise-alt-num">02</div>
           <div class="promise-alt-eyebrow">Health & Clean</div>
@@ -1459,7 +1455,7 @@
 
       <!-- Section 03: Cultural Bridge -->
       <div class="promise-alt-section reveal-up">
-        <div class="promise-alt-img" style="background-image:url('./assets/images/컬쳐브릿지.png');"></div>
+        <div class="promise-alt-img" style="background-image:url('./static/images/brand/컬쳐브릿지.png');"></div>
         <div class="promise-alt-text">
           <div class="promise-alt-num">03</div>
           <div class="promise-alt-eyebrow">Cultural Bridge</div>
@@ -1476,7 +1472,7 @@
       </div>
 
     </div>
-    <footer class="light"><div class="footer-logo"><img src="./assets/images/로고.png" class="footer-logo-img" alt="Da-Mi Food">DA-MI FOOD</div><p data-t="footer-copy-short">© 2026 다미푸드. All rights reserved.</p></footer>
+    <footer class="light"><div class="footer-logo"><img src="./static/images/brand/로고.png" class="footer-logo-img" alt="Da-Mi Food">DA-MI FOOD</div><p data-t="footer-copy-short">© 2026 다미푸드. All rights reserved.</p></footer>
   </div>
 
   <!-- ────── Tab 3: 다미의 비전 ────── -->
@@ -1488,17 +1484,17 @@
         <!-- Photo 2 style: circular images -->
         <div class="vision-circles-new">
           <div class="vision-circle-new">
-            <div class="vision-circle-img-new" style="background-image:url('./assets/images/반미.png');"></div>
+            <div class="vision-circle-img-new" style="background-image:url('./static/images/brand/반미.png');"></div>
             <h4>CULTURE</h4>
             <p data-t="culture-p">당신의 주방에<br>한국의 맛을 식탁 위에</p>
           </div>
           <div class="vision-circle-new">
-            <div class="vision-circle-img-new" style="background-image:url('./assets/images/쌀국수.png');"></div>
+            <div class="vision-circle-img-new" style="background-image:url('./static/images/brand/쌀국수.png');"></div>
             <h4>FUSION</h4>
             <p data-t="fusion-p">한국과 베트남의<br>가장 맛있는 연결고리</p>
           </div>
           <div class="vision-circle-new">
-            <div class="vision-circle-img-new" style="background-image:url('./assets/images/불고기.png');"></div>
+            <div class="vision-circle-img-new" style="background-image:url('./static/images/brand/불고기.png');"></div>
             <h4>LIFESTYLE</h4>
             <p data-t="lifestyle-p">요리 그 이상의<br>프리미엄 K-경험</p>
           </div>
@@ -1510,7 +1506,7 @@
         </div>
       </div>
     </div>
-    <footer><div class="footer-logo"><img src="./assets/images/로고.png" class="footer-logo-img" alt="Da-Mi Food">DA-MI FOOD</div><p data-t="footer-copy-short">© 2026 다미푸드. All rights reserved.</p></footer>
+    <footer><div class="footer-logo"><img src="./static/images/brand/로고.png" class="footer-logo-img" alt="Da-Mi Food">DA-MI FOOD</div><p data-t="footer-copy-short">© 2026 다미푸드. All rights reserved.</p></footer>
   </div>
 
 </div>
@@ -1526,7 +1522,7 @@
   </div>
   <div id="brandDesc" style="display:none"></div>
   <div class="products-grid" id="productsGrid"></div>
-  <footer class="light"><div class="footer-logo"><img src="./assets/images/로고.png" class="footer-logo-img" alt="Da-Mi Food">DA-MI FOOD</div><p data-t="footer-copy-short">© 2026 다미푸드. All rights reserved.</p></footer>
+  <footer class="light"><div class="footer-logo"><img src="./static/images/brand/로고.png" class="footer-logo-img" alt="Da-Mi Food">DA-MI FOOD</div><p data-t="footer-copy-short">© 2026 다미푸드. All rights reserved.</p></footer>
 </div>
 
 <!-- 상품 상세 모달 -->
@@ -1663,13 +1659,14 @@
       </form>
     </div>
   </div>
-  <footer class="light"><div class="footer-logo"><img src="./assets/images/로고.png" class="footer-logo-img" alt="Da-Mi Food">DA-MI FOOD</div><p data-t="footer-copy-contact">© 2026 다미푸드. All rights reserved. | <a href="mailto:contact@damifood.com">contact@damifood.com</a></p></footer>
+  <footer class="light"><div class="footer-logo"><img src="./static/images/brand/로고.png" class="footer-logo-img" alt="Da-Mi Food">DA-MI FOOD</div><p data-t="footer-copy-contact">© 2026 다미푸드. All rights reserved. | <a href="/cdn-cgi/l/email-protection#abc8c4c5dfcac8dfebcfcac6c2cdc4c4cf85c8c4c6"><span class="__cf_email__" data-cfemail="71121e1f051012053115101c18171e1e155f121e1c">[email&#160;protected]</span></a></p></footer>
 </div>
 
 
 <!-- TOAST -->
 <div class="toast" id="toast"></div>
 
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
 <script>
 /* ── NAVBAR SCROLL ── */
 const nav = document.getElementById('mainNav');
@@ -1906,10 +1903,10 @@ const productSpecsLang = {
 const productDetails = {
   1: {
     images: [
-      './assets/images/코인육수/소고기 육개장_사진.png',
-      './assets/images/코인육수/육개장_소포장.png',
-      './assets/images/코인육수/육개장.png',
-      './assets/images/코인육수/육개장_nutrition_1.png',
+      './static/images/products/코인육수/소고기 육개장_사진.png',
+      './static/images/products/코인육수/육개장_소포장.png',
+      './static/images/products/코인육수/육개장.png',
+      './static/images/products/코인육수/육개장_nutrition_1.png',
     ],
     tagline: '베트남 소고기 국수 시장 1위의 그 진한 고기 맛, 한국의 매운맛이 더해졌습니다. 코인 하나로 육개장 육수가 완성됩니다.',
     intro: '소고기 사골 농축액, 건조 대파, 고춧가루, 마늘, 숙주 파우더를<br>저온 압축 성형한 코인육수입니다.<br>끓는 물 500ml에 코인 1알을 넣고 30초만 저으면 진한 육개장 육수가 완성됩니다.<br><br>인스턴트의 편리함, 수제 육수의 맛.<br>한국 가정에서 수십 년간 사랑받아 온 육개장의 레시피를<br>그대로 코인 한 알에 압축했습니다.',
@@ -1940,10 +1937,10 @@ const productDetails = {
   },
   2: {
     images: [
-      './assets/images/코인육수/멸치_사진.png',
-      './assets/images/코인육수/멸치_소포장.png',
-      './assets/images/코인육수/멸치 육수.png',
-      './assets/images/코인육수/멸치_nutrition_2.png',
+      './static/images/products/코인육수/멸치_사진.png',
+      './static/images/products/코인육수/멸치_소포장.png',
+      './static/images/products/코인육수/멸치 육수.png',
+      './static/images/products/코인육수/멸치_nutrition_2.png',
     ],
     tagline: '베트남의 영혼 피쉬소스와 가장 닮은 한국 육수, 멸치 잔치국수. 시원하고 깔끔한 감칠맛을 코인 하나로.',
     intro: '국내산 건멸치, 다시마, 대파, 무 파우더를 엄선해<br>저온 압축한 MIDAM의 시그니처 육수 코인입니다.<br><br>피쉬소스 특유의 강한 발효향 없이,<br>멸치 다시 특유의 투명하고 시원한 감칠맛만을 깔끔하게 담아냈습니다.<br>어느 요리에나 잘 어울리는 베이직 라인의 핵심 제품입니다.',
@@ -1972,10 +1969,10 @@ const productDetails = {
   },
   3: {
     images: [
-      './assets/images/코인육수/칼칼 맑은 채수_사진.png',
-      './assets/images/코인육수/칼칼_소포장.png',
-      './assets/images/코인육수/칼칼.png',
-      './assets/images/코인육수/칼칼채수_nutrition_3.png',
+      './static/images/products/코인육수/칼칼 맑은 채수_사진.png',
+      './static/images/products/코인육수/칼칼_소포장.png',
+      './static/images/products/코인육수/칼칼.png',
+      './static/images/products/코인육수/칼칼채수_nutrition_3.png',
     ],
     tagline: '한국 MZ세대가 해장으로 찾는 그 맛. 칼칼하고 맑은 채수, 이제 코인 하나로. 비건도, 해장도, 다이어트도 한 번에.',
     intro: '청양고추, 표고버섯, 양파, 배추, 대파 —<br>동물성 원료 없이 오직 채소와 버섯의 깊은 감칠맛만으로 만든<br>투명하고 맑은 육수 코인입니다.<br><br>표고버섯의 천연 글루타민산이 깊은 우마미를 만들고,<br>청양고추의 칼칼한 매운맛이 깔끔하게 치고 올라와<br>\'고기 없이도 이렇게 깊은 맛이?\' 라는 반응을 이끌어냅니다.',
@@ -2006,10 +2003,10 @@ const productDetails = {
   },
   4: {
     images: [
-      './assets/images/코인육수/김치_타마린_사진.png',
-      './assets/images/코인육수/김치_소포장.png',
-      './assets/images/코인육수/김치 타마린.png',
-      './assets/images/코인육수/김치타마린nutrition_4.png',
+      './static/images/products/코인육수/김치_타마린_사진.png',
+      './static/images/products/코인육수/김치_소포장.png',
+      './static/images/products/코인육수/김치 타마린.png',
+      './static/images/products/코인육수/김치타마린nutrition_4.png',
     ],
     tagline: '한국 김치의 발효 신맛 + 베트남이 사랑하는 타마린의 새콤함. 두 나라의 \'신맛 DNA\'가 만나 탄생한 전혀 새로운 육수.',
     intro: '국내산 숙성 김치 농축액, 타마린 파우더, 토마토 파우더, 멸치 다시 베이스를<br>절묘하게 배합한 새콤하고 깊은 맛의 육수 코인입니다.<br><br>김치의 발효 신맛은 타마린의 순수한 과일 산미와 만나 서로의 단점을 보완합니다.<br>김치 특유의 강한 발효향은 타마린이 부드럽게 잡아주고,<br>타마린의 단조로운 신맛은 김치 발효의 복합적인 풍미로 채워집니다.',
@@ -2040,11 +2037,11 @@ const productDetails = {
   },
   7: {
     images: [
-      './assets/images/시즈닝/불고기_상품페이지.png',
-      './assets/images/시즈닝/불고기_포장박스.png',
-      './assets/images/시즈닝/MYOMI스틱_불고기_소포장.png',
-      './assets/images/시즈닝/불고기_가루.png',
-      './assets/images/시즈닝/BBQ_nutrition_1.png',
+      './static/images/products/시즈닝/불고기_상품페이지.png',
+      './static/images/products/시즈닝/불고기_포장박스.png',
+      './static/images/products/시즈닝/MYOMI스틱_불고기_소포장.png',
+      './static/images/products/시즈닝/불고기_가루.png',
+      './static/images/products/시즈닝/BBQ_nutrition_1.png',
     ],
     tagline: '베트남이 가장 사랑하는 한국의 맛, 불고기. 그 달콤 짭짤한 풍미를 매일 식탁 위에 — MYOMI가 짜봉과 함께 완성했습니다.',
     intro: '간장 베이스의 달콤 짭짤한 불고기 시즈닝에<br>바삭한 돼지고기 입자와 볶은 깨를 한데 담은<br>플레이크형 시즈닝입니다.<br><br>현지 짜봉이 단순한 고기 맛에 그친다면, MYOMI K-BBQ는 다릅니다.<br>배즙의 천연 단맛, 간장의 깊은 감칠맛, 참기름의 고소함이<br>돼지고기 플레이크 위에 코팅되어 한 번에 \'불고기를 먹는 경험\'을 선사합니다.',
@@ -2075,11 +2072,11 @@ const productDetails = {
   },
   8: {
     images: [
-      './assets/images/시즈닝/감자탕_상품페이지.png',
-      './assets/images/시즈닝/감자탕_포장박스.png',
-      './assets/images/시즈닝/MYOMI스틱_감자탕_소포장.png',
-      './assets/images/시즈닝/감자탕_가루.png',
-      './assets/images/시즈닝/감자탕_nutrition_2_.png',
+      './static/images/products/시즈닝/감자탕_상품페이지.png',
+      './static/images/products/시즈닝/감자탕_포장박스.png',
+      './static/images/products/시즈닝/MYOMI스틱_감자탕_소포장.png',
+      './static/images/products/시즈닝/감자탕_가루.png',
+      './static/images/products/시즈닝/감자탕_nutrition_2_.png',
     ],
     tagline: '베트남이 사랑하는 전골(Lẩu)과 고기 요리의 모든 것이 한 스푼에. 된장 베이스의 진한 감칠맛과 들깨의 고소함 — MYOMI 감자탕 시즈닝이 완성합니다.',
     intro: '된장, 들깨가루, 고춧가루, 돼지고기 플레이크, 마늘의 정교한 배합으로 만든 플레이크형 시즈닝입니다.<br>들깨의 고소함을 메인으로, 깻잎 향을 아주 미세하게 더해<br>한국 감자탕의 정수만을 담았습니다.<br><br>기존 가루형 수프 시즈닝과 달리, MYOMI 감자탕 시즈닝은<br>돼지고기 플레이크가 들어간 \'감자탕 짜봉 후리카케\' 형태로<br>씹히는 질감까지 재현합니다.<br>물에 풀어 국물을 만들 수도, 밥 위에 토핑으로 뿌릴 수도 있는 이중 활용 시즈닝입니다.',
@@ -2110,11 +2107,11 @@ const productDetails = {
   },
   9: {
     images: [
-      './assets/images/시즈닝/닭갈비_상품페이지.png',
-      './assets/images/시즈닝/닭갈비_포장박스.png',
-      './assets/images/시즈닝/MYOMI스틱_닭갈비_소포장.png',
-      './assets/images/시즈닝/닭갈비_가루.png',
-      './assets/images/시즈닝/닭갈비_nutrition_3.png',
+      './static/images/products/시즈닝/닭갈비_상품페이지.png',
+      './static/images/products/시즈닝/닭갈비_포장박스.png',
+      './static/images/products/시즈닝/MYOMI스틱_닭갈비_소포장.png',
+      './static/images/products/시즈닝/닭갈비_가루.png',
+      './static/images/products/시즈닝/닭갈비_nutrition_3.png',
     ],
     tagline: '한국에서 가장 핫한 치킨 요리, 닭갈비. 매콤한 고추장의 불향과 달콤한 꿀의 하모니 — MYOMI가 집에서도 춘천 닭갈비를 완성합니다.',
     intro: '태양초 고추장 파우더, 꿀 파우더, 마늘, 생강, 간장 파우더를 기반으로 한<br>드라이 매리네이드 시즈닝입니다.<br>닭고기에 MYOMI 닭갈비 시즈닝을 직접 버무려 재우면<br>고추장 특유의 발효 풍미가 고기 속으로 스며들어 전문점 수준의 닭갈비 양념을 구현합니다.<br><br>드라이 포맷의 장점: 수분 없이 고기 표면에 밀착되어<br>굽거나 볶을 때 바깥쪽에 맛있는 카라멜라이즈 레이어를 형성합니다.<br>춘천 닭갈비 특유의 \'불향 양념 코팅\'을 집에서 재현할 수 있는 유일한 방법입니다.',
@@ -2145,11 +2142,11 @@ const productDetails = {
   },
   10: {
     images: [
-      './assets/images/시즈닝/전복죽_상품페이지.png',
-      './assets/images/시즈닝/전복죽_포장박스.png',
-      './assets/images/시즈닝/MYOMI스틱_전복죽_소포장.png',
-      './assets/images/시즈닝/전복_가루.png',
-      './assets/images/시즈닝/전복죽_nutrition_4_.png',
+      './static/images/products/시즈닝/전복죽_상품페이지.png',
+      './static/images/products/시즈닝/전복죽_포장박스.png',
+      './static/images/products/시즈닝/MYOMI스틱_전복죽_소포장.png',
+      './static/images/products/시즈닝/전복_가루.png',
+      './static/images/products/시즈닝/전복죽_nutrition_4_.png',
     ],
     tagline: '전복 손질? 긴 조리 시간? 이제 필요 없습니다. MYOMI 전복죽 시즈닝 한 스푼, 뜨거운 물 한 잔 — 1분 만에 한국 고급 보양식이 완성됩니다.',
     intro: '건조 전복 분말, 전복 내장 파우더, 쌀가루, 참기름, 다시마 파우더를<br>정밀 배합한 즉석 죽 시즈닝입니다.<br>쌀가루가 기본 농도를 만들어주고,<br>전복 분말과 내장 파우더가 진하고 깊은 전복 특유의 바다 향 감칠맛을 구현합니다.<br><br>가장 큰 차별화 포인트는 씹히는 전복 입자입니다.<br>단순한 가루가 아니라, 건조 전복 조각을 함께 넣어 실제 전복을 먹는 듯한 텍스처를 재현합니다.<br>인스턴트 죽과는 차원이 다른 \'프리미엄 K-보양식\'입니다.',
@@ -2179,9 +2176,9 @@ const productDetails = {
   },
   11: {
     images: [
-      './assets/images/소스/청양마요_2.png',
-      './assets/images/소스/청양 라벨.png',
-      './assets/images/소스/청양마요_nutrition_facts.png',
+      './static/images/products/소스/청양마요_2.png',
+      './static/images/products/소스/청양 라벨.png',
+      './static/images/products/소스/청양마요_nutrition_facts.png',
     ],
     tagline: '한국에서 가장 중독성 있는 조합, PUNGMI가 베트남 식탁으로 가져왔습니다.',
     intro: 'PUNGMI K-청양마요 소스는 단순히 마요네즈에 고추를 섞은 제품이 아닙니다.<br><br>한국산 청양고추 농축액의 깔끔하고 칼칼한 매운맛이<br>진하고 크리미한 마요네즈 베이스와 완벽한 비율로 배합되어,<br>처음엔 부드럽고 끝에서 매운 이중 풍미를 만들어냅니다.<br>"cay nhẹ, béo ngậy (살짝 매콤하고 고소한)"맛의 공식을<br>한국의 시그니처 고추로 구현한 제품입니다.',
@@ -2210,9 +2207,9 @@ const productDetails = {
   },
   12: {
     images: [
-      './assets/images/소스/매실 시푸드_3.png',
-      './assets/images/소스/매실 시푸드 라벨.png',
-      './assets/images/소스/매실_nutrition_facts_1.png',
+      './static/images/products/소스/매실 시푸드_3.png',
+      './static/images/products/소스/매실 시푸드 라벨.png',
+      './static/images/products/소스/매실_nutrition_facts_1.png',
     ],
     tagline: '베트남 해산물 식탁의 그 소스, 한국 매실이 만나 완전히 달라졌습니다. K-Soul meets VN Seafood.',
     intro: '한국에서 매실은 수백 년간 건강 음료와 조미료로 사용된 전통 발효 식재료입니다.<br>자연스러운 산미와 은은한 단맛, 깔끔한 뒷맛이 특징이죠.<br><br>한국산 매실 농축액 + 베트남 라임즙 + 피쉬소스(Nước mắm) 베이스의 조합은<br>베트남인들에게 익숙한 신맛의 프로파일을 유지하면서도<br>매실의 깊고 복합적인 산미가 더해져 익숙하지만 고급스럽다는 경험을 선사합니다.<br>인공 향료 없이 자연 재료만으로 만든 이 소스는<br>건강과 프리미엄을 동시에 잡을 수 있는 제품입니다.',
@@ -2241,9 +2238,9 @@ const productDetails = {
   },
   13: {
     images: [
-      './assets/images/소스/쌈장_2.png',
-      './assets/images/소스/쌈장 라벨.png',
-      './assets/images/소스/쌈장_nutrition_facts_2.png',
+      './static/images/products/소스/쌈장_2.png',
+      './static/images/products/소스/쌈장 라벨.png',
+      './static/images/products/소스/쌈장_nutrition_facts_2.png',
     ],
     tagline: '베트남의 Gỏi cuốn(월남쌈)에 한국 쌈장이 들어가면 어떻게 될까요? 더 이상 다른 소스가 필요 없어집니다.',
     intro: '기본 쌈장에 베트남 식탁의 필수 재료들을 녹여넣었습니다.<br><br>된장 + 고추장 베이스의 묵직한 감칠맛 위에 라임 제스트의 상쾌함,<br>고수 오일의 이국적인 향, 바질 파우더의 달콤한 허브향이 층층이 쌓여<br>월남쌈 한 입마다 복합적인 풍미가 펼쳐집니다.<br>기존 땅콩 소스보다 덜 무겁고, 느억맘 소스보다 더 깊은 감칠맛 —<br>월남쌈뿐만 아니라 베트남 식탁의 어떤 신선 채소 요리와도 어울리는<br>올라운드 K-허브 디핑 소스입니다.',
@@ -2275,9 +2272,9 @@ const productDetails = {
   },
   14: {
     images: [
-      './assets/images/소스/불고기 코코넛.png',
-      './assets/images/소스/불고기 라벨.png',
-      './assets/images/소스/불고기_nutrition_facts_4.png',
+      './static/images/products/소스/불고기 코코넛.png',
+      './static/images/products/소스/불고기 라벨.png',
+      './static/images/products/소스/불고기_nutrition_facts_4.png',
     ],
     tagline: '베트남의 노천 바비큐 문화, 한국 불고기 양념, 코코넛 크림의 고소한 부드러움. 세 가지가 만나 역대급 바비큐 글레이즈가 완성됩니다.',
     intro: '진간장 & 배즙(불고기 베이스) + 코코넛 크림 + 마늘의 조합으로 완성된<br>이 글레이즈는 단순한 마리네이드 소스가 아닙니다.<br><br>굽는 과정에서 카라멜화되어 고기 표면에 윤기 나는 글레이즈 층을 형성하고,<br>코코넛 크림이 열을 받아 고소한 너트향을 더해 갓 구운 고기의 비주얼과 풍미를 극대화합니다.<br>마리네이드로 사용하면 고기가 부드러워지고,<br>구울 때 한 번 더 발라주면 레스토랑 퀄리티의 바비큐 글레이즈가 완성됩니다.',
@@ -2307,9 +2304,9 @@ const productDetails = {
   },
   15: {
     images: [
-      './assets/images/소스/고추장 망고.png',
-      './assets/images/소스/고추장 망고 라벨.png',
-      './assets/images/소스/고추장 망고_nutrition_facts_5.png',
+      './static/images/products/소스/고추장 망고.png',
+      './static/images/products/소스/고추장 망고 라벨.png',
+      './static/images/products/소스/고추장 망고_nutrition_facts_5.png',
     ],
     tagline: '한국 치킨의 인기 + 베트남 망고의 상큼함. 집에서도 K-치킨 윙을 만드는 시대가 왔습니다.',
     intro: '고추장만 사용하면 텁텁함과 과한 매운맛이 날 수 있습니다.<br>여기서 망고가 마법 같은 역할을 합니다.<br><br>베트남산 망고 퓨레의 자연스러운 산미와 당도가<br>고추장의 발효 풍미와 만나면 서로의 단점을 보완하고<br>장점을 극대화한 달콤 매콤(Ngọt cay)의 가장 이상적인 밸런스가 만들어집니다.<br>글레이즈 타입으로 설계되어 닭날개·닭다리에 바로 짜서 구우면<br>표면에 찰지게 코팅되는 광택 있는 윙 글레이즈가 완성됩니다.',
@@ -2338,9 +2335,9 @@ const productDetails = {
   },
   16: {
     images: [
-      './assets/images/소스/로제_3.png',
-      './assets/images/소스/로제 라벨.png',
-      './assets/images/소스/로제_nutrition_facts_3.png',
+      './static/images/products/소스/로제_3.png',
+      './static/images/products/소스/로제 라벨.png',
+      './static/images/products/소스/로제_nutrition_facts_3.png',
     ],
     tagline: '한국에서 가장 핫한 소스 트렌드 \'로제\', 베트남의 영혼 \'레몬그라스\'를 만나 비로소 완성됩니다.',
     intro: '태양초 고추장 + 크림 파우더 + 다진 레몬그라스의 삼각 구도로 완성된<br>PUNGMI만의 K-VN 퓨전 볶음 소스입니다.<br><br>일반 로제 소스와 달리 PUNGMI K-로제 레몬그라스 소스는<br>베트남 식탁의 모든 볶음·면 요리에 범용적으로 사용할 수 있는<br>만능 퓨전 볶음 소스로 설계되었습니다.<br>Bún xào(분볶), Phở xào(볶음 쌀국수), Gà xào(닭볶음) —<br>베트남 가정의 일상 요리에 바로 넣을 수 있는 현지화된 K-소스입니다.',
@@ -2782,7 +2779,8 @@ setTimeout(_startReveal, 100);
 
 /* ── HERO BANNER SLIDER ── */
 let _heroIdx = 0, _heroTimer = null;
-const _HERO_N = 3;
+const _HERO_N = 6;
+const _HERO_DURATIONS = [66000, 7000, 7000, 7000, 7000, 7000]; /* 영상 1분6초, 이미지 각 7초 */
 
 function goHeroSlide(idx) {
   const slides = document.querySelectorAll('.hero-slide');
@@ -2793,16 +2791,21 @@ function goHeroSlide(idx) {
   _heroIdx = ((idx % _HERO_N) + _HERO_N) % _HERO_N;
   slides[_heroIdx].classList.add('active');
   dots[_heroIdx].classList.add('active');
+  const v = document.getElementById('heroVideo');
+  const soundBtn = document.getElementById('soundToggle');
   if (_heroIdx === 0) {
-    const v = document.getElementById('heroVideo');
-    if (v) { try { v.currentTime = 0; v.play(); } catch(e){} }
+    if (v) { try { v.currentTime = 0; v.muted = true; v.play(); } catch(e){} }
+    if (soundBtn) { soundBtn.style.display = 'flex'; soundBtn.textContent = '🔇'; soundBtn.classList.remove('on'); }
+  } else {
+    if (v) { try { v.pause(); v.muted = true; } catch(e){} }
+    if (soundBtn) { soundBtn.style.display = 'none'; soundBtn.textContent = '🔇'; soundBtn.classList.remove('on'); }
   }
   clearInterval(_heroTimer);
-  _heroTimer = setInterval(() => goHeroSlide(_heroIdx + 1), 7000);
+  _heroTimer = setInterval(() => goHeroSlide(_heroIdx + 1), _HERO_DURATIONS[_heroIdx]);
 }
 
 /* 자동 슬라이드 시작 */
-_heroTimer = setInterval(() => goHeroSlide(_heroIdx + 1), 7000);
+_heroTimer = setInterval(() => goHeroSlide(_heroIdx + 1), _HERO_DURATIONS[_heroIdx]);
 
 function toggleHeroSound() {
   const v   = document.getElementById('heroVideo');
@@ -2810,10 +2813,10 @@ function toggleHeroSound() {
   if (!v || !btn) return;
   v.muted = !v.muted;
   if (v.muted) {
-    btn.innerHTML = '<span>🔇</span><span>MUTE</span>';
+    btn.textContent = '🔇';
     btn.classList.remove('on');
   } else {
-    btn.innerHTML = '<span>🔊</span><span>SOUND ON</span>';
+    btn.textContent = '🔊';
     btn.classList.add('on');
   }
 }
@@ -3351,18 +3354,4 @@ function openSidebar() {
   document.body.style.overflow = 'hidden';
 }
 function closeSidebar() {
-  document.getElementById('sidebar').classList.remove('open');
-  document.getElementById('sidebarOverlay').classList.remove('open');
-  document.body.style.overflow = '';
-}
-function sbToggle(id) {
-  document.getElementById(id).classList.toggle('expanded');
-}
-
-/* ── 페이지 초기화 (모든 const 선언 이후에 실행) ── */
-renderProducts('all');
-_saveCart();
-_updateAuthUI();
-</script>
-</body>
-</html>
+  document.getElementById('sidebar'
