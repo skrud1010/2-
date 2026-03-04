@@ -874,7 +874,7 @@
   }
   .sidebar-close:hover { color: var(--red); }
   .sidebar-nav {
-    flex: 1; overflow-y: auto; padding: 44px 0 8px;
+    flex: 1; overflow-y: auto; padding: 8px 0;
     display: flex; flex-direction: column;
   }
   .sidebar-section-label {
@@ -899,9 +899,9 @@
     content: '–'; position: absolute; left: 17px; color: #ccc; font-size: 0.75rem;
   }
   .sidebar-nav-link:hover { color: var(--red); background: #fef9f0; }
-  .sidebar-footer {
-    padding: 14px 16px; display: flex; flex-direction: column;
-    gap: 9px; border-top: 1.5px solid #eee; flex-shrink: 0;
+  .sidebar-top {
+    padding: 44px 16px 14px; display: flex; flex-direction: column;
+    gap: 9px; border-bottom: 1.5px solid #eee; flex-shrink: 0;
   }
   .sidebar-lang-row { display: flex; gap: 7px; }
   .sidebar-action-row { display: flex; gap: 7px; }
@@ -993,6 +993,17 @@
 <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
 <div class="sidebar" id="sidebar">
   <button class="sidebar-close" onclick="closeSidebar()">✕</button>
+  <div class="sidebar-top">
+    <div class="sidebar-lang-row">
+      <button class="lang-btn active" data-lang="ko" onclick="setLang('ko')">KO</button>
+      <button class="lang-btn" data-lang="en" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" data-lang="vi" onclick="setLang('vi')">VI</button>
+    </div>
+    <div class="sidebar-action-row">
+      <button class="sidebar-cart-btn" onclick="closeSidebar(); openCart()"><span data-t="modal-cart-btn" style="display:contents">🛒 Cart</span> <span class="sidebar-cart-badge" id="sidebarCartCount">0</span></button>
+      <button class="sidebar-login-btn" id="sidebarLoginBtn" onclick="closeSidebar(); document.getElementById('loginModal').classList.add('show')" data-t="nav-login">Login</button>
+    </div>
+  </div>
   <nav class="sidebar-nav">
     <div class="sidebar-section-label" data-t="nav-about">다미 소개</div>
     <a class="sidebar-nav-link sb-sub" href="#" onclick="closeSidebar(); showPage('about'); showAboutTab(0); return false;" data-t="nav-brand-story">다미 스토리</a>
@@ -1006,17 +1017,6 @@
     <a class="sidebar-nav-link sb-sub" href="#" onclick="closeSidebar(); showPage('products'); filterProducts('sauce',null); return false;" data-t="nav-sauce">액체 소스</a>
     <div class="sidebar-section-label sidebar-section-direct" onclick="closeSidebar(); showPage('contact');" data-t="nav-contact">고객 서비스</div>
   </nav>
-  <div class="sidebar-footer">
-    <div class="sidebar-lang-row">
-      <button class="lang-btn active" data-lang="ko" onclick="setLang('ko')">KO</button>
-      <button class="lang-btn" data-lang="en" onclick="setLang('en')">EN</button>
-      <button class="lang-btn" data-lang="vi" onclick="setLang('vi')">VI</button>
-    </div>
-    <div class="sidebar-action-row">
-      <button class="sidebar-cart-btn" onclick="closeSidebar(); openCart()"><span data-t="modal-cart-btn" style="display:contents">🛒 Cart</span> <span class="sidebar-cart-badge" id="sidebarCartCount">0</span></button>
-      <button class="sidebar-login-btn" id="sidebarLoginBtn" onclick="closeSidebar(); document.getElementById('loginModal').classList.add('show')" data-t="nav-login">Login</button>
-    </div>
-  </div>
 </div>
 
 <!-- ══ LOGIN MODAL ══ -->
